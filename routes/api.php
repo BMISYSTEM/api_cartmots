@@ -49,17 +49,17 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::post('/users/updatepassword',[Authcontroller::class,'updatepassword']);
     // dashboard
     Route::get('/dashboard/resumen',[dashboard::class,'index']);
-    // notificaciones 
+    // notificaciones
     Route::get('/clientes/notificaciones',[NotificacionController::class,'index']);
     Route::get('/clientes/alertas',[NotificacionController::class,'alertas']);
-    
+
     Route::post('/create',[Authcontroller::class,'create']);
     Route::post('/logout',[Authcontroller::class,'logout']);
     Route::get('/permisos',[Authcontroller::class,'permisos']);
-    //marcas 
+    //marcas
     Route::post('/marca',[MarcasController::class,'create']);
     Route::get('/index',[MarcasController::class,'index']);
-    // update marcas 
+    // update marcas
     Route::post('/marca/update',[MarcasController::class,'update']);
     //modelos
     Route::post('/modelo',[ModeloController::class,'create']);
@@ -94,7 +94,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/cliente',[ClienteController::class,'cliente']);
     Route::post('//carga-cliente',[ClienteController::class,'ImportClientes']);
     Route::post('clientes/update',[ClienteController::class,'updateCliente']);
-    // graficos 
+    // graficos
     Route::get('/clientes/ventas/barra',[graficos::class,'barra']);
 
     //todos los usuarios\
@@ -106,10 +106,10 @@ Route::middleware('auth:sanctum')->group(function(){
     //asesorios
     Route::post('/asesorios',[AsesorioController::class,'create']);
     Route::get('/asesorios',[AsesorioController::class,'index']);
-    //seguimiento 
+    //seguimiento
     Route::post('/seguimiento/nota',[NotasController::class,'create']);
     Route::get('/seguimiento/nota',[NotasController::class,'index']);
-  
+
     // Informacion para generacion de pdf pedido
     Route::post('/pdfpedido',[NotasController::class,'findPedido']);
     //resultados
@@ -131,7 +131,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/intercompany/enviados',[TransferenciasController::class,'index']);
     Route::get('/intercompany/recepcion',[TransferenciasController::class,'recepcionenviados']);
 
-    // bot 
+    // bot
     Route::post('/bot/newchat',[botController::class,'createNewBot']);
     Route::post('/bot/updatecampana',[botController::class,'updatecampana']);
     Route::post('/bot/asignacion',[botController::class,'createclientebot']);
@@ -166,7 +166,7 @@ Route::middleware('auth:sanctum')->group(function(){
     | Tienen que ver con la empresas
     |--------------------------------------------------------------------------
     |
-    | index 
+    | index
     |
     */
     Route::get('/empresas',[EmpresaController::class,'indexEmpresas']);
@@ -175,7 +175,7 @@ Route::middleware('auth:sanctum')->group(function(){
     | asociaciones
     |--------------------------------------------------------------------------
     |
-    | create,consulta todas las solicitudes 
+    | create,consulta todas las solicitudes
     |
     */
     Route::post('/newasociacion',[AsociacionesController::class,'createAsociacion']);
@@ -190,7 +190,7 @@ Route::middleware('auth:sanctum')->group(function(){
     | Actividades
     |--------------------------------------------------------------------------
     |
-    | create,consulta todas las actividades 
+    | create,consulta todas las actividades
     |
     */
     Route::post('/createactividad',[ActividadesController::class,'createActividad']);
@@ -203,7 +203,7 @@ Route::middleware('auth:sanctum')->group(function(){
     | Motivos
     |--------------------------------------------------------------------------
     |
-    | create,consulta todas las motivos 
+    | create,consulta todas las motivos
     |
     */
     Route::post('/createmotivos',[MotivosController::class,'createMotivo']);
@@ -216,7 +216,7 @@ Route::middleware('auth:sanctum')->group(function(){
     | Logistica / movimientos
     |--------------------------------------------------------------------------
     |
-    | create,consulta todas las movimientos 
+    | create,consulta todas las movimientos
     |
     */
     Route::post('/createmovimiento',[LogisticaController::class,'createMovimiento']);
@@ -238,10 +238,10 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/allnegociosvehiculos',[LogisticaController::class,'allnegociosvehiculos']);
     /*
     |--------------------------------------------------------------------------
-    | proveedor 
+    | proveedor
     |--------------------------------------------------------------------------
     |
-    | create,consulta todas las movimientos 
+    | create,consulta todas las movimientos
     |
     */
     Route::post('/createproveedor',[ProveedorController::class,'createProveedor']);
@@ -253,20 +253,20 @@ Route::middleware('auth:sanctum')->group(function(){
     // pago de mercado pago
 
     Route::post('/preferences',[PasarelaController::class,'preferences']);
-    
-    
-    
-    // imagenes 
+
+
+
+    // imagenes
     Route::get('/imagenes',[ImagenesController::class,'store']);
-    
+
     //configuraciones
     Route::get('/configuraciones',function(){
         $empresa = Auth::user()->empresas;
-        
+
         $modulo_costo = DB::select("SELECT modulo_costos from configuraciones where empresa_id = ".$empresa);
         return response()->json($modulo_costo);
     });
-    
+
      /*
     |--------------------------------------------------------------------------
     | Generador de reporte
@@ -281,18 +281,18 @@ Route::middleware('auth:sanctum')->group(function(){
     | rutas negocio
     |--------------------------------------------------------------------------
     |
-    | elimina el negocio 
+    | elimina el negocio
     |
     */
     Route::get('/allnegocios',[LogisticaController::class,'allnegocios']);
     Route::post('/seguimiento/deletenegocio',[NotasController::class,'deleteNegocioId']);
     Route::post('/seguimiento/cerrarnegocio',[NotasController::class,'closeNegocio']);
   });
-  
-  
-  
-  
-  
+
+
+
+
+
 Route::get('/notificacionpago',[PasarelaController::class,'notificacionPago']);
 Route::post('/codigo/empresa',[Authcontroller::class,'codigoempresa']);
 Route::post('/empresa/registro',[Authcontroller::class,'registroempresa']);
@@ -302,6 +302,7 @@ Route::get('/force',[Authcontroller::class,'force']);
 //generar link
 Route::get('/link',function(){
     Artisan::call('optimize');
+    Artisan::call('storage:link');
     return response()->json(['succes'=>'Rutas actualizadas']);
 });
 Route::get('/prueba',[ClienteController::class,'index']);
@@ -315,12 +316,12 @@ Route::get('/mediospagos',function(){
     $response = Http::withHeaders([
     'Authorization' => 'Bearer TEST-1085150894423410-030803-ea4be12ca2083d3a93f496874831507f-507411332'
     ])->get('https://api.mercadopago.com/v1/payment_methods');
-    
+
     return $response->json();
 });
 Route::get('/realizarpago',function(){
     MercadoPagoConfig::setAccessToken("ACCESS_TOKEN");
-    
+
     $response = Http::withHeaders([
     'Authorization' => 'Bearer TEST-1085150894423410-030803-ea4be12ca2083d3a93f496874831507f-507411332',
     'X-Idempotency-Key: 0d5020ed-1af6-469c-ae06-c3bec19954bb'
