@@ -301,9 +301,9 @@ Route::get('/force',[Authcontroller::class,'force']);
 
 //generar link
 Route::get('/link',function(){
-    Artisan::call('optimize');
     Artisan::call('storage:link');
-    return response()->json(['succes'=>'Rutas actualizadas']);
+    Artisan::call('optimize');
+    return response()->json(['succes'=>'Rutas actualizadas, se creo el storage Link']);
 });
 Route::get('/prueba',[ClienteController::class,'index']);
 // conversacion con el bot
