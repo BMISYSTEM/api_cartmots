@@ -1,0 +1,21 @@
+CREATE TABLE clientes_documentos (
+	id INT NOT NULL AUTO_INCREMENT,
+	tipo VARCHAR(255) NOT NULL,
+	urldoc VARCHAR(255) NOT NULL,
+	cliente bigint unsigned NOT NULL,
+	usuario bigint unsigned NOT NULL,
+	empresa INT NOT NULL,
+	comentario TEXT,
+	PRIMARY KEY (id,cliente,empresa),
+	FOREIGN KEY (CLIENTE) REFERENCES clientes(id),
+	FOREIGN KEY (USUARIO) REFERENCES users(id)
+)
+
+alter table clientes_documentos 
+add column updated_at TIMESTAMP;
+
+alter table clientes_documentos 
+add column created_at TIMESTAMP;
+
+alter table clientes_documentos 
+add column centrofinanciero int;

@@ -1,0 +1,5 @@
+alter table vehiculos add column caja varchar(255) DEFAULT 'sin definir caja'
+alter table vehiculos add column version varchar(255) DEFAULT 'sin definir version'
+alter table vehiculos add column linea varchar(255) DEFAULT 'sin definir linea'
+alter table vehiculos add column soat date DEFAULT null
+alter table vehiculos add column tecnomecanica date DEFAULT null

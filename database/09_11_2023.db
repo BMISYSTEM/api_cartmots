@@ -1,0 +1,11 @@
+alter table empresas add column confirmado integer DEFAULT 0
+
+alter table empresas add column logo varchar(255) DEFAULT 'sin logo'
+
+--para todas las tablas
+alter table vehiculos add COLUMN empresas bigint unsigned;
+ALTER TABLE vehiculos ADD FOREIGN KEY(empresas) REFERENCES empresas(id);
+
+
+alter table estados add column aprobado integer
+alter table estados add column rechazado integer

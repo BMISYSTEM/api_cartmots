@@ -1,0 +1,68 @@
+-----------------------------------------------------------11/12/2023---------------------------------------------------------
+alter table estados add COLUMN finalizado INTEGER DEFAULT 0
+alter table estados add COLUMN vendido INTEGER DEFAULT 0
+-----------------------------------------------------------11/13/2023---------------------------------------------------------
+
+CREATE TABLE ventas (
+	id INT NOT NULL AUTO_INCREMENT,
+  	empresa bigint unsigned NOT NULL,
+  	clientes bigint unsigned NOT NULL,
+  	usuario bigint unsigned NOT NULL,
+  	comentario TEXT,
+  	updated_at TIMESTAMP,
+  	created_at TIMESTAMP,
+  	PRIMARY KEY (id),
+  	FOREIGN KEY (usuario) REFERENCES users(id),
+  	FOREIGN KEY (clientes) REFERENCES clientes(id),
+  	FOREIGN KEY (empresa) REFERENCES empresas(id),
+)
+
+CREATE TABLE newchatbots (
+	codigo 				VARCHAR(255) not null,
+  	empresa 			bigint unsigned NOT NULL,
+  	nombre 				varchar(255) not NULL,
+  	descripcion 		TEXT,
+  	inicio 				TIMESTAMP,
+  	fin 				TIMESTAMP,
+  	updated_at 			TIMESTAMP,
+  	created_at 			TIMESTAMP,
+  	PRIMARY KEY (codigo),
+  	FOREIGN KEY (empresa) REFERENCES empresas(id)
+)
+
+---------------------------------------------------------------------
+tabla para almacenar los numeros registrados en el chat
+
+create table numberchatbots(
+	telefono 		VARCHAR(255) not null,
+	codigo_campana 	VARCHAR(255) not null,
+	estado 			int not null DEFAULT 0,
+	codigo_chat 	VARCHAR(255) not null,
+	FOREIGN KEY (codigo_campana) REFERENCES newchatbots(codigo)
+)
+
+CREATE INDEX relacion_numero_chat ON numberchatbots(codigo_chat);
+
+create table conversacionbots (
+	codigo_chat 	VARCHAR(255) not null,
+	codigo_mensaje 	int not null,
+	mensaje 		VARCHAR(255) not null,
+	opcion1 		varchar(255) not null,
+	proximo1 		int not null,
+	opcion2 		varchar(255) not null,
+	proximo2 		int not null,
+	tipo     		int not null,
+	CONSTRAINT conver_number FOREIGN KEY (codigo_chat) REFERENCES numberchatbots(codigo_chat)
+)
+
+alter table numberchatbots 
+add column updated_at TIMESTAMP;
+
+alter table numberchatbots 
+add column created_at TIMESTAMP;
+
+alter table conversacionbots 
+add column updated_at TIMESTAMP;
+
+alter table conversacionbots 
+add column created_at TIMESTAMP;

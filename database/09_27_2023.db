@@ -1,0 +1,17 @@
+CREATE TABLE transferencias (
+	id INT NOT NULL AUTO_INCREMENT,
+  	empresa_de bigint unsigned NOT NULL,
+  	empresa_para bigint unsigned NOT NULL,
+  	clientes bigint unsigned NOT NULL,
+  	usuario bigint unsigned NOT NULL,
+  	comentario TEXT,
+  	updated_at TIMESTAMP,
+  	created_at TIMESTAMP,
+  	PRIMARY KEY (id),
+  	FOREIGN KEY (usuario) REFERENCES users(id),
+  	FOREIGN KEY (clientes) REFERENCES clientes(id),
+  	FOREIGN KEY (empresa_de) REFERENCES empresas(id),
+  	FOREIGN KEY (empresa_para) REFERENCES empresas(id)
+)
+
+alter table clientes add COLUMN transferido int not null DEFAULT 0

@@ -1,0 +1,211 @@
+
+
+
+
+ALTER TABLE clientes ADD TIPO_DOCUMENTO VARCHAR(255);
+
+alter table notas add COLUMN hora time;
+alter table notas drop COLUMN resultado;
+
+ALTER TABLE clientes ADD FECHA_EXPEDICCION DATE;
+
+
+
+alter table clientes add ciudad varchar(255);
+
+
+
+alter table clientes add genero varchar(255);
+
+
+
+alter table clientes add estado_civil varchar(255);
+
+
+
+alter table clientes add direccion varchar(255);
+
+
+alter table clientes add celular varchar(255);
+
+alter table clientes add tipo_vivienda varchar(255);
+
+ 
+alter table clientes add antiguedad_vivienda integer;
+
+
+
+    create table datos_credito (
+        id int NOT NULL AUTO_INCREMENT,
+        cleintes bigint unsigned not null,
+        marca varchar(255),
+        vehiculo varchar(255),
+        valor_seguro varchar(255),
+        plan varchar(255),
+        valor_vehiculo varchar(255),
+        valor_cuota_extra varchar(255),
+        valor_financiar varchar(255),
+        tipo varchar(255),
+        cuota_inicial varchar(255),
+        plazo varchar(255),
+        tasa varchar(255),
+        financiera varchar(255),
+        PRIMARY KEY (id),
+        FOREIGN KEY (clientes) REFERENCES clientes(id)
+    );
+
+
+
+create table informacion_laboral (
+	id int not null AUTO_INCREMENT,
+	clientes bigint unsigned not null,
+	contrato varchar(255),
+	empresa varchar(255),
+	direccion varchar(255),
+	nit varchar(255),
+	profecion varchar(255),
+	telefono varchar(255),
+	antiguedad int,
+	PRIMARY KEY (id),
+	FOREIGN KEY (clientes) REFERENCES clientes(id)
+	);
+
+
+create table ingresos_egresos (
+	id int not null AUTO_INCREMENT,
+	clientes bigint unsigned not null,
+	ingresos_fijos varchar(255),
+	gastos varchar(255),
+	total_ingresos varchar(255),
+	ingreso_variable varchar(255),
+	otros_egresos varchar(255),
+	total_activos varchar(255),
+	otros_ingresos varchar(255),
+	tiene_vehiculo varchar(255),
+	total_pasivos varchar(255),
+	PRIMARY KEY (id),
+	FOREIGN KEY (clientes) REFERENCES clientes(id)
+);
+
+
+
+create table referencias (
+	id int NOT NULL AUTO_INCREMENT,
+	clientes bigint unsigned not null,
+	personal1_nombre varchar(255),
+	personal1_ciudad varchar(255),
+	personal1_telefono varchar(255),
+	personal1_direccion varchar(255),
+	personal2_nombre varchar(255),
+	personal2_ciudad varchar(255),
+	personal2_telefono varchar(255),
+	personal2_direccion varchar(255),
+	familiares1_nombre varchar(255),
+	familiares1_ciudad varchar(255),
+	familiares1_telefono varchar(255),
+	familiares1_direccion varchar(255),
+	familiares2_nombre varchar(255),
+	familiares2_ciudad varchar(255),
+	familiares2_telefono varchar(255),
+	familiares2_direccion varchar(255),
+	empresariales1_nombre varchar(255),
+	empresariales1_ciudad varchar(255),
+	empresariales1_nit varchar(255),
+	empresariales1_direccion varchar(255),
+	empresariales1_telefono varchar(255),
+	empresariales2_nombre varchar(255),
+	empresariales2_ciudad varchar(255),
+	empresariales2_nit varchar(255),
+	empresariales2_direccion varchar(255),
+	empresariales2_telefono varchar(255),
+	conyuge_nombre varchar(255),
+	conyuge_fechanacimiento varchar(255),
+	conyuge_cedula varchar(255),
+	conyuge_empresa varchar(255),
+	conyuge_telefono varchar(255),
+	coyuge_salario varchar(255),
+	conyuge_otros_ingreso varchar(255),
+	conyuge_egresos varchar(255),
+	PRIMARY KEY (id),
+	FOREIGN KEY (clientes) REFERENCES clientes(id)
+);
+
+
+
+create table pdfsolicitud (
+	id int NOT NULL AUTO_INCREMENT,
+	clientes bigint unsigned not null,
+	users bigint unsigned not null,
+	PRIMARY KEY (id),
+	FOREIGN KEY (clientes) REFERENCES clientes(id)
+	FOREIGN KEY (users) REFERENCES users(id)
+);
+
+
+
+alter table datos_credito 
+add pdf int not null,
+add FOREIGN KEY (pdf) REFERENCES pdfsolicitud(id);
+
+
+
+
+alter table informacion_laboral 
+add pdf int not null,
+add FOREIGN KEY (pdf) REFERENCES pdfsolicitud(id);
+
+
+
+
+alter table ingresos_egresos 
+add pdf int not null,
+add FOREIGN KEY (pdf) REFERENCES pdfsolicitud(id);
+
+
+
+alter table referencias 
+add pdf int not null,
+add FOREIGN KEY (pdf) REFERENCES pdfsolicitud(id);
+
+
+
+rename table pdfsolicitud to pdfsolicitudes;
+alter table estados add COLUMN empresas bigint unsigned
+ALTER TABLE estados ADD CONSTRAINT empresas FOREIGN KEY(empresas) REFERENCES empresas(id);
+
+
+alter table pdfsolicitudes 
+add column updated_at TIMESTAMP;
+
+alter table pdfsolicitudes 
+add column created_at TIMESTAMP;
+
+
+rename table datos_credito to datos_creditos;
+
+alter table datos_creditos 
+add column updated_at TIMESTAMP;
+
+alter table datos_creditos 
+add column created_at TIMESTAMP;
+
+alter table estados ADD COLUMN pendiente varchar(255);
+alter table pdfsolicitudes add column nombre varchar(255)
+
+alter table informacion_laborales 
+add column updated_at TIMESTAMP;
+
+alter table informacion_laborales 
+add column created_at TIMESTAMP;
+
+alter table ingresos_egresos 
+add column updated_at TIMESTAMP;
+
+alter table ingresos_egresos 
+add column created_at TIMESTAMP;
+
+alter table referencias 
+add column updated_at TIMESTAMP;
+
+alter table referencias 
+add column created_at TIMESTAMP;
