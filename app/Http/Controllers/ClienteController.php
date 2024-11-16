@@ -359,17 +359,17 @@ class ClienteController extends Controller
         $telefono = $_GET['telefono'];
         $email = $_GET['email'];
         // valida que venga el telefono pero no el email
-        if($telefono  and !$email)
+        if($telefono <> ''   and $email == '')
         {
            $result = DB::select("select c.id from clientes c inner join users u on c.users_id = u.id 
             inner join empresas e on u.empresas = e.id
             where c.telefono = '".$telefono."' and e.id = ". $empresa ); 
-        }elseif(!$telefono  and $email)
+        }elseif($telefono == ''  and $email <> '')
         {   //valida que venga el email pero el telefono no
             $result = DB::select("select c.id from clientes c inner join users u on c.users_id = u.id 
             inner join empresas e on u.empresas = e.id
             where c.email = '".$email. "' and e.id = ". $empresa ); 
-        }elseif($telefono  and $email)
+        }elseif($telefono <> ''  and $email <> '')
         {  //Si viene tanto email como telefono 
             $result = DB::select("select c.id from clientes c inner join users u on c.users_id = u.id 
             inner join empresas e on u.empresas = e.id
