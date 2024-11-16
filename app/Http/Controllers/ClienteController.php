@@ -353,11 +353,11 @@ class ClienteController extends Controller
         return response()->json($vista);
         // comentario de prueba
     }
-    public function busqueda()
+    public function busqueda(Request $request)
     {   
         $empresa = Auth::user()->empresas;
-        $telefono = $_GET['telefono'];
-        $email = $_GET['email'];
+        $telefono = $request->query('telefono');
+        $email = $request->query('email');
         // valida que venga el telefono pero no el email
         if(!empty($telefono) and empty($email))
         {
