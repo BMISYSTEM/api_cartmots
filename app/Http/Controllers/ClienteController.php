@@ -244,13 +244,12 @@ class ClienteController extends Controller
             inner join empresas em on u.empresas = em.id
             inner join estados e on e.id = c.estados
             left join (SELECT max(created_at) as ultima_nota,clientes as clientes FROM notas GROUP BY clientes ) as ult on c.id = ult.clientes
-            left join (select proximo_seguimiento fecha,clientes clientes,comentario comentarios,created_at as ult_nota from notas GROUP BY clientes,proximo_seguimiento,comentario,created_at order by proximo_seguimiento desc) as t  on t.clientes = c.id and ult.ultima_nota = t.ult_nota
+            left join (select proximo_seguimiento fecha,clientes clientes,comentario comentarios,created_at as ult_nota,empresas as empresa from notas GROUP BY clientes,proximo_seguimiento,comentario,created_at order by proximo_seguimiento desc) as t  on t.clientes = c.id and ult.ultima_nota = t.ult_nota and t.empresa = c.empresas
             where c.empresas= '".$empresa."' and u.id = ".$user." and c.transferido = 0 and e.finalizado <> 1  and t.fecha BETWEEN '".$inicio."' AND '".$fin."'
             group by u.name,u.img,c.id,t.comentarios,t.clientes,c.nombre,c.apellido,c.cedula,c.date,c.telefono,c.email,c.estados,c.users_id,e.id,e.estado,e.created_at,e.updated_at,t.fecha,e.color,e.pendiente,e.aprobado,e.rechazado
             ORDER BY  t.fecha DESC");
         }
         return response()->json($vista);
-        // comentario de prueba
     }
     // trae la informacion de seguimiento del asesor si es 0 trae solo la de el y si es 1 consulta todo de la empresa
     public function finalizados()
