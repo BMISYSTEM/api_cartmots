@@ -9,6 +9,7 @@ use App\Models\numberchatbot;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Models\notas;
 
 class botController extends Controller
 {
@@ -164,7 +165,8 @@ class botController extends Controller
         $numero = numberchatbot::where('codigo_chat',$post['codigo_chat'])->first();
         $nombreCliente = conversacionbot::where('codigo_chat',$post['codigo_chat'])->first(); 
         $Query = DB::select("Select count(*) as numero from clientes where empresas = '".$empresa."' and telefono = '".$numero['telefono']."'");
-
+        $fechaHoraActual = now();
+        $horaActual = now()->format('H:i:s');
         if($Query[0]->numero === 0){
             $create = cliente::create([
                 'nombre'=> $nombreCliente['mensaje'],
@@ -186,6 +188,16 @@ class botController extends Controller
                 'antiguedad_vivienda'=> 0,
                 'empresas'=> $empresa
             ]);
+            $insert = notas::create([
+            'comentario' => 'Cliente asignado de campañas',
+            'proximo_seguimiento' => $fechaHoraActual,
+            'hora' => $horaActual ,
+            'estados' => 1,
+            'clientes' => $create->id,
+            'users'=>$post['id_user'],
+            'empresas'=>$empresa,
+            'codigo_negocio'=> null
+        ]);
             $numero->estado = 1;
             $numero->save();
         }else{
