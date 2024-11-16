@@ -358,19 +358,23 @@ class ClienteController extends Controller
         $empresa = Auth::user()->empresas;
         $telefono = $request->query('telefono');
         $email = $request->query('email');
+        $entroen= '';
         // valida que venga el telefono pero no el email
         if(!empty($telefono) and empty($email))
         {
+            $entroen = 'solo Telefono';
            $result = DB::select("select c.id from clientes c inner join users u on c.users_id = u.id 
             inner join empresas e on u.empresas = e.id
             where c.telefono = '".$telefono."' and e.id = ". $empresa ); 
         }elseif(empty($telefono)  and !empty($email))
         {   //valida que venga el email pero el telefono no
+            $entroen = 'solo email';
             $result = DB::select("select c.id from clientes c inner join users u on c.users_id = u.id 
             inner join empresas e on u.empresas = e.id
             where c.email = '".$email. "' and e.id = ". $empresa ); 
         }elseif(!empty($telefono) and !empty($email))
         {  //Si viene tanto email como telefono 
+            $entroen = 'ambos';
             $result = DB::select("select c.id from clientes c inner join users u on c.users_id = u.id 
             inner join empresas e on u.empresas = e.id
             where c.email = '".$email. "' and c.telefono = '".$telefono. "' and e.id = ". $empresa ); 
