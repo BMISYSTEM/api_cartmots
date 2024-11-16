@@ -78,7 +78,7 @@ class NotasController extends Controller
         ]);
     
         // modifica el estado actual del cliente
-        $update = cliente::where('id',$cliente)->get();
+        $update = cliente::where('id',$cliente)->where('empresas',$empresa)->get();
         $update->toQuery()->update([
             'estados' => $estado
         ]);
