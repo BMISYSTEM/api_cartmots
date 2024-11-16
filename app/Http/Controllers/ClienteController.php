@@ -383,7 +383,7 @@ class ClienteController extends Controller
         if($result){
             return response()->json(['succes'=>$result]);
         }else{
-            return response()->json(['nofound'=>0]);
+            return response()->json(['nofound'=>$entroen]);
         }
     }
 
