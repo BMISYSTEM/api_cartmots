@@ -1,6 +1,6 @@
 <?php
 
-
+use App\Http\Controller\Wpp\WppController;
 use Illuminate\Support\Facades\Http;
 
 
@@ -319,6 +319,10 @@ Route::get('/mediospagos',function(){
 
     return $response->json();
 });
+
+Route::post('/wpp',[WppController::class,'wppPost']);
+Route::get('/wpp',[WppController::class,'wppGet']);
+
 Route::get('/realizarpago',function(){
     MercadoPagoConfig::setAccessToken("ACCESS_TOKEN");
 
