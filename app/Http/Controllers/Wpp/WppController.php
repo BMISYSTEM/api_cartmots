@@ -28,11 +28,17 @@ class WppController extends Controller
         }
     }
     /**post */
-    function wppPost(Request $request)
+    function wppPost(Request $req)
     {
-        $input = file_get_contents('php://input');
-        $data = json_decode($input,true);
-        
+        /**primera patrte */
+        // $input = file_get_contents('php://input');
+        // $data = json_decode($input,true);
+        /**segunda parte */
+
+        $archivo = fopen('logwpp.txt',"a");
+        $texto = json_encode($req);
+        fwrite($archivo,$texto);
+        fclose($archivo);
         return response()->send("EVENT_RECEIVED");
     }
 
