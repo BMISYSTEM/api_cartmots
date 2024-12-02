@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controller\Wpp;
+namespace App\Http\Controllers\Wpp;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;

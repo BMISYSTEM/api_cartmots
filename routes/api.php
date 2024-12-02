@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controller\Wpp\WppController;
 use Illuminate\Support\Facades\Http;
 
 
@@ -30,6 +29,7 @@ use App\Http\Controllers\SolicitudCredito;
 use App\Http\Controllers\TransferenciasController;
 // use App\Http\Controllers\VehiculoController;
 use App\Http\Controllers\Vehiculos\Controller\VehiculoController;
+use App\Http\Controllers\Wpp\WppController;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Route;
