@@ -13,10 +13,11 @@ class WppController extends Controller
     function verificarToken(Request $req)
     {
         try {
+            $tokenapp = 'WPPAPLICATION'; 
             $token = $req['hub_verify_token'];
             $challenge = $req['hub_chanllenge'];
     
-            if(isset($challenge) && isset($token) && $token === token)
+            if(isset($challenge) && isset($token) && $token === $tokenapp)
             {
                 return response()->json($challenge);
             }else{
@@ -34,10 +35,11 @@ class WppController extends Controller
         
         return response()->send("EVENT_RECEIVED");
     }
+
+
     function wppGet(Request $req)
     {
         $token = 'WPPAPLICATION'; 
-    
         if (
             $req->has('hub_mode') && 
             $req->has('hub_verify_token') && 
