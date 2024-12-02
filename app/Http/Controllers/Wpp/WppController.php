@@ -47,7 +47,7 @@ class WppController extends Controller
 
         // Guarda el archivo en el directorio `storage/app/`
         Storage::put($fileName, $jsonData);
-        return response()->send("EVENT_RECEIVED");
+        return response("EVENT_RECEIVED");
     }
 
 
