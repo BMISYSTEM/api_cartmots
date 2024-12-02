@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Wpp;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class WppController extends Controller
 {
@@ -35,10 +36,17 @@ class WppController extends Controller
         // $data = json_decode($input,true);
         /**segunda parte */
 
-        $archivo = fopen('logwpp.txt',"a");
-        $texto = json_encode($req);
-        fwrite($archivo,$texto);
-        fclose($archivo);
+        // Captura todo el contenido del request como un array
+        $requestData = $req->all();
+
+        // Convierte los datos a formato JSON para una mejor representación
+        $jsonData = json_encode($requestData, JSON_PRETTY_PRINT);
+
+        // Define el nombre del archivo (puedes personalizarlo)
+        $fileName = 'logwpp.txt';
+
+        // Guarda el archivo en el directorio `storage/app/`
+        Storage::put($fileName, $jsonData);
         return response()->send("EVENT_RECEIVED");
     }
 
