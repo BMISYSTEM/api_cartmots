@@ -34,13 +34,20 @@ class WppController extends Controller
         
         return response()->send("EVENT_RECEIVED");
     }
-    function wppGet(Request $request)
+    function wppGet(Request $req)
     {
-        if(isset($req['hub_mode']) && isset($req['hub_verify_token']) && isset($req['hub_challenge']) && $req['hub_mode'] === "subscribe" && $req['hub_verify_token'] === token)
-        {
-            return response()->send($req['hub_challenge']);
-        }else{
-            return response()->json([],403);
+        $token = 'WPPAPLICATION'; 
+    
+        if (
+            $req->has('hub_mode') && 
+            $req->has('hub_verify_token') && 
+            $req->has('hub_challenge') && 
+            $req->query('hub_mode') === "subscribe" && 
+            $req->query('hub_verify_token') === $token
+        ) {
+            return response($req->query('hub_challenge'));
+        } else {
+            return response()->json([], 403);
         }
     }
 
