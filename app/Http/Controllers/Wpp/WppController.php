@@ -221,12 +221,13 @@ class WppController extends Controller
     function allMessages(Request $request)
     {
         $telefono = $request->query('telefono');
+        $empresas = Auth::user()->empresas;
         try {
-            $messages = messages_chat::where('telefono',$telefono)->get();
+            $messages = messages_chat::where('telefono',$telefono)->where('empresas',$empresas)->get();
             return response()->json(['succes'=>$messages]);
         } catch (\Throwable $th) {
             return response()->json(['error'=>'error generado en el servidor'.$th],500);
         }
     }
-    
+
 }
