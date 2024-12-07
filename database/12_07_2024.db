@@ -35,3 +35,9 @@ CREATE TABLE messages_chats (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     CONSTRAINT fk_empresas_messages_chats FOREIGN KEY (empresas) REFERENCES empresas(id)
 );
+
+alter table contactos_chats add column id_users bigint unsigned
+alter table contactos_chats ADD CONSTRAINT fk_contactos_chats_id_usres FOREIGN KEY (id_users) REFERENCES users(id);
+
+alter table config_chats add column id_users bigint unsigned
+alter table config_chats ADD CONSTRAINT fk_contactos_config_chats FOREIGN KEY (id_users) REFERENCES users(id);

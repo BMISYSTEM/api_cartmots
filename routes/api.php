@@ -287,6 +287,12 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/allnegocios',[LogisticaController::class,'allnegocios']);
     Route::post('/seguimiento/deletenegocio',[NotasController::class,'deleteNegocioId']);
     Route::post('/seguimiento/cerrarnegocio',[NotasController::class,'closeNegocio']);
+
+    /* 
+        options WhatsApp
+    */
+    Route::get('/wpp/allcontact',[WppController::class,'allContactos']);
+    Route::get('/wpp/allmessages',[WppController::class,'allMessages']);
   });
 
 

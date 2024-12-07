@@ -7,6 +7,7 @@ use App\Models\config_chat;
 use App\Models\contactos_chat;
 use App\Models\messages_chat;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class WppController extends Controller
@@ -204,4 +205,28 @@ class WppController extends Controller
             return response()->json([], 403);
         }
     }
+
+    function allContactos()
+    {
+        $empresa = Auth::user()->empresas;
+        $id_user = Auth::user()->id;
+        try {
+            $contactos = contactos_chat::where('empresas',$empresa)->where('id_users',$id_user)->get();
+            return response()->json(['succes'=>$contactos]);
+        } catch (\Throwable $th) {
+            return response()->json(['error'=>'Error generado '.$th],500);
+        }
+    }
+
+    function allMessages(Request $request)
+    {
+        $telefono = $request->query('telefono');
+        try {
+            $messages = messages_chat::where('telefono',$telefono)->get();
+            return response()->json(['succes'=>$messages]);
+        } catch (\Throwable $th) {
+            return response()->json(['error'=>'error generado en el servidor'.$th],500);
+        }
+    }
+    
 }
