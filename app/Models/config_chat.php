@@ -13,6 +13,8 @@ class config_chat extends Model
         'telefono',
         'id_telefono',
         'tocken_permanente',
-        'empresas'
+        'empresas',
+        'id_users'
+
     ];
 }
