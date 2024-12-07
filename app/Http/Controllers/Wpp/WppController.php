@@ -68,6 +68,14 @@ class WppController extends Controller
                 // Obtener configuración del chat
                 $config_chat = config_chat::where('id_telefono', $id_telefono)->first();
                 $empresas = $config_chat ? $config_chat->empresas : null;
+                file_put_contents($filePath, "--------datos---------", FILE_APPEND);
+                file_put_contents($filePath, $telefono, FILE_APPEND);
+                file_put_contents($filePath, $nombre, FILE_APPEND);
+                file_put_contents($filePath, $id_telefono, FILE_APPEND);
+                file_put_contents($filePath, $message, FILE_APPEND);
+                file_put_contents($filePath, $config_chat, FILE_APPEND);
+                file_put_contents($filePath, $empresas, FILE_APPEND);
+
 
                 if ($telefono && $message && $empresas) {
                     // Verificar si existe el contacto
@@ -98,7 +106,7 @@ class WppController extends Controller
             }
             file_put_contents($filePath, "--------message---------", FILE_APPEND);
         } catch (\Throwable $th) {
-            file_put_contents($filePath, "Error generado--.$th");
+            file_put_contents($filePath, "Error generado--.$th",FILE_APPEND);
             return response()->json(['message' => 'EVENT_RECEIVED'], 200);
         }
 
