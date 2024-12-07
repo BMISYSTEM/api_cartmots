@@ -1,0 +1,37 @@
+--configuracion del wppApi
+
+CREATE TABLE config_chats (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    telefono varchar(255),
+    id_telefono varchar(255),
+    token_permanente varchar(255),
+    empresas bigint unsigned  NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    CONSTRAINT fk_empresas_config_chats FOREIGN KEY (empresas) REFERENCES empresas(id)
+);
+
+--Manejo de los chats entrantes
+CREATE TABLE contactos_chats (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    telefono varchar(255),
+    nombre varchar(255),
+    id_telefono varchar(255),
+    empresas bigint unsigned  NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    CONSTRAINT fk_empresas_contactos_chat FOREIGN KEY (empresas) REFERENCES empresas(id)
+);
+--mensajes recibidos y enviados 
+CREATE TABLE messages_chats (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    telefono varchar(255),
+    message text,
+    timestamp_message varchar(255),
+    id_telefono varchar(255),
+    send int(1),
+    empresas bigint unsigned  NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    CONSTRAINT fk_empresas_messages_chats FOREIGN KEY (empresas) REFERENCES empresas(id)
+);

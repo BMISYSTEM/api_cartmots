@@ -31,58 +31,128 @@ class WppController extends Controller
     /**post */
     function wppPost(Request $req)
     {
+        // Define la ruta completa del archivo (puedes usar el helper `storage_path`)
+        $filePath = storage_path('./seguimiento.txt');
+         // Captura todo el contenido del request como un array
+        $requestData = $req->all();
+
+        // Convierte los datos a formato JSON para una mejor representación
+        $jsonData = json_encode($requestData);
+        // Contenido que deseas escribir
+        // Escribir en el archivo (creará el archivo si no existe)
+        file_put_contents($filePath, $jsonData, FILE_APPEND); 
         /**primera patrte */
         // $input = file_get_contents('php://input');
         // $data = json_decode($input,true);
         /**segunda parte */
 
-        // Captura todo el contenido del request como un array
-        /* $requestData = $req->all();
+       
 
-        // Convierte los datos a formato JSON para una mejor representación
-        $jsonData = json_encode($requestData, JSON_PRETTY_PRINT);
 
-        // Define el nombre del archivo (puedes personalizarlo)
-        $fileName = 'logwpp.txt';
-
-        // Guarda el archivo en el directorio `storage/app/`
-        Storage::put($fileName, $jsonData); */
-        $entry = $req['entry'][0];
-        $changes = $entry['changes'][0];
-        $value = $changes['value'];
-        $objectMessage = $value['message'][0];
-        $comentario = $objectMessage['text']['body'];
-        $from = $objectMessage['from'];
-        $this->sendMessage($comentario,$from);
-        return response("EVENT_RECEIVED");
+        try{
+            $comentario = '';
+            $from = 0;
+            if (isset($req['entry'][0]['changes'][0]['value']['messages'][0]['from']) 
+                && isset($req['entry'][0]['changes'][0]['value']['messages'][0]['text']['body']) 
+                && ($from = $req['entry'][0]['changes'][0]['value']['messages'][0]['from']) 
+                && ($comentario = $req['entry'][0]['changes'][0]['value']['messages'][0]['text']['body'])) {
+                /**envia los mensajes **/
+                $this->sendMessage($comentario,$from); 
+            }else{
+               return response()->json(['message'=>'EVENT_RECEIVED'],200); 
+            }
+            file_put_contents($filePath, "--------message---------",FILE_APPEND); 
+        }catch  (\Throwable $th){
+            file_put_contents($filePath, "Error generado--.$th"); 
+            return response()->json(['message'=>'EVENT_RECEIVED'],200);
+        }
+        
+        return response()->json(['message'=>'EVENT_RECEIVED'],200);
     }
 
     function sendMessage($comentario,$numero)
     {
-        $comentario = strtolower(($comentario));
-       
-        if(strpos($comentario,'hola')){
-            $data = json_encode([
-                "messaging_product"=>"whatsapp",
-                "recipient_type"=>"individual",
-                "to"=>$numero,
-                "type"=>"text",
-                "text"=>[
-                    "preview_url"=>false,
-                    "body"=>"hola soy el bot programado por bayron meneses"
-                ]
-            ]);
+        $filePath = storage_path('./seguimiento.txt');
+        file_put_contents($filePath, "--------numero---------.$numero",FILE_APPEND);
+        $curl = curl_init();
+        $data = [];
+        if(strpos($comentario,"hola") !== false){
+            $data = [
+                    "messaging_product" => "whatsapp",
+                    "recipient_type" => "individual",
+                    "to" => $numero,
+                    "type" => "text",
+                    "text" => [
+                        "preview_url" => false,
+                        "body" => "hola como estas ? "
+                    ]
+                ];
+        }else if(strpos($comentario,"boton") !== false){
+            $data = [
+                    
+                        "messaging_product"=> "whatsapp",
+                        "recipient_type"=>"individual",
+                        "to"=> $numero,
+                        "type"=> "interactive",
+                        "interactive"=> [
+                            "type"=>"button",
+                            "body"=> [
+                                "text"=> "prueba de botones"
+                            ],
+                            "action"=> [
+                                "buttons"=> [
+                                    [
+                                        "type"=> "reply",
+                                        "reply"=> [
+                                            "id"=> "button1",
+                                            "title"=> "primera opcion"
+                                        ]
+                                    ],
+                                    [
+                                        "type"=> "reply",
+                                        "reply"=> [
+                                            "id"=> "button2",
+                                            "title"=>"segunda opcion"
+                                        ]
+                                    ]
+                                ]
+                            ]
+                        ]
+
+                ];
+        }else {
+             $data = [
+                    "messaging_product" => "whatsapp",
+                    "recipient_type" => "individual",
+                    "to" => $numero,
+                    "type" => "text",
+                    "text" => [
+                        "preview_url" => false,
+                        "body" => "no se logro leer el mensaje $comentario"
+                    ]
+                ];
         }
-        $options = [
-            "http"=>[
-                "method"=>"POST",
-                "header"=>"Content-Type: application/json\r\nAuthorization: Bearer EAAH7VDWCz74BO7B0KFEMAgjsGJJbQOvVLJiqLiZAubng123ZCOA4WiM2ZCxzyNmziS7IlipdynLZBZAkGe0nXBvQY9x6sreG4Eizo4oIYBW6ebJDM6bcqLEosO6RZAxNZBfM86p5F6gf5yJanutUIWLGwZAHoedoXbmwQiHG6LqpsnedfZAaaabZBGitKbPmSjzDdSZA4g9FTZAiCGCPmTghnG119SURPwZDZD\r\n",
-                "content"=>$data,
-                "ignore_errors"=>true
-                ]
-        ];
-        $context = stream_context_create($options);
-        $response = file_get_contents('https://graph.facebook.com/v21.0/408992122295321/messages',false,$options);
+
+
+            curl_setopt_array($curl, array(
+              CURLOPT_URL => 'https://graph.facebook.com/v21.0/474070335798438/messages',
+              CURLOPT_RETURNTRANSFER => true,
+              CURLOPT_ENCODING => '',
+              CURLOPT_MAXREDIRS => 10,
+              CURLOPT_TIMEOUT => 0,
+              CURLOPT_FOLLOWLOCATION => true,
+              CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+              CURLOPT_CUSTOMREQUEST => 'POST',
+              CURLOPT_POSTFIELDS =>json_encode($data),
+              CURLOPT_HTTPHEADER => array(
+                'Content-Type: application/json',
+                'Authorization: Bearer EAAH7VDWCz74BO0U9OsdlULHEbXupK2u87sSidoZC9UcARVvTqo8ZCYZASVoZCBomljw9yMe3OMZCPN10QcUDEVscZAk1nJW2CoTGQARPP84wmzY1VuSHyed1fFN6gKgdjOvOsIo2rlAv6qHUJwLpTjU6TNmlrVUoGkVEqVtKlcYipCSCs4FpELXMorJA3AOFL6'
+              ),
+            ));
+        
+        
+        $response = curl_exec($curl);
+        curl_close($curl);
     }
     function wppGet(Request $req)
     {

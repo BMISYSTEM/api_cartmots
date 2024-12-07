@@ -12,7 +12,7 @@ class CreateVehiculoRequest
                 'marcas' => 'required|exists:marcas,id',
                 'modelos' => 'required|exists:modelos,id',
                 'estados' => 'required|exists:estados,id',
-                'placa' => 'required|unique:vehiculos,placa',
+                'placa' => 'required',
                 'kilometraje' => 'required',
                 'valor' => 'required',
                 'disponibilidad' => 'required',
