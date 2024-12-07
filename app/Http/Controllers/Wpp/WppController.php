@@ -71,13 +71,13 @@ class WppController extends Controller
                 file_put_contents($filePath, "--------datos---------", FILE_APPEND);
                 file_put_contents($filePath, $telefono, FILE_APPEND);
                 file_put_contents($filePath, $nombre, FILE_APPEND);
-                file_put_contents($filePath, $id_telefono, FILE_APPEND);
+                /* file_put_contents($filePath, $id_telefono, FILE_APPEND);
                 file_put_contents($filePath, $message, FILE_APPEND);
                 file_put_contents($filePath, $config_chat, FILE_APPEND);
-                file_put_contents($filePath, $empresas, FILE_APPEND);
+                file_put_contents($filePath, $empresas, FILE_APPEND); */
 
 
-                if ($telefono && $message && $empresas) {
+                /* if ($telefono && $message && $empresas) {
                     // Verificar si existe el contacto
                     $contacto = contactos_chat::where('telefono', $telefono)->where('empresas', $empresas)->get();
                     if ($contacto->isEmpty()) {
@@ -98,7 +98,7 @@ class WppController extends Controller
                         'send' => 0,
                         'empresas' => $empresas
                     ]);
-                }
+                } */
                 /**envia los mensajes **/
                 $this->sendMessage($comentario, $from);
             } else {
