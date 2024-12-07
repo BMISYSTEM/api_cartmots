@@ -93,7 +93,7 @@ class WppController extends Controller
                     ]);
                 } 
                 /**envia los mensajes **/
-                $this->sendMessage($comentario, $from);
+                /* $this->sendMessage($comentario, $from); */
             } else {
                 return response()->json(['message' => 'EVENT_RECEIVED'], 200);
             }
@@ -106,24 +106,24 @@ class WppController extends Controller
         return response()->json(['message' => 'EVENT_RECEIVED'], 200);
     }
 
-    function sendMessage($comentario, $numero)
+    function sendMessage(Request $request)
     {
+        
         $filePath = storage_path('./seguimiento.txt');
-        file_put_contents($filePath, "--------numero---------.$numero", FILE_APPEND);
+        file_put_contents($filePath, "--------numero---------".$request['numero'], FILE_APPEND);
         $curl = curl_init();
-        $data = [];
-        if (strpos($comentario, "hola") !== false) {
-            $data = [
-                "messaging_product" => "whatsapp",
-                "recipient_type" => "individual",
-                "to" => $numero,
-                "type" => "text",
-                "text" => [
-                    "preview_url" => false,
-                    "body" => "hola como estas ? "
-                ]
-            ];
-        } else if (strpos($comentario, "boton") !== false) {
+
+        $data = [
+            "messaging_product" => "whatsapp",
+            "recipient_type" => "individual",
+            "to" => $request['numero'],
+            "type" => "text",
+            "text" => [
+                "preview_url" => false,
+                "body" => $request['message']
+            ]
+        ];
+        /* } else if (strpos($comentario, "boton") !== false) {
             $data = [
 
                 "messaging_product" => "whatsapp",
@@ -167,7 +167,7 @@ class WppController extends Controller
                     "body" => "no se logro leer el mensaje $comentario"
                 ]
             ];
-        }
+        } */
 
 
         curl_setopt_array($curl, array(
