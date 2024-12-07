@@ -189,6 +189,20 @@ class WppController extends Controller
 
         $response = curl_exec($curl);
         curl_close($curl);
+        if($response)
+        {
+            $empresas = Auth::user()->empresas;
+            // Crear mensaje
+            messages_chat::create([
+                'telefono' => $request['numero'],
+                'message' => $request['message'],
+                'timestamp_message' =>time(),
+                'id_telefono' => $request['id_telefono'],
+                'send' => 1,
+                'empresas' => $empresas
+            ]);
+        }
+
     }
     function wppGet(Request $req)
     {
