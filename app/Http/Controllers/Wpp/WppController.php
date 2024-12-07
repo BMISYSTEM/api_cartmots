@@ -73,14 +73,13 @@ class WppController extends Controller
                 if ($telefono && $message && $empresas) {
                     // Verificar si existe el contacto
                     $contacto = contactos_chat::where('telefono', $telefono)->where('empresas', $empresas)->get();
-                    $config = config_chat::where('id_telefono',$id_telefono)->first();
                     if ($contacto->isEmpty()) {
                         contactos_chat::create([
                             'telefono' => $telefono,
                             'nombre' => $nombre,
                             'id_telefono' => $id_telefono,
                             'empresas' => $empresas,
-                            'id_users'=> $config->id_users
+                            'id_users'=> $config_chat->id_users
                         ]);
                     }
 
