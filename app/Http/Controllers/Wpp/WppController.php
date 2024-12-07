@@ -63,30 +63,34 @@ class WppController extends Controller
                 $telefono = $req['entry'][0]['changes'][0]['value']['messages'][0]['from'] ?? '0';
                 $nombre = $req['entry'][0]['changes'][0]['value']['contacts'][0]['profile']['name'] ?? 'sin nombre definido';
                 $id_telefono = $req['entry'][0]['changes'][0]['value']['metadata']['phone_number_id'] ?? '0';
-                $message = $req['entry'][0]['changes'][0]['value']['messages'][0]['text']['body'];
-                $config_chat = config_chat::where('id_telefono', $id_telefono)->get();
-                $empresas = $config_chat->empresas;
-                /* verificar si existe el contacto  */
-                $contacto = contactos_chat::where('telefono',$telefono)->where('empresas',$empresas)->get();
-                if(isset($contacto))
-                {
-                    $create_contacto = contactos_chat::create(
-                        [
-                            'telefono'=>$telefono,
-                            'nombre'=>$nombre,
-                            'id_telefono'=>$id_telefono,
-                            'empresas'=>$empresas
-                        ]
-                    );
+                $message = $req['entry'][0]['changes'][0]['value']['messages'][0]['text']['body'] ?? null;
+
+                // Obtener configuración del chat
+                $config_chat = config_chat::where('id_telefono', $id_telefono)->first();
+                $empresas = $config_chat ? $config_chat->empresas : null;
+
+                if ($telefono && $message && $empresas) {
+                    // Verificar si existe el contacto
+                    $contacto = contactos_chat::where('telefono', $telefono)->where('empresas', $empresas)->get();
+                    if ($contacto->isEmpty()) {
+                        contactos_chat::create([
+                            'telefono' => $telefono,
+                            'nombre' => $nombre,
+                            'id_telefono' => $id_telefono,
+                            'empresas' => $empresas
+                        ]);
+                    }
+
+                    // Crear mensaje
+                    messages_chat::create([
+                        'telefono' => $telefono,
+                        'message' => $message,
+                        'timestamp_message' => $req['entry'][0]['changes'][0]['value']['messages'][0]['timestamp'] ?? time(),
+                        'id_telefono' => $id_telefono,
+                        'send' => 0,
+                        'empresas' => $empresas
+                    ]);
                 }
-                $create_message = messages_chat::create([
-                    'telefono'=>$telefono,
-                    'message'=>$message,
-                    'timestamp_message'=>'9865',
-                    'id_telefono'=>$id_telefono,
-                    'send'=>0,
-                    'empresas'=>$empresas
-                ]);
                 /**envia los mensajes **/
                 $this->sendMessage($comentario, $from);
             } else {
