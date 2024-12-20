@@ -178,9 +178,9 @@ class LogisticaController extends Controller
             order by l.created_at ASC
             ");
             $resumen = DB::select("
-            select sum(case when l.finalizado = 1 then  l.Valor else 0 end ) pagado,sum(case when l.finalizado = 0 then  l.Valor else 0 end ) debe,v.valor,v.precio_proveedor,l.operacion from logisticas l
-            inner join vehiculos v on l.placa = v.placa
-            where l.placa ='".$request['placa']."' and l.empresas = '". $empresa ."'  and l.cargar_cuenta = 3
+            select sum(case when l.finalizado = 1 then  l.Valor else 0 end ) pagado,sum(case when l.finalizado = 0 then  l.Valor else 0 end ) debe,v.valor,v.precio_proveedor,l.operacion from vehiculos v
+            LEFT join (select finalizado as finalizado, valor as valor,operacion as operacion,placa as placa,created_at as created_at from logisticas WHERE cargar_cuenta = 3) l on l.placa = v.placa
+            where v.placa ='".$request['placa']."' and v.empresas = '". $empresa ."' 
             GROUP BY v.valor,v.precio_proveedor,l.operacion
             ORDER by l.created_at DESC
             ");

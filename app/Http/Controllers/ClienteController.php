@@ -426,6 +426,10 @@ class ClienteController extends Controller
         $request->validate(
             [
                 'telefono' => 'required|numeric',
+                'nombre'=>'nullable',
+                'apellido'=>'nullable',
+                'cedula'=>'nullable',
+                'email'=>'required',
             ],
             [
                 'telefono.required' => 'El telefono es obligatorio',

@@ -41,3 +41,16 @@ alter table contactos_chats ADD CONSTRAINT fk_contactos_chats_id_usres FOREIGN K
 
 alter table config_chats add column id_users bigint unsigned
 alter table config_chats ADD CONSTRAINT fk_contactos_config_chats FOREIGN KEY (id_users) REFERENCES users(id);
+
+
+
+CREATE TABLE costo_usuarios (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    valor float,
+    id_user bigint unsigned  NOT NULL,
+    empresas bigint unsigned  NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    CONSTRAINT fk_empresas_cosot_usuarios FOREIGN KEY (empresas) REFERENCES empresas(id),
+    CONSTRAINT fk_usuarios_costos FOREIGN KEY (id_user) REFERENCES users(id)
+);
