@@ -22,7 +22,7 @@ class LogisticaController extends Controller
         // validacion 
         $request = $request->validate(
             [
-                'placa'=>'nullable'.$empresa,
+                'placa'=>'nullable',
                 'actividad'=>'required|exists:actividads,id,empresas,'.$empresa,
                 'motivo'=>'required|exists:motivos,id,empresas,'.$empresa,
                 'fecha'=>'required|date|date_format:Y-m-d H:i:s',
