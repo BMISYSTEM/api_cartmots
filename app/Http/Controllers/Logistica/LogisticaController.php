@@ -22,7 +22,7 @@ class LogisticaController extends Controller
         // validacion 
         $request = $request->validate(
             [
-                'placa'=>'required|exists:vehiculos,placa,empresas,'.$empresa,
+                'placa'=>'nullable'.$empresa,
                 'actividad'=>'required|exists:actividads,id,empresas,'.$empresa,
                 'motivo'=>'required|exists:motivos,id,empresas,'.$empresa,
                 'fecha'=>'required|date|date_format:Y-m-d H:i:s',
@@ -30,7 +30,8 @@ class LogisticaController extends Controller
                 'finalizado'=>'required',
                 'tipo_movimiento'=>'required|numeric',
                 'cargar_cuenta'=>'required|numeric',
-                'comentario'=>'required'
+                'comentario'=>'required',
+                'soporte'=>'nullable'
             ],
             [
                 'placa.required'=>'La placa es obligatoria',
@@ -49,10 +50,31 @@ class LogisticaController extends Controller
                 'comentario.required'=>'El comentario es obligatorio'
             ]
         );
-        // implementacion
-        $estatus = $this->logistica->createMovimiento($request['placa'],$request['actividad'],$request['motivo'],$request['fecha'],$request['valor'],$request['finalizado'],$request['tipo_movimiento'],$request['cargar_cuenta'],$request['comentario']);
-        // $estatus = ['succes'=>true];
         
+        // busqueda por la placa si el movimiento es cualquiera diferente de 4 
+        if($request['cargar_cuenta'] != 4)
+        {
+            $request = $request->validate(
+                [
+                    'placa'=>'required|exists:vehiculos,placa,empresas,'.$empresa,
+                ],
+                [
+                    'placa.required'=>'La placa es obligatoria',
+                    'placa.exists' => 'La palca ingresada no existe',
+                ]
+            );
+        }
+        /* busca el nombre de la empresa */
+        $nomempresa = DB::table('empresas')->where('id',$empresa)->first();
+        $archivo = '';
+        /* si el tipo es 4 se guardara el archivo en la carpeta correspondiente */
+        if($request['cargar_cuenta'] == 4 and  $request->hasFile('soporte'))
+        {
+            $archivo = $request ->file('soporte')->store('public/'.$nomempresa['nombre'].'/documentos');
+        }
+        // implementacion
+        $estatus = $this->logistica->createMovimiento($request['placa'],$request['actividad'],$request['motivo'],$request['fecha'],$request['valor'],$request['finalizado'],$request['tipo_movimiento'],$request['cargar_cuenta'],$request['comentario'],$archivo);
+        // $estatus = ['succes'=>true];
         // respuesta
         return response()->json($estatus,array_key_exists('error',$estatus) ? 500 : 200);
     }

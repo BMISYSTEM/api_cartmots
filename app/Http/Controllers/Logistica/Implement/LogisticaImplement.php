@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 
 class LogisticaImplement implements LogisticaInterface
 {
-    function createMovimiento($placa, $actividad, $motivo, $fecha, $valor, $finalizado,$tipomovimiento,$cargarcuenta,$comentario): array
+    function createMovimiento($placa, $actividad, $motivo, $fecha, $valor, $finalizado,$tipomovimiento,$cargarcuenta,$comentario,$soporte): array
     {
         try {
             $logisticas = logistica::create(
@@ -23,6 +23,7 @@ class LogisticaImplement implements LogisticaInterface
                     'tipo_movimiento'=>$tipomovimiento,
                     'cargar_cuenta'=>$cargarcuenta,
                     'comentario'=>$comentario,
+                    'soporte'=>$soporte
                 ]
             );
             return ['succes'=>'Se guardo correctamente el movimiento'];
