@@ -20,6 +20,7 @@ class logistica extends Model
         'tipo_movimiento',
         'cargar_cuenta',
         'comentario',
-        'soporte'
+        'soporte',
+        'usuario'
     ];
 }

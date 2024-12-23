@@ -10,6 +10,7 @@ class LogisticaImplement implements LogisticaInterface
 {
     function createMovimiento($placa, $actividad, $motivo, $fecha, $valor, $finalizado,$tipomovimiento,$cargarcuenta,$comentario,$soporte): array
     {
+        $idUser = Auth::user()->id;
         try {
             $logisticas = logistica::create(
                 [
@@ -23,7 +24,8 @@ class LogisticaImplement implements LogisticaInterface
                     'tipo_movimiento'=>$tipomovimiento,
                     'cargar_cuenta'=>$cargarcuenta,
                     'comentario'=>$comentario,
-                    'soporte'=>$soporte
+                    'soporte'=>$soporte,
+                    'usuario'=>$idUser
                 ]
             );
             return ['succes'=>'Se guardo correctamente el movimiento'];
