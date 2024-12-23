@@ -82,12 +82,13 @@ class LogisticaImplement implements LogisticaInterface
     {
         try {
             $empresa = Auth::user()->empresas;
-            $logisticas = DB::select("select v.valor preciovehiculo,lg.comentario,lg.cargar_cuenta,lg.id, lg.placa, lg.fecha, lg.Valor, lg.finalizado, lg.actividads, lg.motivos, lg.empresas, lg.created_at, lg.updated_at,
+            $logisticas = DB::select("select u.nombre as nombre_usuario,u.id as id_user, v.valor preciovehiculo,lg.comentario,lg.cargar_cuenta,lg.id, lg.placa, lg.fecha, lg.Valor, lg.finalizado, lg.actividads, lg.motivos, lg.empresas, lg.created_at, lg.updated_at,
             at.nombre nombreactividad, mt.nombre nombremotivo,lg.operacion
             from logisticas lg
             inner join actividads at on lg.actividads = at.id
             inner join motivos mt on lg.motivos = mt.id
             left join vehiculos v on lg.placa = v.placa 
+            left join users u on lg.usuario = u.id
             where lg.empresas ='".$empresa."'");
             return ['succes'=>$logisticas];
         } catch (\Throwable $th) {
