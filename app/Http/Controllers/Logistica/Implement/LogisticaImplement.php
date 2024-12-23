@@ -85,7 +85,7 @@ class LogisticaImplement implements LogisticaInterface
             from logisticas lg
             inner join actividads at on lg.actividads = at.id
             inner join motivos mt on lg.motivos = mt.id
-            inner join vehiculos v on lg.placa = v.placa 
+            left join vehiculos v on lg.placa = v.placa 
             where lg.empresas ='".$empresa."'");
             return ['succes'=>$logisticas];
         } catch (\Throwable $th) {
