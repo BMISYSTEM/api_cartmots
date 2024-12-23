@@ -69,7 +69,7 @@ class LogisticaController extends Controller
         $archivo = '';
         /* si el tipo es 4 se guardara el archivo en la carpeta correspondiente */
         if ($request->input('cargar_cuenta') == 4 && $request->hasFile('soporte')) {
-            $archivo = $request->file('soporte')->store('public/' . $nomempresa['nombre'] . '/documentos');
+            $archivo = $request->file('soporte')->store('public/' . $nomempresa->nombre  . '/documentos');
         }
         // implementacion
         $estatus = $this->logistica->createMovimiento($requestv['placa'], 
