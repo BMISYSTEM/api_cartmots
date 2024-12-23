@@ -54,15 +54,16 @@ class LogisticaController extends Controller
         // busqueda por la placa si el movimiento es cualquiera diferente de 4 
         if($request['cargar_cuenta'] != 4)
         {
-            $request = $request->validate(
-                [
-                    'placa'=>'required|exists:vehiculos,placa,empresas,'.$empresa,
-                ],
-                [
-                    'placa.required'=>'La placa es obligatoria',
-                    'placa.exists' => 'La palca ingresada no existe',
-                ]
-            );
+            if($request['placa'])
+            {
+                $exist = DB::table('vehiculos')->where('placa',$request['placa'])->where('empresas',$empresa)->first();
+                if(!$exist)
+                {
+                    return response()->json(['error','La placa ingresada no existe'],500);
+                }
+            }else{
+                return response()->json(['error','La placa es obligatoria'],500);
+            }
         }
         /* busca el nombre de la empresa */
         $nomempresa = DB::table('empresas')->where('id',$empresa)->first();
