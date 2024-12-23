@@ -59,10 +59,10 @@ class LogisticaController extends Controller
                 $exist = DB::table('vehiculos')->where('placa',$request['placa'])->where('empresas',$empresa)->first();
                 if(!$exist)
                 {
-                    return response()->json(['placa','La placa ingresada no existe'],500);
+                    return response()->json(['placa'=>'La placa ingresada no existe'],500);
                 }
             }else{
-                return response()->json(['placa','La placa es obligatoria'],500);
+                return response()->json(['placa'=>'La placa es obligatoria'],500);
             }
         }
         /* busca el nombre de la empresa */
