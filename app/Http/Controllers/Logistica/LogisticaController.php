@@ -311,7 +311,7 @@ class LogisticaController extends Controller
     function indexMontosUsuarios(Request $request): object
     {
         $empresa = Auth::user()->empresas;
-        $id = $request->params('id');
+        $id = $request->query('id');
         $estatus = DB::table('monto_usuarios')->where('empresas', $empresa)->where('id_user',$id)->get();
         return response()->json(['succes' => $estatus]);
     }
