@@ -308,10 +308,11 @@ class LogisticaController extends Controller
         return response()->json($estatus, array_key_exists('error', $estatus) ? 500 : 200);
     }
 
-    function indexMontosUsuarios(): object
+    function indexMontosUsuarios(Request $request): object
     {
         $empresa = Auth::user()->empresas;
-        $estatus = DB::table('monto_usuarios')->where('empresas', $empresa)->get();
+        $id = $request->params('id');
+        $estatus = DB::table('monto_usuarios')->where('empresas', $empresa)->where('id_user',$id)->get();
         return response()->json(['succes' => $estatus]);
     }
     function deleteMontoUsuario(Request $request): object
