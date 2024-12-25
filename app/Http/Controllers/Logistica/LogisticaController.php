@@ -274,4 +274,99 @@ class LogisticaController extends Controller
             ");
         return response()->json(['succes' => $estatus]);
     }
+
+
+    /* esta funcion permite crear un valor a la tabla de monto de usuario para despues cruzarlo con los movimientos realizados en logistica  */
+    function createMontoUsuario(Request $request): object
+    {
+        $empresa = Auth::user()->empresas;
+        $request = $request->validate(
+            [
+                'valor' => 'required',
+                'usuario_id' => 'required',
+                'empresas' => 'required'
+            ],
+            [
+                'valor.required' => 'El valor es obligatorio',
+                'usuario_id.required' => 'El usuario es obligatorio',
+                'empresas.required' => 'La empresa es obligatoria'
+            ]
+        );
+        try {
+            $monto = DB::table('monto_usuarios')->insert($request);
+            if($monto){
+                $estatus = ['succes'=>'Monto ingresado correctamente'];
+            }else{
+                $estatus = ['error'=>'No se pudo ingresar el monto'];
+            }
+        } catch (\Throwable $th) {
+            $estatus = ['error' => $th->getMessage()];
+        }
+        // respuesta
+        return response()->json($estatus, array_key_exists('error', $estatus) ? 500 : 200);
+    }
+
+    function indexMontosUsuarios(): object
+    {
+        $empresa = Auth::user()->empresas;
+        $estatus = DB::table('monto_usuarios')->where('empresas', $empresa)->get();
+        return response()->json(['succes' => $estatus]);
+    }
+    function deleteMontoUsuario(Request $request): object
+    {
+        $request = $request->validate(
+            [
+                'id' => 'required',
+            ],
+            [
+                'id.required' => 'el id del monto es obligatoria',
+            ]
+        );
+        try {
+            //code...
+            $delete = DB::table('monto_usuarios')->where('id', $request['id'])->delete();
+            if($delete){
+                $estatus = ['succes'=>'Monto eliminado correctamente'];
+            }else{
+                $estatus = ['error'=>'No se pudo eliminar el monto'];
+            }
+        } catch (\Throwable $th) {
+            //throw $th;
+            $estatus = ['error' => $th->getMessage()];
+        }
+        // respuesta
+        return response()->json($estatus, array_key_exists('error', $estatus) ? 500 : 200);
+    }
+
+    function updateMontoUsuario(Request $request): object
+    {
+        $request = $request->validate(
+            [
+                'id' => 'required',
+                'valor' => 'required',
+                'usuario_id' => 'required',
+                'empresas' => 'required'
+            ],
+            [
+                'id.required' => 'el id del monto es obligatoria',
+                'valor.required' => 'El valor es obligatorio',
+                'usuario_id.required' => 'El usuario es obligatorio',
+                'empresas.required' => 'La empresa es obligatoria'
+            ]
+        );
+        try {
+            //code...
+            $update = DB::table('monto_usuarios')->where('id', $request['id'])->update($request);
+            if($update){
+                $estatus = ['succes'=>'Monto actualizado correctamente'];
+            }else{
+                $estatus = ['error'=>'No se pudo actualizar el monto'];
+            }
+        } catch (\Throwable $th) {
+            //throw $th;
+            $estatus = ['error' => $th->getMessage()];
+        }
+        // respuesta
+        return response()->json($estatus, array_key_exists('error', $estatus) ? 500 : 200);
+    }
 }

@@ -54,3 +54,15 @@ CREATE TABLE costo_usuarios (
     CONSTRAINT fk_empresas_cosot_usuarios FOREIGN KEY (empresas) REFERENCES empresas(id),
     CONSTRAINT fk_usuarios_costos FOREIGN KEY (id_user) REFERENCES users(id)
 );
+
+se agrega tabla de montos vigentes 
+create table monto_usuarios (	
+    id INT AUTO_INCREMENT PRIMARY KEY,
+	valor float not null,
+    id_user bigint unsigned  NOT NULL,
+    empresas bigint unsigned  NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+   	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+   	CONSTRAINT fk_empresas_cosot_usuarios_monto FOREIGN KEY (empresas) REFERENCES empresas(id),
+   	CONSTRAINT fk_usuarios_costos_monto FOREIGN KEY (id_user) REFERENCES users(id)
+)

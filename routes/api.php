@@ -294,6 +294,14 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/wpp/allcontact',[WppController::class,'allContactos']);
     Route::get('/wpp/allmessages',[WppController::class,'allMessages']);
     Route::post('/wpp/sendmessage',[WppController::class,'sendMessage']);
+
+    /**
+     * Opciones de movimientod de costos de usuarios
+     */
+    Route::post('/movimiento/costos/usuarios/create',[LogisticaController::class,'createMontoUsuario']);
+    Route::post('/movimiento/costos/usuarios/index',[LogisticaController::class,'indexMontosUsuarios']);
+    Route::post('/movimiento/costos/usuarios/delete',[LogisticaController::class,'deleteMontoUsuario']);
+    Route::post('/movimiento/costos/usuarios/update',[LogisticaController::class,'updateMontoUsuario']);
   });
 
 
@@ -330,111 +338,5 @@ Route::get('/mediospagos',function(){
 Route::post('/wpp',[WppController::class,'wppPost']);
 Route::get('/wpp',[WppController::class,'wppGet']);
 
-Route::get('/realizarpago',function(){
-    MercadoPagoConfig::setAccessToken("ACCESS_TOKEN");
-
-    $response = Http::withHeaders([
-    'Authorization' => 'Bearer TEST-1085150894423410-030803-ea4be12ca2083d3a93f496874831507f-507411332',
-    'X-Idempotency-Key: 0d5020ed-1af6-469c-ae06-c3bec19954bb'
-    ])->post(    'https://api.mercadopago.com/v1/payments');
 
 
-$createRequest = [
-    "additional_info" => [
-        "items" => [
-            [
-                "id" => "plan_1",//Es el identificador del anuncio del producto adquirido
-                "title" => "Plan Mensual",//titulo del producto
-                "description" => "Plan Mensual",//descripcion del producto
-                // "picture_url" => "https://http2.mlstatic.com/resources/frontend/statics/growth-sellers-landings/device-mlb-point-i_medium2x.png",
-                "category_id" => "Plan",//categoria del producto
-                "quantity" => 1,//cantidad de productos
-                "unit_price" => 25000000,//precio unitario
-                "type" => "plan",//tipo de producto
-                "event_date" => "2024-06-30T09:37:52.000-04:00",//fecha del pago
-                "warranty" => false,//sin garantia
-                // si es un viaje aca va su info
-                "category_descriptor" => [
-                    "passenger" => [
-                        "first_name"=>null,//nombre del pasajero
-                        "last_name"=>null //apellido del pasajero
-                        ],
-                    "route" => [
-                        "departure"=>null,//ciudad de salida,
-                        "destination"=>null,//ciudad de destino,
-                        "departure_date_time"=>null,//Fecha y hora de salida. El formato válido es el siguiente - "yyyy-MM-ddTHH:mm:ss.sssZ". Ejemplo - 2023-12-31T09:37:52.000-04:00.,
-                        "arrival_date_time"=>null,//Fecha y hora de llegada. El formato válido es el siguiente - "yyyy-MM-ddTHH:mm:ss.sssZ". Ejemplo - 2023-12-31T09:37:52.000-04:00.
-                        "company"=>null
-                        ]
-                ]
-            ]
-        ],
-        // El payer es quien realiza el pago. Este campo es un objeto que tiene la información del pagador.
-        "payer" => [
-            "first_name" => "Test",//Nombre del comprador
-            "last_name" => "Test",//Es el campo de apellido del comprador.
-            "phone" => [
-                "area_code" => 57,//Código de área donde reside el comprador.
-                "number" => "3184482848"//Número telefónico del comprador.
-            ],
-            "address" => [
-                "zip_code"=>null,//codigo postal
-                "street_name"=>null,//Calle donde vive el comprador.
-                "street_number" => null//Número de la propiedad donde vive el comprador.
-            ],
-            "shipments" => [
-                "receiver_address" => [//Objeto que comprende la dirección del destinatario de la compra.
-                    "zip_code" => "12312-123",//Código postal
-                    "state_name" => "Rio de Janeiro",//Provincia
-                    "city_name" => "Buzios",//Ciudad
-                    "street_name" => "Av das Nacoes Unidas",//Calle
-                    "street_number" => 3003,//numero calle,
-                    "floor"=>null,//piso de direccion
-                    "apartment"=>null//Número de departamento de la dirección de entrega.
-                ],
-                "width" => null,//Ancho del código de barras
-                "height" => null,//Altura del código de barras
-                "express_shipment"=>null,//Indica si el envío es express o no. Los valores válidos son los siguientes - "1" si lo es, "0" si no lo es.
-                "pick_up_on_seller"=>null//Indica si el cliente recogerá el producto en la dirección del vendedor. Los valores válidos son los siguientes - "1" si lo es, "0" si no lo es.
-            ]
-        ],
-    ],
-    "application_fee" => null,//Comisión (fee) que los terceros (integradores) cobran a sus clientes, en este caso vendedores, por utilizar la plataforma del marketplace y otros servicios. Este es un valor en reales que será definido por el integrador para el vendedor.
-    "binary_mode" => false,//Cuando se configura como TRUE los pagos sólo pueden resultar aprobados o rechazados. Caso contrario también pueden resultar in_process.
-    "callback_url"=>null,//URL a la cual Mercado Pago hace la redirección final (sólo para transferencia bancaria).
-    "campaign_id" => null,//Es el identificador de la entidad que modela la fuente de los descuentos. Todos los cupones provienen de una sola campaña. La campaña configura, entre otras cosas, el saldo presupuestario disponible, fechas entre las cuales se pueden utilizar los cupones, reglas para la aplicación de los mismos, etc. Es la promesa de descuento.
-    "capture" => false,//Es un campo booleano que se encuentra en pagos de dos pasos (como tarjeta de débito). En este tipo de pago, que se realiza de forma asíncrona, primero se reserva el valor de la compra (capture = false). Esta cantidad se captura y no se debita de la cuenta al instante. Cuando el dinero se transfiere realmente al cobrador (que recibe el pago), se captura la cantidad (capture = true).
-    "coupon_amount" => null,//Es el valor del cupón de descuento. Por ejemplo - BRL 14,50. El tipo del atributo es BigDecimal.
-    "description" => "Plan mensual  Cartmots",//Descripción del producto adquirido, el motivo del pago. Ej. - "Celular Xiaomi Redmi Note 11S 128gb 6gb Ram Original Global Blue Version" (descripción de un producto en el marketplace).
-    "differential_pricing_id" => null,//Atributo que comúnmente contiene un acuerdo sobre cuánto se le cobrará al usuario (generalmente, este campo es más relevante para los pagos de Marketplace). Los precios y las tarifas se calculan en función de este identificador.
-    "external_reference" => "MP0001",//Es una referencia de pago externa. Podría ser, por ejemplo, un hashcode del Banco Central, funcionando como identificador del origen de la transacción.
-    "installments" => 1,//Cantidad seleccionada de cuotas
-    "metadata" => null,//Este es un objeto clave-valor opcional en el que el cliente puede agregar información adicional que debe registrarse al finalizar la compra. Por ejemplo - {"payments_group_size":1,"payments_group_timestamp":"2022-11-18T15:01:44Z","payments_group_uuid":"96cfd2a4-0b06-4dea-b25f-c5accb02ba10"}
-    "notification_url"=>null,//URL de Notificaciones disponibilizada para recibir las notificaciones de los eventos relacionados al Pago. La cantidad máxima de caracteres permitidos para enviar en este parámetro es de 248 caracteres.
-    "payer" => [
-        "entity_type" => "individual",//Tipo de entidad del pagador (sólo para transferencias bancarias) individual: Payer is individual.association: Payer is an association.
-        "type" => "customer",//Tipo de identificación del pagador asociado (requerido si el pagador es un cliente) customer: Payer is a Customer and belongs to the collector. guest: The payer doesn't have an account.
-        "email" => "baironmenesesidarraga.990128@gmail.com",//Correo electrónico asociado al payer. Este valor sólo devolverá una respuesta cuando status=approved, status=refunded o status=charged_back.
-        "identification" => [
-            "type" => "CC",//Se refiere al tipo de identificación. Puede ser de los siguientes tipos.
-            // CPF: Individual Taxpayer Registration, Brazil.
-            // CNPJ: National Register of Legal Entities, Brazil.
-            // CUIT: Unique Tax Identification Code, Argentina.
-            // CUIL: Unique Labor Identification Code, Argentina.
-            // DNI: National Identity Document, Argentina.
-            // CURP: Single Population Registration Code, Mexico.
-            // RFC: Federal Registry of Taxpayers, Mexico.
-            // CC: Citizenship Card, Colombia.
-            // RUT: Single Tax List, Chile.
-            // CI: Identity Card, Uruguay.
-            "number" => "1143994831"//El número hace referencia al identificador del usuario en cuestión. Si es un CPF, por ejemplo, tendrá 11 números.
-        ]
-    ],
-    "payment_method_id" => "master",//dentificador del medio de pago. Indica el ID del medio de pago seleccionado para realizar el pago. A continuación presentamos algunos ejemplos. Obtén todos los métodos de pago disponibles consultando la API de 'Obtener métodos de pago'.
-    "statement_descriptor"=>"Pago plan mensual",
-    "token" => "ff8080814c11e237014c1ff593b57b4d",//Identificador del token card. (obligatorio para tarjeta de crédito). El token de la tarjeta se crea a partir de la información de la propia tarjeta, aumentando la seguridad durante el flujo de pago. Además, una vez que el token se usa en una compra determinada, se descarta, lo que requiere la creación de un nuevo token para futuras compras.
-    "transaction_amount" => 0,//Costo del producto. Ejemplo - La venta de un producto por R$ 100,00 tendrá un transactionAmount = 100.
-];
-
-$client->create($createRequest, $request_options);
-});
