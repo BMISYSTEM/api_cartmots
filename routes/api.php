@@ -299,7 +299,7 @@ Route::middleware('auth:sanctum')->group(function(){
      * Opciones de movimientod de costos de usuarios
      */
     Route::post('/movimiento/costos/usuarios/create',[LogisticaController::class,'createMontoUsuario']);
-    Route::post('/movimiento/costos/usuarios/index',[LogisticaController::class,'indexMontosUsuarios']);
+    Route::get('/movimiento/costos/usuarios/index',[LogisticaController::class,'indexMontosUsuarios']);
     Route::post('/movimiento/costos/usuarios/delete',[LogisticaController::class,'deleteMontoUsuario']);
     Route::post('/movimiento/costos/usuarios/update',[LogisticaController::class,'updateMontoUsuario']);
   });
