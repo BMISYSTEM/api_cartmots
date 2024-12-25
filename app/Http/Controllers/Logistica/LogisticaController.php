@@ -284,16 +284,18 @@ class LogisticaController extends Controller
             [
                 'valor' => 'required',
                 'usuario_id' => 'required',
-                'empresas' => 'required'
             ],
             [
                 'valor.required' => 'El valor es obligatorio',
                 'usuario_id.required' => 'El usuario es obligatorio',
-                'empresas.required' => 'La empresa es obligatoria'
             ]
         );
         try {
-            $monto = DB::table('monto_usuarios')->insert($request);
+            $monto = DB::table('monto_usuarios')->insert([
+                'valor' => $request['valor'],
+                'usuario_id' => $request['usuario_id'],
+                'empresas' => $empresa
+            ]);
             if($monto){
                 $estatus = ['succes'=>'Monto ingresado correctamente'];
             }else{
@@ -340,23 +342,26 @@ class LogisticaController extends Controller
 
     function updateMontoUsuario(Request $request): object
     {
+        $empresa = Auth::user()->empresas;
         $request = $request->validate(
             [
                 'id' => 'required',
                 'valor' => 'required',
                 'usuario_id' => 'required',
-                'empresas' => 'required'
             ],
             [
                 'id.required' => 'el id del monto es obligatoria',
                 'valor.required' => 'El valor es obligatorio',
                 'usuario_id.required' => 'El usuario es obligatorio',
-                'empresas.required' => 'La empresa es obligatoria'
             ]
         );
         try {
             //code...
-            $update = DB::table('monto_usuarios')->where('id', $request['id'])->update($request);
+            $update = DB::table('monto_usuarios')->where('id', $request['id'])->update([
+                'valor' => $request['valor'],
+                'usuario_id' => $request['usuario_id'],
+                'empresas' => $empresa
+            ]);
             if($update){
                 $estatus = ['succes'=>'Monto actualizado correctamente'];
             }else{
