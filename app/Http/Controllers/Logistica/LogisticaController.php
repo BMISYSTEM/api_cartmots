@@ -293,7 +293,7 @@ class LogisticaController extends Controller
         try {
             $monto = DB::table('monto_usuarios')->insert([
                 'valor' => $request['valor'],
-                'usuario_id' => $request['usuario_id'],
+                'id_user' => $request['usuario_id'],
                 'empresas' => $empresa
             ]);
             if($monto){
