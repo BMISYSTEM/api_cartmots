@@ -20,7 +20,13 @@ class UpdateVehiculoRequest
                 'soat' => 'required',
                 'tecnicomecanica' => 'required',
                 'proveedor'=>'nullable',
-                'precio_proveedor'=>'nullable'
+                'precio_proveedor'=>'nullable',
+                'combustible'=>'nullable',
+                'cilindraje'=>'nullable',
+                'facecolda'=>'nullable',
+                'accesorios'=>'nullable',
+                'llave'=>'nullable',
+
             ],
             [
                 'id_vehiculo.required'=>'El vehiculo es requerido',

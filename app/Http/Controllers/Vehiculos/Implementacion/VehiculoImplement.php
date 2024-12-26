@@ -134,7 +134,12 @@ class VehiculoImplement implements VehiculoInterface
                                 string $version, 
                                 string $linea, 
                                 string $soat, 
-                                string $tecnicomencanica,string $proveedor,int $precio_proveedor): array
+                                string $tecnicomencanica,string $proveedor,int $precio_proveedor,
+                                string $combustible,
+                                float $cilindraje,
+                                float $facecolda,
+                                string $accesorios,
+                                string $llave): array
     {
         try {
             /**
@@ -160,6 +165,12 @@ class VehiculoImplement implements VehiculoInterface
             $vehiculo->tecnomecanica = $tecnicomencanica;
             $vehiculo->proveedor = $proveedor;
             $vehiculo->precio_proveedor = $precio_proveedor;
+            $vehiculo->combustible = $combustible;
+            $vehiculo->cilindraje = $cilindraje;
+            $vehiculo->facecolda = $facecolda;
+            $vehiculo->accesorios = $accesorios;
+            $vehiculo->llave = $llave;
+            
 
             /**
              * Se guardan los campos anteriores

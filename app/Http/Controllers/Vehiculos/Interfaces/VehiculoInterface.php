@@ -83,7 +83,12 @@ interface VehiculoInterface
                                     string $version, 
                                     string $linea, 
                                     string $soat, 
-                                    string $tecnicomencanica,string $proveedor,int $precio_proveedor): array;
+                                    string $tecnicomencanica,string $proveedor,int $precio_proveedor,
+                                    string $combustible,
+                                    float $cilindraje,
+                                    float $facecolda,
+                                    string $accesorios,
+                                    string $llave): array;
 
     /** Elimina un vehiculo
      * @param int $id_vehiculo
