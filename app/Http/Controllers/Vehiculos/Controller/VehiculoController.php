@@ -49,12 +49,12 @@ class VehiculoController extends Controller
             $request['soat'],
             $request['tecnicomecanica'],
             $request['proveedor'] ? $request['proveedor'] : null,
-            $request['precio_proveedor'] ? $request['precio_proveedor'] : null,
-            $request['combustible'] ? $request['combustible'] : null,
-            $request['cilindraje'] ? $request['cilindraje'] : null,
-            $request['facecolda'] ? $request['facecolda'] : null,
-            $request['accesorios'] ? $request['accesorios'] : null,
-            $request['llave'] ? $request['llave'] : null
+            $request['precio_proveedor'] ? $request['precio_proveedor'] : 0,
+            $request['combustible'] ? $request['combustible'] : 'sin definir',
+            $request['cilindraje'] ? $request['cilindraje'] : 0,
+            $request['facecolda'] ? $request['facecolda'] : 0,
+            $request['accesorios'] ? $request['accesorios'] : 'sin definir',
+            $request['llave'] ? $request['llave'] : 0
         
         );
         // echo $request['tecnicomecanica'];
