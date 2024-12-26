@@ -66,3 +66,11 @@ create table monto_usuarios (
    	CONSTRAINT fk_empresas_cosot_usuarios_monto FOREIGN KEY (empresas) REFERENCES empresas(id),
    	CONSTRAINT fk_usuarios_costos_monto FOREIGN KEY (id_user) REFERENCES users(id)
 )
+
+campos de auto 2 
+ALTER TABLE vehiculos
+ADD COLUMN combustible VARCHAR(255) NULL COMMENT 'Tipo de combustible del vehículo',
+ADD COLUMN cilindraje DECIMAL(10,2) NULL COMMENT 'Cilindraje del motor en cc',
+ADD COLUMN facecolda DECIMAL(10,2) NULL COMMENT 'Valor de referencia FACECOLDA',
+ADD COLUMN accesorios TEXT NULL COMMENT 'Lista de accesorios del vehículo',
+ADD COLUMN llave varchar(255) NULL COMMENT 'indica en que parte tiene la llave ';

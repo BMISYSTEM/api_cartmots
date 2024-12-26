@@ -37,6 +37,11 @@ class Vehiculos extends FormRequest
             'linea' => ['required'],
             'soat' => ['required'],
             'tecnomecanica' => ['required'],
+            'combustible'=>'nullable',
+            'cilindraje'=>'nullable',
+            'facecolda'=>'nullable',
+            'accesorios'=>'nullable',
+            'llave'=>'nullable',
         ];
     }
     public function messages()

@@ -29,7 +29,12 @@ class vehiculo extends Model
         'soat',
         'tecnomecanica',
         'proveedor',
-        'precio_proveedor'
+        'precio_proveedor',
+        'combustible',
+        'cilindraje',
+        'facecolda',
+        'accesorios',
+        'llave',
     ];
 
 

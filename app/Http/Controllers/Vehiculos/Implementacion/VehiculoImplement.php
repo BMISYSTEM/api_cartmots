@@ -48,7 +48,14 @@ class VehiculoImplement implements VehiculoInterface
                                 string $version, 
                                 string $linea, 
                                 string $soat, 
-                                string $tecnicomencanica,string $proveedor,int $precio_proveedor): array
+                                string $tecnicomencanica,
+                                string $proveedor,
+                                int $precio_proveedor, 
+                                string $combustible,
+                                float $cilindraje,
+                                float $facecolda,
+                                string $accesorios,
+                                string $llave): array
     {
         try {
             $empresa = Auth::user()->empresas;
@@ -78,7 +85,12 @@ class VehiculoImplement implements VehiculoInterface
                     'tecnomecanica'=>$tecnicomencanica,
                     'peritaje'=>'',
                     'proveedor'=>$proveedor,
-                    'precio_proveedor'=>$precio_proveedor
+                    'precio_proveedor'=>$precio_proveedor,
+                    'combustible'=>$combustible,
+                    'cilindraje'=>$cilindraje,
+                    'facecolda'=>$facecolda,
+                    'accesorios'=>$accesorios,
+                    'llave'=>$llave
                 ]
             );
             return ['succes'=>'Se creo de forma exitosa el vehiculo'];

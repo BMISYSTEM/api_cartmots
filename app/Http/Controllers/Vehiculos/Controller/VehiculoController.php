@@ -49,7 +49,13 @@ class VehiculoController extends Controller
             $request['soat'],
             $request['tecnicomecanica'],
             $request['proveedor'] ? $request['proveedor'] : null,
-            $request['precio_proveedor'] ? $request['precio_proveedor'] : null
+            $request['precio_proveedor'] ? $request['precio_proveedor'] : null,
+            $request['combustible'] ? $request['combustible'] : null,
+            $request['cilindraje'] ? $request['cilindraje'] : null,
+            $request['facecolda'] ? $request['facecolda'] : null,
+            $request['accesorios'] ? $request['accesorios'] : null,
+            $request['llave'] ? $request['llave'] : null
+        
         );
         // echo $request['tecnicomecanica'];
         return response()->json($estatus, array_key_exists('error', $estatus) ? 500 : 200);
