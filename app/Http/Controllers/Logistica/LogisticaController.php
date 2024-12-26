@@ -64,6 +64,13 @@ class LogisticaController extends Controller
                 return response()->json(['placa' => 'La placa es obligatoria'], 500);
             }
         }
+        /* Validacion por saldos si el movimiento es de tipo 4  de enviar el error se debera asignar un valor por el administrador */
+        if($requestv['cargar_cuenta'] == 4){
+            $valorDisponible = DB::select('select sum(valor) from monto_usuarios where id_user = '.Auth::user()->id);
+            if($valorDisponible[0]->sum < $requestv['valor']){
+                return response()->json(['valor' => 'El valor ingresado supera el monto disponible, Comunicater con el administrador de costos'], 500);
+            }
+        }
         /* busca el nombre de la empresa */
         $nomempresa = DB::table('empresas')->where('id', $empresa)->first();
         $archivo = '';
