@@ -307,7 +307,7 @@ class LogisticaController extends Controller
         // respuesta
         return response()->json($estatus, array_key_exists('error', $estatus) ? 500 : 200);
     }
-
+    /* consulta todos los valores asignados a un usuario */
     function indexMontosUsuarios(Request $request): object
     {
         $empresa = Auth::user()->empresas;
@@ -315,6 +315,7 @@ class LogisticaController extends Controller
         $estatus = DB::table('monto_usuarios')->where('empresas', $empresa)->where('id_user',$id)->get();
         return response()->json(['succes' => $estatus]);
     }
+    /* elimina un monto asignado */
     function deleteMontoUsuario(Request $request): object
     {
         $request = $request->validate(
@@ -340,7 +341,7 @@ class LogisticaController extends Controller
         // respuesta
         return response()->json($estatus, array_key_exists('error', $estatus) ? 500 : 200);
     }
-
+    /* actualiza un monto asignado */
     function updateMontoUsuario(Request $request): object
     {
         $empresa = Auth::user()->empresas;
@@ -374,5 +375,20 @@ class LogisticaController extends Controller
         }
         // respuesta
         return response()->json($estatus, array_key_exists('error', $estatus) ? 500 : 200);
+    }
+    /* consulta todos los movimientos de logistica para despues cruzarlos con los montos asignados  */
+    function indexMovimientosUsuario(Request $request)
+    {
+        $id = $request->query('id');
+        $empresa = Auth::user()->empresas;
+        try {
+            $movimientos = DB::select("select l.*,a.nombre as nombre_actividad,m.nombre as nombre_motivo from logisticas l 
+                                        inner join actividads a on l.actividads = a.id
+                                        inner join motivos m on l.motivos = m.id
+                                        where l.cargar_cuenta = 4  and l.empresas = '" . $empresa . "' and l.usuario = '" . $id . "'");
+            return response()->json(['succes' => $movimientos]);
+        } catch (\Throwable $th) {
+            return response()->json(['error' => $th->getMessage()], 500);
+        }
     }
 }
