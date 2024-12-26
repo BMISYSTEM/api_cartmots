@@ -284,6 +284,11 @@ class VehiculoImplement implements VehiculoInterface
                     v.soat, 
                     v.precio_proveedor,
                     v.tecnomecanica,
+                    v.combustible,
+                    v.cilindraje,
+                    v.facecolda,
+                    v.accesorios,
+                    v.llave,
                     mar.nombre as marca_nombre,
                     m.year as model_nombre,
                     e.estado as estado_nombre
