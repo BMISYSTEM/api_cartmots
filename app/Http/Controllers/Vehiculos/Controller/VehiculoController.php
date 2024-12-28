@@ -65,26 +65,26 @@ class VehiculoController extends Controller
     {
         $request = UpdateVehiculoRequest::validate($request);
         $estatus = $this->vehiculo->updateVehiculo(
-            $request->input('id_vehiculo'),
-            $request->input('placa'),
-            $request->input('kilometraje'),
-            $request->input('marcas'),
-            $request->input('modelos'),
-            $request->input('estados'),
-            $request->input('valor'),
-            $request->input('disponibilidad'),
-            $request->input('caja'),
-            $request->input('version'),
-            $request->input('linea'),
-            $request->input('soat'),
-            $request->input('tecnicomecanica'),
-            $request->input('proveedor'),
-            $request->input('precio_proveedor', null), // Valor predeterminado: null
-            $request->input('combustible', 'sin definir'), // Valor predeterminado: 'sin definir'
-            $request->input('cilindraje', 0), // Valor predeterminado: 0
-            $request->input('facecolda', 0), // Valor predeterminado: 0
-            $request->input('accesorios', 'sin definir'), // Valor predeterminado: 'sin definir'
-            $request->input('llave', 0) // Valor predeterminado: 0
+            $request['id_vehiculo'] ?? null,
+            $request['placa'] ?? null,
+            $request['kilometraje'] ?? null,
+            $request['marcas'] ?? null,
+            $request['modelos'] ?? null,
+            $request['estados'] ?? null,
+            $request['valor'] ?? null,
+            $request['disponibilidad'] ?? null,
+            $request['caja'] ?? null,
+            $request['version'] ?? null,
+            $request['linea'] ?? null,
+            $request['soat'] ?? null,
+            $request['tecnicomecanica'] ?? null,
+            $request['proveedor'] ?? null,
+            $request['precio_proveedor'] ?? null,
+            $request['combustible'] ?? 'sin definir',
+            $request['cilindraje'] ?? 0,
+            $request['facecolda'] ?? 0,
+            $request['accesorios'] ?? 'sin definir',
+            $request['llave'] ?? 0
         );
         return response()->json($estatus, array_key_exists('error', $estatus) ? 500 : 200);
     }
