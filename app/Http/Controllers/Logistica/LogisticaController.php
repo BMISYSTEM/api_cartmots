@@ -103,7 +103,7 @@ class LogisticaController extends Controller
                 'fecha' => 'required|date|date_format:Y-m-d H:i:s',
                 'Valor' => 'required',
                 'finalizado' => 'required',
-                'operacion' => 'required'
+                'operacion' => 'nullable'
             ],
             [
                 'id.required' => 'el id del movimiento obligatoria',
@@ -117,8 +117,8 @@ class LogisticaController extends Controller
                 'operacion.required' => 'La operacion es obligatoria',
             ]
         );
-        $estatus = $this->logistica->updateMovimiento($request['id'], $request['placa'], $request['actividads'], $request['motivos'], $request['fecha'], $request['Valor'], $request['finalizado'], $request['operacion']);
-        // $estatus = ['succes'=>true];
+        $estatus = $this->logistica->updateMovimiento($request['id'], $request['placa'], $request['actividads'], $request['motivos'], $request['fecha'], $request['Valor'], $request['finalizado'], $request['operacion'] ?? 0);
+
 
         // respuesta
         return response()->json($estatus, array_key_exists('error', $estatus) ? 500 : 200);
