@@ -220,7 +220,7 @@ class ClienteController extends Controller
             left join (select proximo_seguimiento fecha,clientes clientes,comentario comentarios,created_at as ult_nota,empresas as empresa from notas GROUP BY clientes,proximo_seguimiento,comentario,created_at,empresas order by proximo_seguimiento desc) as t  on t.clientes = c.id and ult.ultima_nota = t.ult_nota and t.empresa = c.empresas
             where c.empresas= '".$empresa."' and c.transferido = 0 and e.finalizado <> 1   and t.fecha BETWEEN '".$inicio."' AND '".$fin."'
             group by u.name,u.img,c.id,t.comentarios,t.clientes,c.nombre,c.apellido,c.cedula,c.date,c.telefono,c.email,c.estados,c.users_id,e.id,e.estado,e.created_at,e.updated_at,t.fecha,e.color,e.pendiente,e.aprobado,e.rechazado
-            ORDER BY  t.fecha DESC limit 1000");
+            ORDER BY  t.fecha DESC limit 500");
         }else{
 
             $vista = DB::select("
@@ -247,7 +247,7 @@ class ClienteController extends Controller
             left join (select proximo_seguimiento fecha,clientes clientes,comentario comentarios,created_at as ult_nota,empresas as empresa from notas GROUP BY clientes,proximo_seguimiento,comentario,created_at,empresas order by proximo_seguimiento desc) as t  on t.clientes = c.id and ult.ultima_nota = t.ult_nota and t.empresa = c.empresas
             where c.empresas= '".$empresa."' and u.id = ".$user." and c.transferido = 0 and e.finalizado <> 1  and t.fecha BETWEEN '".$inicio."' AND '".$fin."'
             group by u.name,u.img,c.id,t.comentarios,t.clientes,c.nombre,c.apellido,c.cedula,c.date,c.telefono,c.email,c.estados,c.users_id,e.id,e.estado,e.created_at,e.updated_at,t.fecha,e.color,e.pendiente,e.aprobado,e.rechazado
-            ORDER BY  t.fecha DESC DESC limit 1000");
+            ORDER BY  t.fecha DESC limit 500");
         }
         return response()->json($vista);
     }
