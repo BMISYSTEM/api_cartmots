@@ -66,8 +66,8 @@ class LogisticaController extends Controller
         }
         /* Validacion por saldos si el movimiento es de tipo 4  de enviar el error se debera asignar un valor por el administrador */
         if($requestv['cargar_cuenta'] == 4){
-            $valorDisponible = DB::select('select sum(valor) as sum from monto_usuarios where id_user = '.Auth::user()->id);
-            $valorMovimientos = DB::select('select sum(Valor) as sum from logisticas where cargar_cuenta = 4  and usuario = '.Auth::user()->id);
+            $valorDisponible = DB::select('select sum(valor) as sum from monto_usuarios where id_user = '.Auth::user()->id + ' and empresas = '.$empresa);
+            $valorMovimientos = DB::select('select sum(Valor) as sum from logisticas where cargar_cuenta = 4  and usuario = '.Auth::user()->id + ' and empresas = '.$empresa);
             $total = $valorDisponible[0]->sum - $valorMovimientos[0]->sum;
             if($total < $requestv['valor']){
                 return response()->json(['valor' => 'El valor ingresado supera el monto disponible, Comunicater con el administrador de costos'], 500);
