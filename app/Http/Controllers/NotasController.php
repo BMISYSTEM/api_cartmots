@@ -38,7 +38,7 @@ class NotasController extends Controller
             }
             if($modulo_costo[0]->modulo_costos == 1){
                 // if(floatval($nota['vtraspaso']) and floatval($nota['vcuotaInicial']) and floatval($nota['vseparacion']) and floatval($nota['vtraspaso'])){
-                    $negocios = DB::select("select count(*) cantidad from negocios where placa ='".$nota['placa']."'");
+                    $negocios = DB::select("select count(*) cantidad from negocios where vehiculo ='".$nota['placa']."'");
                     if($negocios[0]->cantidad == 0 ){
                         $creacionNegocio = negocio::create(
                              [
