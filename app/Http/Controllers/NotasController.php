@@ -38,26 +38,31 @@ class NotasController extends Controller
             }
             if($modulo_costo[0]->modulo_costos == 1){
                 // if(floatval($nota['vtraspaso']) and floatval($nota['vcuotaInicial']) and floatval($nota['vseparacion']) and floatval($nota['vtraspaso'])){
-                   $creacionNegocio = negocio::create(
-                        [
-                            'vehiculo'=>$nota['placa'] ,
-                            'valorventa'=>$nota['valorventa'],
-                            'porcentajedescuento'=>$nota['porcentaje'], 
-                            'placaretoma' => $nota['placaretoma'] ,
-                            'valorretoma' => $nota['valorretoma'],
-                            'finalizado' => 0,
-                            'cliente'  => $nota['cliente'],
-                            'empresas' => $empresa ,   
-                            'metodopago'=>$nota['metodo'],
-                            'asesor'=>$users,
-                            'vcredito'=>$nota['vcredito'],
-                            'vcuotaInicial'=>$nota['vcuotaInicial'],
-                            'vseparacion'=>$nota['vseparacion'],
-                            'vtraspaso'=>$nota['vtraspaso'],
-                            'asesorios'=>$nota['asesorios'],
-                            'obsequios'=>$nota['obsequios'],
-                        ]
-                        ); 
+                    $negocios = DB::select("select count(*) cantidad from negocios where placa ='".$nota['placa']."'");
+                    if($negocios[0]->cantidad == 0 ){
+                        $creacionNegocio = negocio::create(
+                             [
+                                 'vehiculo'=>$nota['placa'] ,
+                                 'valorventa'=>$nota['valorventa'],
+                                 'porcentajedescuento'=>$nota['porcentaje'], 
+                                 'placaretoma' => $nota['placaretoma'] ,
+                                 'valorretoma' => $nota['valorretoma'],
+                                 'finalizado' => 0,
+                                 'cliente'  => $nota['cliente'],
+                                 'empresas' => $empresa ,   
+                                 'metodopago'=>$nota['metodo'],
+                                 'asesor'=>$users,
+                                 'vcredito'=>$nota['vcredito'],
+                                 'vcuotaInicial'=>$nota['vcuotaInicial'],
+                                 'vseparacion'=>$nota['vseparacion'],
+                                 'vtraspaso'=>$nota['vtraspaso'],
+                                 'asesorios'=>$nota['asesorios'],
+                                 'obsequios'=>$nota['obsequios'],
+                             ]
+                             ); 
+                    }else{
+                        return response()->json(['error'=>'El negocio no se puede crear debido a que ya existen negocio abierto para esta placa']);
+                    }
                     
                 // }else{
                 //     return "No se guardo la nota verifique los campos inicial,separacion,traspaso, estos campos son numericos no deben contener letras si no aplica coloque 0 (cero)";
