@@ -13,6 +13,8 @@ class graficos extends Controller
         $empresa = Auth::user()->empresas;
         $user_id = Auth::user()->id;
         $modulo_costo = DB::select("SELECT modulo_costos from configuraciones where empresa_id = ".$empresa);
+        $empresa = Auth::user()->empresas;
+        $currentYear = now()->year;
         if($modulo_costo[0]->modulo_costos == 0 )
         {
             $Query = '
@@ -36,18 +38,18 @@ class graficos extends Controller
             $Query = '
                 select 
                 count(*) as registros,
-                (select count(*) from negocios where MONTH(updated_at) = 1    and empresas = '.$empresa.' and finalizado = 1) as enero,
-                (select count(*) from negocios where MONTH(updated_at) = 2    and empresas = '.$empresa.' and finalizado = 1) as febrero,
-                (select count(*) from negocios where MONTH(updated_at) = 3    and empresas = '.$empresa.' and finalizado = 1) as marzo,
-                (select count(*) from negocios where MONTH(updated_at) = 4    and empresas = '.$empresa.' and finalizado = 1) as abril,
-                (select count(*) from negocios where MONTH(updated_at) = 5    and empresas = '.$empresa.' and finalizado = 1) as mayo,
-                (select count(*) from negocios where MONTH(updated_at) = 6    and empresas = '.$empresa.' and finalizado = 1) as junio,
-                (select count(*) from negocios where MONTH(updated_at) = 7    and empresas = '.$empresa.' and finalizado = 1) as julio,
-                (select count(*) from negocios where MONTH(updated_at) = 8    and empresas = '.$empresa.' and finalizado = 1) as agosto,
-                (select count(*) from negocios where MONTH(updated_at) = 9    and empresas = '.$empresa.' and finalizado = 1) as septiembre,
-                (select count(*) from negocios where MONTH(updated_at) = 10   and empresas = '.$empresa.' and finalizado = 1) as optubre,
-                (select count(*) from negocios where MONTH(updated_at) = 11   and empresas = '.$empresa.' and finalizado = 1) as noviembre,
-                (select count(*) from negocios where MONTH(updated_at) = 12   and empresas = '.$empresa.' and finalizado = 1) as diciembre
+                (select count(*) from negocios where MONTH(updated_at) = 1    and empresas = '.$empresa.' and finalizado = 1 and YEAR(update_at) = '.$currentYear.') as enero,
+                (select count(*) from negocios where MONTH(updated_at) = 2    and empresas = '.$empresa.' and finalizado = 1 and YEAR(update_at) = '.$currentYear.') as febrero,
+                (select count(*) from negocios where MONTH(updated_at) = 3    and empresas = '.$empresa.' and finalizado = 1 and YEAR(update_at) = '.$currentYear.') as marzo,
+                (select count(*) from negocios where MONTH(updated_at) = 4    and empresas = '.$empresa.' and finalizado = 1 and YEAR(update_at) = '.$currentYear.') as abril,
+                (select count(*) from negocios where MONTH(updated_at) = 5    and empresas = '.$empresa.' and finalizado = 1 and YEAR(update_at) = '.$currentYear.') as mayo,
+                (select count(*) from negocios where MONTH(updated_at) = 6    and empresas = '.$empresa.' and finalizado = 1 and YEAR(update_at) = '.$currentYear.') as junio,
+                (select count(*) from negocios where MONTH(updated_at) = 7    and empresas = '.$empresa.' and finalizado = 1 and YEAR(update_at) = '.$currentYear.') as julio,
+                (select count(*) from negocios where MONTH(updated_at) = 8    and empresas = '.$empresa.' and finalizado = 1 and YEAR(update_at) = '.$currentYear.') as agosto,
+                (select count(*) from negocios where MONTH(updated_at) = 9    and empresas = '.$empresa.' and finalizado = 1 and YEAR(update_at) = '.$currentYear.') as septiembre,
+                (select count(*) from negocios where MONTH(updated_at) = 10   and empresas = '.$empresa.' and finalizado = 1 and YEAR(update_at) = '.$currentYear.') as optubre,
+                (select count(*) from negocios where MONTH(updated_at) = 11   and empresas = '.$empresa.' and finalizado = 1 and YEAR(update_at) = '.$currentYear.') as noviembre,
+                (select count(*) from negocios where MONTH(updated_at) = 12   and empresas = '.$empresa.' and finalizado = 1 and YEAR(update_at) = '.$currentYear.') as diciembre
                 from negocios where empresas = '.$empresa.'
             ';
         }
