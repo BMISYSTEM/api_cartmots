@@ -108,8 +108,7 @@ class NotasController extends Controller
         ORDER BY  n.created_at DESC
         ");
         return response()->json($vista);
-    }
-    
+    }    
     public function findPedido(Request $request)
     {
         $request = $request->validate(

@@ -155,7 +155,7 @@ class ClienteController extends Controller
             inner join clientes c on f.cliente = c.id
             inner join empresas e on f.empresas = e.id
             inner join users u on f.asesor = u.id
-            where finalizado = 1 and f.empresas = ".$empresa." and f.created_at BETWEEN '".$inicio."' AND '".$fin."'
+            where finalizado = 1 and f.empresas = ".$empresa." and f.updated_at BETWEEN '".$inicio."' AND '".$fin."'
             ";
         }
         $vista = DB::select($Query);
