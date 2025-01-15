@@ -127,7 +127,13 @@ class NotasController extends Controller
         n.valorventa,n.porcentajedescuento,n.empresas,n.id,
         n.vcredito,n.metodopago,n.vcuotaInicial,n.asesorios,n.vseparacion,n.vtraspaso,n.valorretoma,n.obsequios,n.placaretoma,
         cl.nombre as nombre_cliente,cl.apellido as apellido_cliente,cl.cedula as cedula_cliente,cl.telefono as telefono_cliente,cl.email as email_cliente,
-        user.name,user.email,user.cedula
+        user.name,user.email,user.cedula, v.chasis,
+        v.color,
+        v.motor,
+        v.matricula,
+        v.tipo,
+        v.servicio,
+        v.serie
         from negocios n
         inner join users user on n.asesor = user.id and n.empresas = user.empresas
         inner join clientes cl on n.cliente = cl.id and n.empresas = cl.empresas
