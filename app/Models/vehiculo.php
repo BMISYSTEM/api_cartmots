@@ -35,6 +35,13 @@ class vehiculo extends Model
         'facecolda',
         'accesorios',
         'llave',
+        'chasis',
+        'color',
+        'motor',
+        'matricula',
+        'tipo',
+        'servicio',
+        'serie',
     ];
 
 

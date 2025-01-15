@@ -55,7 +55,15 @@ class VehiculoImplement implements VehiculoInterface
                                 float $cilindraje,
                                 float $facecolda,
                                 string $accesorios,
-                                string $llave): array
+                                string $llave,
+                                string $chasis,
+                                string $color,
+                                string $motor,
+                                string $matricula,
+                                string $tipo,
+                                string $servicio,
+                                string $serie,
+                                ): array
     {
         try {
             $empresa = Auth::user()->empresas;
@@ -90,7 +98,15 @@ class VehiculoImplement implements VehiculoInterface
                     'cilindraje'=>$cilindraje,
                     'facecolda'=>$facecolda,
                     'accesorios'=>$accesorios,
-                    'llave'=>$llave
+                    'llave'=>$llave,
+                    'chasis'=>$chasis,
+                    'color'=>$color,
+                    'motor'=>$motor,
+                    'matricula'=>$matricula,
+                    'tipo'=>$tipo,
+                    'servicio'=>$servicio,
+                    'serie'=>$serie,
+
                 ]
             );
             return ['succes'=>'Se creo de forma exitosa el vehiculo'];
@@ -139,7 +155,15 @@ class VehiculoImplement implements VehiculoInterface
                                 float $cilindraje,
                                 float $facecolda,
                                 string $accesorios,
-                                string $llave): array
+                                string $llave,
+                                string $chasis,
+                                string $color,
+                                string $motor,
+                                string $matricula,
+                                string $tipo,
+                                string $servicio,
+                                string $serie,
+                                ): array
     {
         try {
             /**
@@ -170,6 +194,13 @@ class VehiculoImplement implements VehiculoInterface
             $vehiculo->facecolda = $facecolda;
             $vehiculo->accesorios = $accesorios;
             $vehiculo->llave = $llave;
+            $vehiculo->chasis = $chasis;
+            $vehiculo->color = $color;
+            $vehiculo->motor = $motor;
+            $vehiculo->matricula = $matricula;
+            $vehiculo->tipo = $tipo;
+            $vehiculo->servicio = $servicio;
+            $vehiculo->serie = $serie;
             
 
             /**
@@ -252,6 +283,13 @@ class VehiculoImplement implements VehiculoInterface
                     v.facecolda,
                     v.accesorios,
                     v.llave,
+                    v.chasis,
+                    v.color,
+                    v.motor,
+                    v.matricula,
+                    v.tipo,
+                    v.servicio,
+                    v.serie,
                     mar.nombre as marca_nombre,
                     m.year as model_nombre,
                     e.estado as estado_nombre,
@@ -305,6 +343,13 @@ class VehiculoImplement implements VehiculoInterface
                     v.facecolda,
                     v.accesorios,
                     v.llave,
+                    v.chasis,
+                    v.color,
+                    v.motor,
+                    v.matricula,
+                    v.tipo,
+                    v.servicio,
+                    v.serie,
                     mar.nombre as marca_nombre,
                     m.year as model_nombre,
                     e.estado as estado_nombre

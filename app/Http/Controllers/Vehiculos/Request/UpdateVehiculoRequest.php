@@ -26,6 +26,13 @@ class UpdateVehiculoRequest
                 'facecolda'=>'nullable',
                 'accesorios'=>'nullable',
                 'llave'=>'nullable',
+                'chasis'=>'nullable',
+            'color'=>'nullable',
+            'motor'=>'nullable',
+            'matricula'=>'nullable',
+            'tipo'=>'nullable',
+            'servicio'=>'nullable',
+            'serie'=>'nullable',
 
             ],
             [

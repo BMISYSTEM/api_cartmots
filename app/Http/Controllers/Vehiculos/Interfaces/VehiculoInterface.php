@@ -46,7 +46,15 @@ interface VehiculoInterface
                                     float $cilindraje,
                                     float $facecolda,
                                     string $accesorios,
-                                    string $llave): array;
+                                    string $llave,
+                                    string $chasis,
+                                    string $color,
+                                    string $motor,
+                                    string $matricula,
+                                    string $tipo,
+                                    string $servicio,
+                                    string $serie,
+                                    ): array;
 
     /** Actualiza la informacion de un vehiculo
      * @param int $id_vehiculo
@@ -88,7 +96,15 @@ interface VehiculoInterface
                                     float $cilindraje,
                                     float $facecolda,
                                     string $accesorios,
-                                    string $llave): array;
+                                    string $llave,
+                                    string $chasis,
+                                    string $color,
+                                    string $motor,
+                                    string $matricula,
+                                    string $tipo,
+                                    string $servicio,
+                                    string $serie,
+                                    ): array;
 
     /** Elimina un vehiculo
      * @param int $id_vehiculo

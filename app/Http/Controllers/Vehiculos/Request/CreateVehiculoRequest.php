@@ -33,6 +33,13 @@ class CreateVehiculoRequest
                 'facecolda'=>'nullable',
                 'accesorios'=>'nullable',
                 'llave'=>'nullable',
+                'chasis'=>'nullable',
+            'color'=>'nullable',
+            'motor'=>'nullable',
+            'matricula'=>'nullable',
+            'tipo'=>'nullable',
+            'servicio'=>'nullable',
+            'serie'=>'nullable',
             ],
             [
                 'marcas.required' => 'El campo marcas es obligatorio',

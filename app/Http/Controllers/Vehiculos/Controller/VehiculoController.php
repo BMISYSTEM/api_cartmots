@@ -54,7 +54,14 @@ class VehiculoController extends Controller
             $request['cilindraje'] ?? 0,
             $request['facecolda'] ?? 0,
             $request['accesorios'] ?? 'sin definir',
-            $request['llave'] ?? 0
+            $request['llave'] ?? 0,
+            $request['chasis'] ?? 'sin definir',
+            $request['color'] ?? 'sin definir',
+            $request['motor'] ?? 'sin definir',
+            $request['matricula'] ?? 'sin definir',
+            $request['tipo'] ?? 'sin definir',
+            $request['servicio'] ?? 'sin definir',
+            $request['serie'] ?? 'sin definir',
         
         );
         // echo $request['tecnicomecanica'];
@@ -84,7 +91,14 @@ class VehiculoController extends Controller
             $request['cilindraje'] ?? 0,
             $request['facecolda'] ?? 0,
             $request['accesorios'] ?? 'sin definir',
-            $request['llave'] ?? 0
+            $request['llave'] ?? 0,
+            $request['chasis'] ?? 'sin definir',
+            $request['color'] ?? 'sin definir',
+            $request['motor'] ?? 'sin definir',
+            $request['matricula'] ?? 'sin definir',
+            $request['tipo'] ?? 'sin definir',
+            $request['servicio'] ?? 'sin definir',
+            $request['serie'] ?? 'sin definir',
         );
         return response()->json($estatus, array_key_exists('error', $estatus) ? 500 : 200);
     }

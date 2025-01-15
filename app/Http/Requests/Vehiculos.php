@@ -42,6 +42,14 @@ class Vehiculos extends FormRequest
             'facecolda'=>'nullable',
             'accesorios'=>'nullable',
             'llave'=>'nullable',
+            'chasis'=>'nullable',
+            'color'=>'nullable',
+            'motor'=>'nullable',
+            'matricula'=>'nullable',
+            'tipo'=>'nullable',
+            'servicio'=>'nullable',
+            'serie'=>'nullable',
+            
         ];
     }
     public function messages()
