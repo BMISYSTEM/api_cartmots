@@ -263,7 +263,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/configuraciones',function(){
         $empresa = Auth::user()->empresas;
 
-        $modulo_costo = DB::select("SELECT modulo_costos from configuraciones where empresa_id = ".$empresa);
+        $modulo_costo = DB::select("SELECT modulo_costos,format_prdido from configuraciones where empresa_id = ".$empresa);
         return response()->json($modulo_costo);
     });
 
