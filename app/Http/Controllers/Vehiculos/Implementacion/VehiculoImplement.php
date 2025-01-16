@@ -466,7 +466,7 @@ class VehiculoImplement implements VehiculoInterface
                 inner join marcas m on v.marcas = m.id
                 inner join modelos mo on v.modelos = mo.id
                 inner join estados e on v.estados = e.id
-                inner join empresas em on v.empresas = em.id
+                inner join empresas em on v.empresas = em.id and em.activo = 1
                 where v.disponibilidad = 1
             ');
             return ['succes'=>$vehiculos];
