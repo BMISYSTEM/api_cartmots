@@ -290,6 +290,7 @@ class VehiculoImplement implements VehiculoInterface
                     v.tipo,
                     v.servicio,
                     v.serie,
+                    v.vin,
                     mar.nombre as marca_nombre,
                     m.year as model_nombre,
                     e.estado as estado_nombre,
