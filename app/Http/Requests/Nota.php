@@ -40,6 +40,10 @@ class Nota extends FormRequest
             'vtraspaso'=>['nullable'],
             'asesorios'=>['nullable'],
             'obsequios'=>['nullable'],
+            'segundoPrecio'=>['nullable'],
+            'entrega'=>['nullable'],
+            'vendedor'=>['nullable'],
+            'clausulasAdiccionales'=>['nullable'],
         ];
     }
     public function messages()

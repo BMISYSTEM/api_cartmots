@@ -33,6 +33,7 @@ class UpdateVehiculoRequest
                 'tipo'=>'nullable',
                 'servicio'=>'nullable',
                 'serie'=>'nullable',
+                'vin'=>'nullable',
             ],
             [
                 'id_vehiculo.required'=>'El vehiculo es requerido',

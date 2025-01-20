@@ -40,6 +40,8 @@ class CreateVehiculoRequest
             'tipo'=>'nullable',
             'servicio'=>'nullable',
             'serie'=>'nullable',
+            'vin'=>'nullable',
+
             ],
             [
                 'marcas.required' => 'El campo marcas es obligatorio',

@@ -62,6 +62,7 @@ class VehiculoController extends Controller
             $request['tipo'] ?? 'sin definir',
             $request['servicio'] ?? 'sin definir',
             $request['serie'] ?? 'sin definir',
+            $request['vin'] ?? 'sin definir',
         
         );
         // echo $request['tecnicomecanica'];
@@ -99,6 +100,7 @@ class VehiculoController extends Controller
             $request['tipo'] ?? 'sin definir',
             $request['servicio'] ?? 'sin definir',
             $request['serie'] ?? 'sin definir',
+            $request['vin'] ?? 'sin definir',
         );
         return response()->json($estatus, array_key_exists('error', $estatus) ? 500 : 200);
     }
@@ -171,4 +173,7 @@ class VehiculoController extends Controller
             where v.proveedor=' . $request['id_proveedor'] . ' and v.empresas=' . Auth::user()->empresas);
         return response()->json(['succes' => $vehiculo]);
     }
+
+
+    
 }
