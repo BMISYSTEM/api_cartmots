@@ -128,7 +128,7 @@ class NotasController extends Controller
         $estatus = DB::select("
         select 
         m.nombre,v.linea,v.placa,model.year,
-        n.valorventa,n.porcentajedescuento,n.empresas,n.id,
+        n.valorventa,n.porcentajedescuento,n.empresas,n.id,n.vendedor,n.entrega,n.segundo_precio,n.clausulasAdiccionales,
         n.vcredito,n.metodopago,n.vcuotaInicial,n.asesorios,n.vseparacion,n.vtraspaso,n.valorretoma,n.obsequios,n.placaretoma,
         cl.nombre as nombre_cliente,cl.apellido as apellido_cliente,cl.cedula as cedula_cliente,cl.telefono as telefono_cliente,cl.email as email_cliente,
         user.name,user.email,user.cedula, v.chasis,
