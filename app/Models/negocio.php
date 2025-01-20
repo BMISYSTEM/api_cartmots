@@ -26,5 +26,9 @@ class negocio extends Model
         'vtraspaso',
         'asesorios',
         'obsequios',
+        'segundo_precio',
+        'vendedor',
+        'entrega',
+        'clausulasAdiccionales'
     ];
 }

@@ -56,7 +56,7 @@ class NotasController extends Controller
                                  'vtraspaso'=>$nota['vtraspaso'],
                                  'asesorios'=>$nota['asesorios'],
                                  'obsequios'=>$nota['obsequios'],
-                                 'segundoPrecio'=>$nota['segundoPrecio']?? 'sin definir',
+                                 'segundo_precio'=>$nota['segundoPrecio']?? 'sin definir',
                                  'entrega'=>$nota['entrega']?? 'sin definir',
                                  'vendedor'=>$nota['vendedor']?? 'sin definir',
                                  'clausulasAdiccionales'=>$nota['clausulasAdiccionales']?? 'sin definir',
