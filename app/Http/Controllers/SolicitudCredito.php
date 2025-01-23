@@ -6,6 +6,7 @@ use App\Models\cliente;
 use App\Models\datos_credito;
 use App\Models\informacion_laborale;
 use App\Models\ingresos_egreso;
+use App\Models\pdffinanciero;
 use App\Models\pdfsolicitud;
 use App\Models\pdfsolicitude;
 use App\Models\referencia;
@@ -251,5 +252,16 @@ class SolicitudCredito extends Controller
         // $pdf->loadHTML('<h1>Test</h1>');
         // return $pdf->save(public_path().'/storage/documentos/'.str_replace(' ','-','000001solicitud.pdf'))->stream('solicitud');
         return $pdf->stream();
+    }
+
+    public function datosCredito(Request $request)
+    {
+        $empresa = Auth::user()->empresas;
+        $cliente = $request->query('cliente');
+        if($cliente == null){
+            return response()->json(['error'=>'No se encontro el cliente'],404);
+        }
+        $datos = DB::select('select * from datos_creditos where empresas = '.$empresa.' and clientes = '.$cliente.'  order by created_at DESC LIMIT 1');
+        return response()->json($datos);
     }
 }

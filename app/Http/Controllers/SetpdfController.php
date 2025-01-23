@@ -155,4 +155,7 @@ class SetpdfController extends Controller
         $paht = storage_path('app/public/documentos/'.$documento);
         return  response()->download($paht);
     }
+
+   
+    
 }
