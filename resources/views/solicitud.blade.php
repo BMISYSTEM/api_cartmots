@@ -194,7 +194,7 @@
         text-align: justify;
     }
     .mt-1{
-        margin: 1rem:
+        margin: 1rem;
     }
     .h-20{
         height: 5rem;
@@ -267,7 +267,7 @@
                 <table class="w-full itemns-center text-lg text-center border-none p-0 m-0">
                     <tbody class="p-0 m-0">
                         <tr class="contenedor-tabla w-full  items-between m-0 ">
-                            <td class="text-left  border-1-t border-1-b border-1-l w-full h-2 text-lg">Nombre Completo: {{$nombre}}</td>
+                            <td class="text-left  border-1-t border-1-b border-1-l w-full h-2 text-lg">Nombre Completo: {{$nombre}} {{$apellido}}</td>
                             <td class="text-left  border-1-t border-1-b w-full h-2 text-lg"></td>
                             <td class="text-left  border-1-t border-1-b w-full h-2 text-lg"></td>
                             <td class="text-left  border-1-t border-1-b border-1-r w-full h-2 text-lg"></td>
@@ -471,8 +471,8 @@
          <div class="w-full">
             <h1 class="text-lg text-center">Autorizacion para consulta y reporte a centrales de riesgo, beneficios y proteccion</h1>
             <div class="border-2 text-sm p-1 justify-lef">
-                <p>"YO ___________ con Cédula de ciudadanía número ________ actuando en nombre propio y de manera
-                    autónoma. Autorizo expresa y ampliamente EMPRESA__ MOTOR S.A.S. ,a las Entidades Financieras Aliadas o cualquiera que represente
+                <p>YO ___________ con Cédula de ciudadanía número _________________ actuando en nombre propio y de manera
+                    autónoma. Autorizo expresa y ampliamente EMPRESA {{$nombre_empresa}} ,a las Entidades Financieras Aliadas o cualquiera que represente
                     sus derechos, para que compartan con corporaciones, entidades avaladoras, y/o empresas con las que estas establezcan alianzas, la
                     información que he diligenciado en este documento, consulten, procesen, soliciten, reporten y divulguen ante las entidades de consulta
                     y Operadores de Información y Riesgo y demás entidades financieras de Colombia, o a cualquier entidad que maneje o administre bases
@@ -485,7 +485,7 @@
                     2012 y sus derechos.
                     Lo anterior también implica que el incumplimiento de mis obligaciones se reflejará en las mencionadas bases de datos durante el tiempo
                     que establezcan las normas que regulan la materia de acuerdo con los términos y condiciones definidos por ellos. Entiendo que EMPRESA__
-                    MOTOR S.A.S. no asume responsabilidad alguna por la aprobación o negación del crédito por parte de las entidades financieras,
+                    {{$nombre_empresa}}. no asume responsabilidad alguna por la aprobación o negación del crédito por parte de las entidades financieras,
                     entidades avaladoras y/o empresas con las que estas establezcan alianzas comerciales u otras empresas, ni se compromete a obtener
                     la aprobación de este por cuanto simplemente actúa como un canal de información entre el solicitante del crédito y la(s) señalada(s)
                     empresa(s). Autorizo voluntariamente a la entidad financiera, corporación, entidad avaladora, empresa para enviar mensajes relativos a
@@ -519,7 +519,8 @@
                     referentes a mi (nuestro) actual y pasado comportamiento frente a las obligaciones del sector financiero, y en general frente al
                     cumplimiento de mi (nuestras) obligaciones". Autorizo Consultar y/o verificar la información de mi titularidad depositada o existente en
                     cualquier organismo o entidad de cualquier naturaleza, incluyendo organismos y entidades que recopilan datos de la seguridad social y
-                    tratar dicha información con base en lo aquí autorizado, en particular para validación de información y demás finalidades descritas.</p>
+                    tratar dicha información con base en lo aquí autorizado, en particular para validación de información y demás finalidades descritas.
+                </p>
             </div>
             <div class="border-2 justify-lef">
                 <p class="text-sm ">Declaró que la información contenida en esta solicitud es para reportar solicitar y divulgar mi información crediticia ante cualquier
