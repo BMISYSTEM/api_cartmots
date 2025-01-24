@@ -309,6 +309,9 @@ Route::middleware('auth:sanctum')->group(function(){
      * Opciones de solicitud de credito 
      */
     Route::get('/solicitudcredito/datoscredito',[SolicitudCredito::class,'datosCredito']);
+    Route::get('/solicitudcredito/informacionlaboral',[SolicitudCredito::class,'informacionLaboral']);
+    Route::get('/solicitudcredito/ingresos',[SolicitudCredito::class,'ingresosEgresos']);
+    Route::get('/solicitudcredito/referencias',[SolicitudCredito::class,'referencias']);
   });
 
 
