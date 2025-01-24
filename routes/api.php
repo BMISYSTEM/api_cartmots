@@ -303,8 +303,6 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::post('/movimiento/costos/usuarios/delete',[LogisticaController::class,'deleteMontoUsuario']);
     Route::post('/movimiento/costos/usuarios/update',[LogisticaController::class,'updateMontoUsuario']);
     Route::get('/movimiento/costos/usuarios/find',[LogisticaController::class,'indexMovimientosUsuario']);
-
-
     /**
      * Opciones de solicitud de credito 
      */
