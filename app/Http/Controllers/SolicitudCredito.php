@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\cliente;
 use App\Models\datos_credito;
+use App\Models\empresa;
 use App\Models\informacion_laborale;
 use App\Models\ingresos_egreso;
 use App\Models\pdffinanciero;
@@ -37,6 +38,7 @@ class SolicitudCredito extends Controller
         $usuarioempresa = Auth::user()->empresa;
         $empresa = Auth::user()->empresas;
         $telefono= cliente::find($request['cliente'])->celular;
+        $nombre_empresa = empresa::find($empresa)->nombre;
         $fecha = now();
         $nombrepdf= $dt->format('Y_m_d_H_i_s').str_replace(' ','-','Solicitud_credito_'.$telefono).'.pdf';
         
@@ -159,6 +161,7 @@ class SolicitudCredito extends Controller
         // CREA EL PDF
 
         $pdf = Pdf::loadView('solicitud', [
+            'nombre_empresa'=>$nombre_empresa,
             'usuario'=>$usuarionombre .' '.$usuarioapellido,
             'cedulausuario'=>$usuariocedula,
             'fecha'=>$fecha,
