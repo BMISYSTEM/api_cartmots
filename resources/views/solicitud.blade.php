@@ -213,8 +213,7 @@
                 <table class="w-full text-sm text-center">
                     <tr>
                         <td>Fecha De Expediccion: <p class="text-lg">{{$fecha}}</p></td>
-                        <td>No.Solicitud:<p class="text-lg">0000001</p></td>
-                       
+                        <td>No.Solicitud:<p class="text-lg">{{rand(10000,9999)}}{{\Carbon\Carbon::now()->format('d/m/Y')}}</p></td>
                     </tr>
                 </table>
                 <h2 class="text-lg text-center">datos requeridos por los establecimientos de credito y entidades aseguradoras</h2>
