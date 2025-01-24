@@ -264,4 +264,34 @@ class SolicitudCredito extends Controller
         $datos = DB::select('select * from datos_creditos where empresas = '.$empresa.' and clientes = '.$cliente.'  order by created_at DESC LIMIT 1');
         return response()->json($datos);
     }
+    public function informacionLaboral(Request $request)
+    {
+        $empresa = Auth::user()->empresas;
+        $cliente = $request->query('cliente');
+        if($cliente == null){
+            return response()->json(['error'=>'No se encontro el cliente'],404);
+        }
+        $datos = DB::select('select * from informacion_laborales where empresas = '.$empresa.' and clientes = '.$cliente.'  order by created_at DESC LIMIT 1');
+        return response()->json($datos);
+    }
+    public function ingresosEgresos(Request $request)
+    {
+        $empresa = Auth::user()->empresas;
+        $cliente = $request->query('cliente');
+        if($cliente == null){
+            return response()->json(['error'=>'No se encontro el cliente'],404);
+        }
+        $datos = DB::select('select * from ingresos_egresos where empresas = '.$empresa.' and clientes = '.$cliente.'  order by created_at DESC LIMIT 1');
+        return response()->json($datos);
+    }
+    public function referencias(Request $request)
+    {
+        $empresa = Auth::user()->empresas;
+        $cliente = $request->query('cliente');
+        if($cliente == null){
+            return response()->json(['error'=>'No se encontro el cliente'],404);
+        }
+        $datos = DB::select('select * from referencias where empresas = '.$empresa.' and clientes = '.$cliente.'  order by created_at DESC LIMIT 1');
+        return response()->json($datos);
+    }
 }
