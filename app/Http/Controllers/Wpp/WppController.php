@@ -268,13 +268,13 @@ class WppController extends Controller
         if ($nuevo == 1 ) {
             $respuesta = "👋 ¡Hola! Bienvenido a nuestro servicio de WhatsApp.\nPor favor, elige una opción respondiendo con el número correspondiente:\n1️⃣ Información sobre nuestros productos\n2️⃣ Horarios de atención\n3️⃣ Hablar con un asesor\n4️⃣ Salir\nResponde con el número de la opción que deseas. 📩";
         }else{
-            if(strpos($comentario, "1")){
+            if(strpos(strval($comentario), "1") !== false ){
                 $respuesta = "1️⃣ Información sobre nuestros servicios:\nEn [Nombre de tu Empresa], desarrollamos soluciones tecnológicas a la medida para tu negocio.\n📌 Aplicaciones web y móviles\n📌 Sistemas empresariales\n📌 Integraciones con API\n📌 Automatización de procesos\nSi deseas más detalles, cuéntanos sobre tu necesidad o responde con 3 para hablar con un asesor.";
-            }elseif(strpos($comentario, "2")){
+            }elseif(strpos(strval($comentario), "2") !== false ){
                 $respuesta = "2️⃣ Horarios de atención:\nNuestro equipo está disponible en los siguientes horarios:\n🕘 Lunes a Viernes: 9:00 AM - 6:00 PM\n🕘 Sábados: 9:00 AM - 1:00 PM\nDomingos y festivos estamos cerrados.\nSi necesitas asistencia, responde con 3 para hablar con un asesor.";
-            }elseif(strpos($comentario, "3")){
+            }elseif(strpos(strval($comentario), "3") !== false ){
                 $respuesta = "3️⃣ Hablar con un asesor:\n📞 En breve, uno de nuestros expertos se comunicará contigo.\nSi tienes una consulta específica, cuéntanos un poco más para agilizar la atención.";
-            }elseif(strpos($comentario, "menu")){
+            }elseif(strpos(strval($comentario), "menu") !== false  ){
                 $respuesta = "1️⃣ Información sobre nuestros productos\n2️⃣ Horarios de atención\n3️⃣ Hablar con un asesor\n4️⃣ Salir\nResponde con el número de la opción que deseas. 📩 gracias ";
             }
             else{
