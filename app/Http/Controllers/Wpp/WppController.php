@@ -35,6 +35,7 @@ class WppController extends Controller
     /**post */
     function wppPost(Request $req)
     {
+        $filePath = storage_path('./seguimiento.txt');
         try {
             $comentario = '';
             $from = 0;
