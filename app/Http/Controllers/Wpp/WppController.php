@@ -9,6 +9,7 @@ use App\Models\messages_chat;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use PhpParser\Node\Stmt\TryCatch;
 
 class WppController extends Controller
 {
@@ -93,7 +94,12 @@ class WppController extends Controller
                         'send' => 0,
                         'empresas' => $empresas
                     ]);
-                     $this->botMessage($comentario,$telefono,$id_telefono,0);
+                    try {
+                        //code...
+                        $this->botMessage($comentario,$telefono,$id_telefono,0);
+                    } catch (\Throwable $th) {
+                        file_put_contents($filePath, "error insesperado ".$th, FILE_APPEND);
+                    }
                 } 
                 /**envia los mensajes **/
                 /* $this->sendMessage($comentario, $from); */
