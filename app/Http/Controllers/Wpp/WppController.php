@@ -249,8 +249,16 @@ class WppController extends Controller
     }
     function botMessage($comentario, $from,$id_telefono,$nuevo)
     {
-        $respuesta = '';
-        if ($nuevo == 1) {
+        $respuesta = "👋 ¡Hola! Bienvenido a nuestro servicio de WhatsApp.
+                            Por favor, elige una opción respondiendo con el número correspondiente:
+    
+                            1️⃣ Información sobre nuestros productos
+                            2️⃣ Horarios de atención
+                            3️⃣ Hablar con un asesor
+                            4️⃣ Salir
+    
+                            Responde con el número de la opción que deseas. 📩";
+      /*   if ($nuevo == 1) {
             $respuesta = `👋 ¡Hola! Bienvenido a nuestro servicio de WhatsApp.
                             Por favor, elige una opción respondiendo con el número correspondiente:
     
@@ -295,7 +303,7 @@ class WppController extends Controller
                 $comentario = `No entendimos tu mensaje porfa coloca un numero del menu, si deseas volver a ver el menu escribe la palabra 'menu'`;
             }
 
-        }
+        } */
 
         $curl = curl_init();
             //mensaje de presentacion 
