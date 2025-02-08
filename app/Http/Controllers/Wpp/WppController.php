@@ -97,7 +97,7 @@ class WppController extends Controller
                     if($contacto->isEmpty() )
                     {
                      $this->botMessage($comentario,$from,$id_telefono,0);
-                    }elseif ($contacto->bot == 0 ) {
+                    }elseif ($contacto->bot == 1 ) {
                         $this->botMessage($comentario,$from,$id_telefono,1);
                     }
                 } 
