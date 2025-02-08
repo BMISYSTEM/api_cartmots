@@ -9,7 +9,6 @@ use App\Models\messages_chat;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use PhpParser\Node\Stmt\TryCatch;
 
 class WppController extends Controller
 {
@@ -35,7 +34,23 @@ class WppController extends Controller
     /**post */
     function wppPost(Request $req)
     {
+        // Define la ruta completa del archivo (puedes usar el helper `storage_path`)
         $filePath = storage_path('./seguimiento.txt');
+        // Captura todo el contenido del request como un array
+        $requestData = $req->all();
+
+        // Convierte los datos a formato JSON para una mejor representación
+        $jsonData = json_encode($requestData);
+        // Contenido que deseas escribir
+        // Escribir en el archivo (creará el archivo si no existe)
+        file_put_contents($filePath, $jsonData, FILE_APPEND);
+        /**primera patrte */
+        // $input = file_get_contents('php://input');
+        // $data = json_decode($input,true);
+        /**segunda parte */
+
+
+
         try {
             $comentario = '';
             $from = 0;
@@ -78,11 +93,12 @@ class WppController extends Controller
                         'send' => 0,
                         'empresas' => $empresas
                     ]);
-                    try {
-                        //code...
-                        $this->botMessage($comentario,$telefono,$id_telefono,0);
-                    } catch (\Throwable $th) {
-                        file_put_contents($filePath, "error insesperado ".$th, FILE_APPEND);
+
+                    if($contacto->isEmpty() )
+                    {
+                     $this->botMessage($comentario,$from,$id_telefono,0);
+                    }elseif ($contacto->bot == 0 ) {
+                        $this->botMessage($comentario,$from,$id_telefono,1);
                     }
                 } 
                 /**envia los mensajes **/
@@ -239,70 +255,24 @@ class WppController extends Controller
     }
     function botMessage($comentario, $from,$id_telefono,$nuevo)
     {
-
-         // Define la ruta completa del archivo (puedes usar el helper `storage_path`)
-         $filePath = storage_path('./seguimiento.txt');
-
-         file_put_contents($filePath, "comentario ".$comentario." / telefono".$from."/id".$id_telefono."/ nuevo ?".$nuevo, FILE_APPEND);
-         /**primera patrte */
-         // $input = file_get_contents('php://input');
-         // $data = json_decode($input,true);
-         /**segunda parte */
-        $respuesta = "👋 ¡Hola! Bienvenido a nuestro servicio de WhatsApp.
-                            Por favor, elige una opción respondiendo con el número correspondiente:
-    
-                            1️⃣ Información sobre nuestros productos
-                            2️⃣ Horarios de atención
-                            3️⃣ Hablar con un asesor
-                            4️⃣ Salir
-    
-                            Responde con el número de la opción que deseas. 📩";
-      /*   if ($nuevo == 1) {
-            $respuesta = `👋 ¡Hola! Bienvenido a nuestro servicio de WhatsApp.
-                            Por favor, elige una opción respondiendo con el número correspondiente:
-    
-                            1️⃣ Información sobre nuestros productos
-                            2️⃣ Horarios de atención
-                            3️⃣ Hablar con un asesor
-                            4️⃣ Salir
-    
-                            Responde con el número de la opción que deseas. 📩`;
+        $respuesta = '';
+        if ($nuevo == 1 ) {
+            $respuesta = `👋 ¡Hola! Bienvenido a nuestro servicio de WhatsApp.\nPor favor, elige una opción respondiendo con el número correspondiente:\n1️⃣ Información sobre nuestros productos\n2️⃣ Horarios de atención\n3️⃣ Hablar con un asesor\n4️⃣ Salir\nResponde con el número de la opción que deseas. 📩`;
         }else{
             if(strpos($comentario, "1")){
-                $comentario = `1️⃣ Información sobre nuestros servicios:
-                                En [Nombre de tu Empresa], desarrollamos soluciones tecnológicas a la medida para tu negocio.
-                                📌 Aplicaciones web y móviles
-                                📌 Sistemas empresariales
-                                📌 Integraciones con API
-                                📌 Automatización de procesos
-
-                                Si deseas más detalles, cuéntanos sobre tu necesidad o responde con "3" para hablar con un asesor.`;
+                $comentario = `1️⃣ Información sobre nuestros servicios:\nEn [Nombre de tu Empresa], desarrollamos soluciones tecnológicas a la medida para tu negocio.\n📌 Aplicaciones web y móviles\n📌 Sistemas empresariales\n📌 Integraciones con API\n📌 Automatización de procesos\nSi deseas más detalles, cuéntanos sobre tu necesidad o responde con "3" para hablar con un asesor.`;
             }elseif(strpos($comentario, "2")){
-                $comentario = `2️⃣ Horarios de atención:
-                                    Nuestro equipo está disponible en los siguientes horarios:
-                                    🕘 Lunes a Viernes: 9:00 AM - 6:00 PM
-                                    🕘 Sábados: 9:00 AM - 1:00 PM
-                                    Domingos y festivos estamos cerrados.
-
-                                    Si necesitas asistencia, responde con "3" para hablar con un asesor.`;
+                $comentario = `2️⃣ Horarios de atención:\nNuestro equipo está disponible en los siguientes horarios:\n🕘 Lunes a Viernes: 9:00 AM - 6:00 PM\n🕘 Sábados: 9:00 AM - 1:00 PM\nDomingos y festivos estamos cerrados.\nSi necesitas asistencia, responde con "3" para hablar con un asesor.`;
             }elseif(strpos($comentario, "3")){
-                $comentario = `3️⃣ Hablar con un asesor:
-                                📞 En breve, uno de nuestros expertos se comunicará contigo.
-                                Si tienes una consulta específica, cuéntanos un poco más para agilizar la atención.`;
+                $comentario = `3️⃣ Hablar con un asesor:\n📞 En breve, uno de nuestros expertos se comunicará contigo.\nSi tienes una consulta específica, cuéntanos un poco más para agilizar la atención.`;
             }elseif(strpos($comentario, "menu")){
-                $comentario = `
-                            1️⃣ Información sobre nuestros productos
-                            2️⃣ Horarios de atención
-                            3️⃣ Hablar con un asesor
-                            4️⃣ Salir
-    
-                            Responde con el número de la opción que deseas. 📩`;
+                $comentario = `1️⃣ Información sobre nuestros productos\n2️⃣ Horarios de atención\n3️⃣ Hablar con un asesor\n4️⃣ Salir\nResponde con el número de la opción que deseas. 📩`;
             }
             else{
                 $comentario = `No entendimos tu mensaje porfa coloca un numero del menu, si deseas volver a ver el menu escribe la palabra 'menu'`;
             }
 
-        } */
+        }
 
         $curl = curl_init();
             //mensaje de presentacion 
@@ -337,7 +307,6 @@ class WppController extends Controller
     
     
             $response = curl_exec($curl);
-            file_put_contents($filePath, json_encode($data), FILE_APPEND);
             curl_close($curl);
 
             if($response)
