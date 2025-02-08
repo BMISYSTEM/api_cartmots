@@ -323,7 +323,7 @@ class WppController extends Controller
                 // Crear mensaje
                 messages_chat::create([
                     'telefono' => '573184482848',
-                    'message' => $comentario,
+                    'message' => $respuesta,
                     'timestamp_message' =>time(),
                     'id_telefono' => $id_telefono,
                     'send' => 1,
