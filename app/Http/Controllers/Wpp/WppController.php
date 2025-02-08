@@ -250,7 +250,7 @@ class WppController extends Controller
     function botMessage($comentario, $from,$id_telefono,$nuevo)
     {
         $respuesta = '';
-        if ($nuevo) {
+        if ($nuevo == 1) {
             $respuesta = `👋 ¡Hola! Bienvenido a nuestro servicio de WhatsApp.
                             Por favor, elige una opción respondiendo con el número correspondiente:
     
