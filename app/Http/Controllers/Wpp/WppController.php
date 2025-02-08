@@ -34,7 +34,7 @@ class WppController extends Controller
     /**post */
     function wppPost(Request $req)
     {
-        // Define la ruta completa del archivo (puedes usar el helper `storage_path`)
+        // Define la ruta completa del archivo (puedes usar el helper "storage_path")
         $filePath = storage_path('./seguimiento.txt');
         // Captura todo el contenido del request como un array
         $requestData = $req->all();
@@ -257,21 +257,26 @@ class WppController extends Controller
     {
         $filePath = storage_path('./seguimiento.txt');
         file_put_contents($filePath, "entro en el bot ".$nuevo, FILE_APPEND);
+        file_put_contents($filePath, "\nentro en el bot ".$id_telefono, FILE_APPEND);
+        file_put_contents($filePath, "\nentro en el bot ".$from, FILE_APPEND);
+        file_put_contents($filePath, "\nentro en el bot ".$comentario, FILE_APPEND);
+        file_put_contents($filePath, "\nentro en el bot ".$nuevo, FILE_APPEND);
+        file_put_contents($filePath, "\nentro en el bot ".$nuevo, FILE_APPEND);
         $respuesta = '';
         if ($nuevo == 1 ) {
-            $respuesta = `👋 ¡Hola! Bienvenido a nuestro servicio de WhatsApp.\nPor favor, elige una opción respondiendo con el número correspondiente:\n1️⃣ Información sobre nuestros productos\n2️⃣ Horarios de atención\n3️⃣ Hablar con un asesor\n4️⃣ Salir\nResponde con el número de la opción que deseas. 📩`;
+            $respuesta = "👋 ¡Hola! Bienvenido a nuestro servicio de WhatsApp.\nPor favor, elige una opción respondiendo con el número correspondiente:\n1️⃣ Información sobre nuestros productos\n2️⃣ Horarios de atención\n3️⃣ Hablar con un asesor\n4️⃣ Salir\nResponde con el número de la opción que deseas. 📩";
         }else{
             if(strpos($comentario, "1")){
-                $respuesta = `1️⃣ Información sobre nuestros servicios:\nEn [Nombre de tu Empresa], desarrollamos soluciones tecnológicas a la medida para tu negocio.\n📌 Aplicaciones web y móviles\n📌 Sistemas empresariales\n📌 Integraciones con API\n📌 Automatización de procesos\nSi deseas más detalles, cuéntanos sobre tu necesidad o responde con "3" para hablar con un asesor.`;
+                $respuesta = "1️⃣ Información sobre nuestros servicios:\nEn [Nombre de tu Empresa], desarrollamos soluciones tecnológicas a la medida para tu negocio.\n📌 Aplicaciones web y móviles\n📌 Sistemas empresariales\n📌 Integraciones con API\n📌 Automatización de procesos\nSi deseas más detalles, cuéntanos sobre tu necesidad o responde con 3 para hablar con un asesor.";
             }elseif(strpos($comentario, "2")){
-                $respuesta = `2️⃣ Horarios de atención:\nNuestro equipo está disponible en los siguientes horarios:\n🕘 Lunes a Viernes: 9:00 AM - 6:00 PM\n🕘 Sábados: 9:00 AM - 1:00 PM\nDomingos y festivos estamos cerrados.\nSi necesitas asistencia, responde con "3" para hablar con un asesor.`;
+                $respuesta = "2️⃣ Horarios de atención:\nNuestro equipo está disponible en los siguientes horarios:\n🕘 Lunes a Viernes: 9:00 AM - 6:00 PM\n🕘 Sábados: 9:00 AM - 1:00 PM\nDomingos y festivos estamos cerrados.\nSi necesitas asistencia, responde con 3 para hablar con un asesor.";
             }elseif(strpos($comentario, "3")){
-                $respuesta = `3️⃣ Hablar con un asesor:\n📞 En breve, uno de nuestros expertos se comunicará contigo.\nSi tienes una consulta específica, cuéntanos un poco más para agilizar la atención.`;
+                $respuesta = "3️⃣ Hablar con un asesor:\n📞 En breve, uno de nuestros expertos se comunicará contigo.\nSi tienes una consulta específica, cuéntanos un poco más para agilizar la atención.";
             }elseif(strpos($comentario, "menu")){
-                $respuesta = `1️⃣ Información sobre nuestros productos\n2️⃣ Horarios de atención\n3️⃣ Hablar con un asesor\n4️⃣ Salir\nResponde con el número de la opción que deseas. 📩 gracias `;
+                $respuesta = "1️⃣ Información sobre nuestros productos\n2️⃣ Horarios de atención\n3️⃣ Hablar con un asesor\n4️⃣ Salir\nResponde con el número de la opción que deseas. 📩 gracias ";
             }
             else{
-                $respuesta = `No entendimos tu mensaje porfa coloca un numero del menu, si deseas volver a ver el menu escribe la palabra 'menu'`;
+                $respuesta = "No entendimos tu mensaje porfa coloca un numero del menu, si deseas volver a ver el menu escribe la palabra 'menu'";
             }
 
         }
