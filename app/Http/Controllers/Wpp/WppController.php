@@ -266,7 +266,7 @@ class WppController extends Controller
             }elseif(strpos($comentario, "3")){
                 $comentario = `3️⃣ Hablar con un asesor:\n📞 En breve, uno de nuestros expertos se comunicará contigo.\nSi tienes una consulta específica, cuéntanos un poco más para agilizar la atención.`;
             }elseif(strpos($comentario, "menu")){
-                $comentario = `1️⃣ Información sobre nuestros productos\n2️⃣ Horarios de atención\n3️⃣ Hablar con un asesor\n4️⃣ Salir\nResponde con el número de la opción que deseas. 📩`;
+                $comentario = `1️⃣ Información sobre nuestros productos\n2️⃣ Horarios de atención\n3️⃣ Hablar con un asesor\n4️⃣ Salir\nResponde con el número de la opción que deseas. 📩 gracias `;
             }
             else{
                 $comentario = `No entendimos tu mensaje porfa coloca un numero del menu, si deseas volver a ver el menu escribe la palabra 'menu'`;
