@@ -93,13 +93,7 @@ class WppController extends Controller
                         'send' => 0,
                         'empresas' => $empresas
                     ]);
-
-                    if($contacto->isEmpty() )
-                    {
-                     $this->botMessage($comentario,$from,$id_telefono,0);
-                    }elseif ($contacto->bot == 0 ) {
-                        $this->botMessage($comentario,$from,$id_telefono,1);
-                    }
+                     $this->botMessage($comentario,$telefono,$id_telefono,0);
                 } 
                 /**envia los mensajes **/
                 /* $this->sendMessage($comentario, $from); */
