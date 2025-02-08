@@ -337,10 +337,9 @@ class WppController extends Controller
     
             $response = curl_exec($curl);
             curl_close($curl);
-            
+
             if($response)
             {
-                $empresas = Auth::user()->empresas;
                 // Crear mensaje
                 messages_chat::create([
                     'telefono' => '3184482848',
@@ -348,7 +347,7 @@ class WppController extends Controller
                     'timestamp_message' =>time(),
                     'id_telefono' => $id_telefono,
                     'send' => 1,
-                    'empresas' => $empresas
+                    'empresas' => 8
                 ]);
             }
     }
