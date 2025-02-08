@@ -255,6 +255,8 @@ class WppController extends Controller
     }
     function botMessage($comentario, $from,$id_telefono,$nuevo)
     {
+        $filePath = storage_path('./seguimiento.txt');
+        file_put_contents($filePath, "entro en el bot ", FILE_APPEND);
         $respuesta = '';
         if ($nuevo == 1 ) {
             $respuesta = `👋 ¡Hola! Bienvenido a nuestro servicio de WhatsApp.\nPor favor, elige una opción respondiendo con el número correspondiente:\n1️⃣ Información sobre nuestros productos\n2️⃣ Horarios de atención\n3️⃣ Hablar con un asesor\n4️⃣ Salir\nResponde con el número de la opción que deseas. 📩`;
