@@ -99,6 +99,8 @@ class WppController extends Controller
                      $this->botMessage($comentario,$from,$id_telefono,0);
                     }elseif ($contactovalidation->bot == 1 ) {
                         $this->botMessage($comentario,$from,$id_telefono,1);
+                    }else{
+                        $this->botMessage($comentario,$from,$id_telefono,0);
                     }
                 } 
                 /**envia los mensajes **/
