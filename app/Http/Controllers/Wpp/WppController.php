@@ -35,23 +35,6 @@ class WppController extends Controller
     /**post */
     function wppPost(Request $req)
     {
-        // Define la ruta completa del archivo (puedes usar el helper `storage_path`)
-        $filePath = storage_path('./seguimiento.txt');
-        // Captura todo el contenido del request como un array
-        $requestData = $req->all();
-
-        // Convierte los datos a formato JSON para una mejor representación
-        $jsonData = json_encode($requestData);
-        // Contenido que deseas escribir
-        // Escribir en el archivo (creará el archivo si no existe)
-        file_put_contents($filePath, $jsonData, FILE_APPEND);
-        /**primera patrte */
-        // $input = file_get_contents('php://input');
-        // $data = json_decode($input,true);
-        /**segunda parte */
-
-
-
         try {
             $comentario = '';
             $from = 0;
@@ -255,6 +238,15 @@ class WppController extends Controller
     }
     function botMessage($comentario, $from,$id_telefono,$nuevo)
     {
+
+         // Define la ruta completa del archivo (puedes usar el helper `storage_path`)
+         $filePath = storage_path('./seguimiento.txt');
+
+         file_put_contents($filePath, "comentario ".$comentario." / telefono".$from."/id".$id_telefono."/ nuevo ?".$nuevo, FILE_APPEND);
+         /**primera patrte */
+         // $input = file_get_contents('php://input');
+         // $data = json_decode($input,true);
+         /**segunda parte */
         $respuesta = "👋 ¡Hola! Bienvenido a nuestro servicio de WhatsApp.
                             Por favor, elige una opción respondiendo con el número correspondiente:
     
@@ -344,6 +336,7 @@ class WppController extends Controller
     
     
             $response = curl_exec($curl);
+            file_put_contents($filePath, json_encode($data), FILE_APPEND);
             curl_close($curl);
 
             if($response)
