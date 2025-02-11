@@ -288,6 +288,7 @@ class WppController extends Controller
                 ),
             ));
             curl_close($curl);
+            $curl = curl_init();
             // segundo mensaje 
             $dataMessage2 = [
                 "messaging_product" => "whatsapp",
