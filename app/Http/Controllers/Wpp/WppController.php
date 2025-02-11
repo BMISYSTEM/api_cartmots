@@ -287,6 +287,7 @@ class WppController extends Controller
                     'Authorization: Bearer EAAH7VDWCz74BO0U9OsdlULHEbXupK2u87sSidoZC9UcARVvTqo8ZCYZASVoZCBomljw9yMe3OMZCPN10QcUDEVscZAk1nJW2CoTGQARPP84wmzY1VuSHyed1fFN6gKgdjOvOsIo2rlAv6qHUJwLpTjU6TNmlrVUoGkVEqVtKlcYipCSCs4FpELXMorJA3AOFL6'
                 ),
             ));
+            curl_close($curl);
             // segundo mensaje 
             $dataMessage2 = [
                 "messaging_product" => "whatsapp",
@@ -333,6 +334,7 @@ class WppController extends Controller
                     'Authorization: Bearer EAAH7VDWCz74BO0U9OsdlULHEbXupK2u87sSidoZC9UcARVvTqo8ZCYZASVoZCBomljw9yMe3OMZCPN10QcUDEVscZAk1nJW2CoTGQARPP84wmzY1VuSHyed1fFN6gKgdjOvOsIo2rlAv6qHUJwLpTjU6TNmlrVUoGkVEqVtKlcYipCSCs4FpELXMorJA3AOFL6'
                 ),
             ));
+            curl_close($curl);
         }else{
             if(strpos(strval($comentario), "1") !== false ){
                 $respuesta = "1️⃣ Información sobre nuestros servicios:\nEn [Nombre de tu Empresa], desarrollamos soluciones tecnológicas a la medida para tu negocio.\n📌 Aplicaciones web y móviles\n📌 Sistemas empresariales\n📌 Integraciones con API\n📌 Automatización de procesos\nSi deseas más detalles, cuéntanos sobre tu necesidad o responde con 3 para hablar con un asesor.";
