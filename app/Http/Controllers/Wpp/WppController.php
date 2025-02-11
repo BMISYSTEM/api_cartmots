@@ -257,16 +257,9 @@ class WppController extends Controller
     }
     function botMessage($comentario, $from,$id_telefono,$nuevo)
     {
-        $filePath = storage_path('./seguimiento.txt');
-        file_put_contents($filePath, "entro en el bot ".$nuevo, FILE_APPEND);
-        file_put_contents($filePath, "\nentro en el bot ".$id_telefono, FILE_APPEND);
-        file_put_contents($filePath, "\nentro en el bot ".$from, FILE_APPEND);
-        file_put_contents($filePath, "\nentro en el bot ".$comentario, FILE_APPEND);
-        file_put_contents($filePath, "\nentro en el bot ".$nuevo, FILE_APPEND);
-        file_put_contents($filePath, "\nentro en el bot ".$nuevo, FILE_APPEND);
         $respuesta = '';
         if ($nuevo == 1 ) {
-            $respuesta = "👋 ¡Hola! Bienvenido a nuestro servicio de WhatsApp.\nPor favor, elige una opción respondiendo con el número correspondiente:\n1️⃣ Información sobre nuestros productos\n2️⃣ Horarios de atención\n3️⃣ Hablar con un asesor\n4️⃣ Salir\nResponde con el número de la opción que deseas. 📩";
+            $respuesta = "🔹 ¡Hola, buen día! ☀️\n👋 Mi nombre es Brandon Arbelaez, especialista en el sector financiero 💰 y automotriz 🚗.\n📌 Permíteme hacerte unas preguntas 📝 para poder asesorarte de la mejor manera.\n✨ ¡Estoy aquí para ayudarte!";
         }else{
             if(strpos(strval($comentario), "1") !== false ){
                 $respuesta = "1️⃣ Información sobre nuestros servicios:\nEn [Nombre de tu Empresa], desarrollamos soluciones tecnológicas a la medida para tu negocio.\n📌 Aplicaciones web y móviles\n📌 Sistemas empresariales\n📌 Integraciones con API\n📌 Automatización de procesos\nSi deseas más detalles, cuéntanos sobre tu necesidad o responde con 3 para hablar con un asesor.";
