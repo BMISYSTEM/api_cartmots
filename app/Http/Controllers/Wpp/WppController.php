@@ -288,7 +288,7 @@ class WppController extends Controller
                 ),
             ));
             // segundo mensaje 
-            $data = [
+            $dataMessage2 = [
                 "messaging_product" => "whatsapp",
                 "recipient_type" => "individual",
                 "to" => $from,
@@ -327,7 +327,7 @@ class WppController extends Controller
                 CURLOPT_FOLLOWLOCATION => true,
                 CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
                 CURLOPT_CUSTOMREQUEST => 'POST',
-                CURLOPT_POSTFIELDS => json_encode($data),
+                CURLOPT_POSTFIELDS => json_encode($dataMessage2),
                 CURLOPT_HTTPHEADER => array(
                     'Content-Type: application/json',
                     'Authorization: Bearer EAAH7VDWCz74BO0U9OsdlULHEbXupK2u87sSidoZC9UcARVvTqo8ZCYZASVoZCBomljw9yMe3OMZCPN10QcUDEVscZAk1nJW2CoTGQARPP84wmzY1VuSHyed1fFN6gKgdjOvOsIo2rlAv6qHUJwLpTjU6TNmlrVUoGkVEqVtKlcYipCSCs4FpELXMorJA3AOFL6'
