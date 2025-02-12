@@ -259,7 +259,7 @@ class WppController extends Controller
     {
         $respuesta = '';
         if ($nuevo == 1 ) {
-            $respuesta = "🔹 ¡Hola, buen día! ☀️\n👋 Mi nombre es Brandon Arbelaez, especialista en el sector financiero 💰 y automotriz 🚗.\n📌 Permíteme hacerte unas preguntas 📝 para poder asesorarte de la mejor manera.\n✨ ¡Estoy aquí para ayudarte!";
+            /* $respuesta = "🔹 ¡Hola, buen día! ☀️\n👋 Mi nombre es Brandon Arbelaez, especialista en el sector financiero 💰 y automotriz 🚗.\n📌 Permíteme hacerte unas preguntas 📝 para poder asesorarte de la mejor manera.\n✨ ¡Estoy aquí para ayudarte!";
             $curl1 = curl_init();
             //mensaje de presentacion 
             $data1 = [
@@ -288,8 +288,9 @@ class WppController extends Controller
                 ),
             ));
             $response1 = curl_exec($curl1);
-            curl_close($curl1);
-            usleep(3000000);
+            usleep(3000000); */
+/*             curl_close($curl1);
+ */            usleep(3000000);
             $curl2 = curl_init();
             $message = [
                 "messaging_product" => "whatsapp",
@@ -299,7 +300,7 @@ class WppController extends Controller
                 "interactive" => [
                     "type" => "button",
                     "body" => [
-                        "text" => "Desea comprar vehiculo"
+                        "text" => "🔹 ¡Hola, buen día! ☀️\n👋 Mi nombre es Brandon Arbelaez, especialista en el sector financiero 💰 y automotriz 🚗.\n📌 Permíteme hacerte unas preguntas 📝 para poder asesorarte de la mejor manera.\n✨ ¡Estoy aquí para ayudarte!\nDeseas comprar vehiculo?"
                     ],
                     "action" => [
                         "buttons" => [
@@ -321,7 +322,6 @@ class WppController extends Controller
                     ]
                 ]
             ];
-            
             curl_setopt_array($curl2, array(
                 CURLOPT_URL => 'https://graph.facebook.com/v21.0/474070335798438/messages',
                 CURLOPT_RETURNTRANSFER => true,
@@ -338,16 +338,10 @@ class WppController extends Controller
                 ),
             ));
             $response = curl_exec($curl2);
-            $httpcode = curl_getinfo($curl2, CURLINFO_HTTP_CODE);
             curl_close($curl2);
-            
-            echo "HTTP Code: " . $httpcode . "\n";
-            echo "Response: " . $response . "\n";
-
             $contacto = contactos_chat::where('telefono',$from)->first();
             $contacto->bot = 0;
             $contacto->save();
-
         }else{
             if(strpos(strval($comentario), "1") !== false ){
                 $respuesta = "1️⃣ Información sobre nuestros servicios:\nEn [Nombre de tu Empresa], desarrollamos soluciones tecnológicas a la medida para tu negocio.\n📌 Aplicaciones web y móviles\n📌 Sistemas empresariales\n📌 Integraciones con API\n📌 Automatización de procesos\nSi deseas más detalles, cuéntanos sobre tu necesidad o responde con 3 para hablar con un asesor.";
