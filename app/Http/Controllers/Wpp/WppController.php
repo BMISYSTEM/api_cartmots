@@ -93,37 +93,37 @@ class WppController extends Controller
                 /* $this->sendMessage($comentario, $from); */
                 /* $this->sendMessage($comentario, $from,$id_telefono); */
             } else {
-                return response()->json(['message' => 'EVENT_RECEIVED'], 200);
-            }
-
-            if (
-                isset($req['entry'][0]['changes'][0]['value']['messages'][0]['from']) &&
-                isset($req['entry'][0]['changes'][0]['value']['messages'][0]['type']) &&
-                ($from = $req['entry'][0]['changes'][0]['value']['messages'][0]['from']) &&
-                ($type = $req['entry'][0]['changes'][0]['value']['messages'][0]['type']) &&
-                ($id_telefono = $req['entry'][0]['changes'][0]['value']['metadata']['display_phone_number'])
-            ) {
+                
                 if (
-                    $type === 'interactive' &&
-                    isset($req['entry'][0]['changes'][0]['value']['messages'][0]['interactive']['button_reply']['id']) &&
-                    isset($req['entry'][0]['changes'][0]['value']['messages'][0]['interactive']['button_reply']['title']) &&
-                    ($buttonId = $req['entry'][0]['changes'][0]['value']['messages'][0]['interactive']['button_reply']['id']) &&
-                    ($id_telefono = $req['entry'][0]['changes'][0]['value']['messages'][0]['interactive']['button_reply']['id']) &&
-                    ($buttonTitle = $req['entry'][0]['changes'][0]['value']['messages'][0]['interactive']['button_reply']['title'])
+                    isset($req['entry'][0]['changes'][0]['value']['messages'][0]['from']) &&
+                    isset($req['entry'][0]['changes'][0]['value']['messages'][0]['type']) &&
+                    ($from = $req['entry'][0]['changes'][0]['value']['messages'][0]['from']) &&
+                    ($type = $req['entry'][0]['changes'][0]['value']['messages'][0]['type']) &&
+                    ($id_telefono = $req['entry'][0]['changes'][0]['value']['metadata']['display_phone_number'])
                 ) {
-                    $this->botMessage($buttonId, $from, $id_telefono, 0);
-                } elseif (
-                    $type === 'text' &&
-                    isset($req['entry'][0]['changes'][0]['value']['messages'][0]['text']['body']) &&
-                    ($comentario = $req['entry'][0]['changes'][0]['value']['messages'][0]['text']['body'])
-                ) {
-                    // Es un mensaje de texto
-                    return response()->json([
-                        'status' => 'success',
-                        'message' => "El usuario $from envió el mensaje: $comentario"
-                    ]);
+                    if (
+                        $type === 'interactive' &&
+                        isset($req['entry'][0]['changes'][0]['value']['messages'][0]['interactive']['button_reply']['id']) &&
+                        isset($req['entry'][0]['changes'][0]['value']['messages'][0]['interactive']['button_reply']['title']) &&
+                        ($buttonId = $req['entry'][0]['changes'][0]['value']['messages'][0]['interactive']['button_reply']['id']) &&
+                        ($id_telefono = $req['entry'][0]['changes'][0]['value']['messages'][0]['interactive']['button_reply']['id']) &&
+                        ($buttonTitle = $req['entry'][0]['changes'][0]['value']['messages'][0]['interactive']['button_reply']['title'])
+                    ) {
+                        $this->botMessage($buttonId, $from, $id_telefono, 0);
+                    } elseif (
+                        $type === 'text' &&
+                        isset($req['entry'][0]['changes'][0]['value']['messages'][0]['text']['body']) &&
+                        ($comentario = $req['entry'][0]['changes'][0]['value']['messages'][0]['text']['body'])
+                    ) {
+                        // Es un mensaje de texto
+                        return response()->json([
+                            'status' => 'success',
+                            'message' => "El usuario $from envió el mensaje: $comentario"
+                        ]);
+                    }
                 }
             }
+
             file_put_contents($filePath, "--------message---------", FILE_APPEND);
         } catch (\Throwable $th) {
             file_put_contents($filePath, "Error generado--.$th", FILE_APPEND);
