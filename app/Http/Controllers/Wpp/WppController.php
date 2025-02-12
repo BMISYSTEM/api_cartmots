@@ -288,6 +288,7 @@ class WppController extends Controller
                 ),
             ));
             curl_close($curl);
+            sleep(3);
             $curl = curl_init();
 
             $message = [
