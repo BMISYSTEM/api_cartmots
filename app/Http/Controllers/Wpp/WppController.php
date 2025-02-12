@@ -527,14 +527,60 @@ class WppController extends Controller
                 $response = curl_exec($curl2);
                 curl_close($curl2);
             } elseif (strpos($comentario, "retoma") !== false) {
-                $respuesta = "retoma";
+                $curl2 = curl_init();
+                $message = [
+                    "messaging_product" => "whatsapp",
+                    "recipient_type" => "individual",
+                    "to" => $from,
+                    "type" => "interactive",
+                    "interactive" => [
+                        "type" => "button",
+                        "body" => [
+                            "text" => "perfecto !!! Deseas dejar tu vehiculo en parte de pago ? "
+                        ],
+                        "action" => [
+                            "buttons" => [
+                                [
+                                    "type" => "reply",
+                                    "reply" => [
+                                        "id" => "retomaSi",
+                                        "title" => "Si"
+                                    ]
+                                ],
+                                [
+                                    "type" => "reply",
+                                    "reply" => [
+                                        "id" => "retomaNo",
+                                        "title" => "No"
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ]
+                ];
+                curl_setopt_array($curl2, array(
+                    CURLOPT_URL => 'https://graph.facebook.com/v21.0/474070335798438/messages',
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_ENCODING => '',
+                    CURLOPT_MAXREDIRS => 10,
+                    CURLOPT_TIMEOUT => 0,
+                    CURLOPT_FOLLOWLOCATION => true,
+                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                    CURLOPT_CUSTOMREQUEST => 'POST',
+                    CURLOPT_POSTFIELDS => json_encode($message, JSON_UNESCAPED_UNICODE), // Corrección aquí
+                    CURLOPT_HTTPHEADER => array(
+                        'Content-Type: application/json',
+                        'Authorization: Bearer EAAH7VDWCz74BO0U9OsdlULHEbXupK2u87sSidoZC9UcARVvTqo8ZCYZASVoZCBomljw9yMe3OMZCPN10QcUDEVscZAk1nJW2CoTGQARPP84wmzY1VuSHyed1fFN6gKgdjOvOsIo2rlAv6qHUJwLpTjU6TNmlrVUoGkVEqVtKlcYipCSCs4FpELXMorJA3AOFL6'
+                    ),
+                ));
+                $response = curl_exec($curl2);
+                curl_close($curl2);
             } elseif (strpos(strval($comentario), "menu") !== false) {
                 $respuesta = "1️⃣ Información sobre nuestros productos\n2️⃣ Horarios de atención\n3️⃣ Hablar con un asesor\n4️⃣ Salir\nResponde con el número de la opción que deseas. 📩 gracias ";
             } else {
                 $respuesta = "No entendimos tu mensaje porfa coloca un numero del menu, si deseas volver a ver el menu escribe la palabra 'menu'";
             }
         }
-
         $curl = curl_init();
         //mensaje de presentacion 
         $data = [
