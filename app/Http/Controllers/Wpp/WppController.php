@@ -892,7 +892,8 @@ class WppController extends Controller
                     ));
                     $response = curl_exec($curl2);
                     curl_close($curl2);
-                } elseif (strpos($comentario, "retoSi") !== false) {
+                } 
+                elseif (strpos($comentario, "retoSi") !== false) {
                     $curl = curl_init();
                     //mensaje de presentacion 
                     $data = [
@@ -925,7 +926,69 @@ class WppController extends Controller
                     $contacto = contactos_chat::where('telefono', $from)->first();
                     $contacto->ferencias = 1;
                     $contacto->save();
-                } else {
+                } 
+                elseif (strpos($comentario, "retoNo") !== false) {
+                    
+                    $curl = curl_init();
+                    //mensaje de presentacion 
+                    $message = [
+                        "messaging_product" => "whatsapp",
+                        "recipient_type" => "individual",
+                        "to" => $from,
+                        "type" => "interactive",
+                        "interactive" => [
+                            "type" => "button",
+                            "body" => [
+                                "text" => "Quisiera saber como deseas hacer el negocio "
+                            ],
+                            "action" => [
+                                "buttons" => [
+                                    [
+                                        "type" => "reply",
+                                        "reply" => [
+                                            "id" => "contado1",
+                                            "title" => "De Contado"
+                                        ]
+                                    ],
+                                    [
+                                        "type" => "reply",
+                                        "reply" => [
+                                            "id" => "financiado1",
+                                            "title" => "Financiado"
+                                        ]
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ];
+                    curl_setopt_array($curl, array(
+                        CURLOPT_URL => 'https://graph.facebook.com/v21.0/474070335798438/messages',
+                        CURLOPT_RETURNTRANSFER => true,
+                        CURLOPT_ENCODING => '',
+                        CURLOPT_MAXREDIRS => 10,
+                        CURLOPT_TIMEOUT => 0,
+                        CURLOPT_FOLLOWLOCATION => true,
+                        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                        CURLOPT_CUSTOMREQUEST => 'POST',
+                        CURLOPT_POSTFIELDS => json_encode($message),
+                        CURLOPT_HTTPHEADER => array(
+                            'Content-Type: application/json',
+                            'Authorization: Bearer EAAH7VDWCz74BO0U9OsdlULHEbXupK2u87sSidoZC9UcARVvTqo8ZCYZASVoZCBomljw9yMe3OMZCPN10QcUDEVscZAk1nJW2CoTGQARPP84wmzY1VuSHyed1fFN6gKgdjOvOsIo2rlAv6qHUJwLpTjU6TNmlrVUoGkVEqVtKlcYipCSCs4FpELXMorJA3AOFL6'
+                        ),
+                    ));
+                    $response = curl_exec($curl);
+                    curl_close($curl);
+                    $contacto = contactos_chat::where('telefono', $from)->first();
+                    $contacto->ferencias = 1;
+                    $contacto->ferencias = 1;
+                    $contacto->modelo = 1;  
+                    $contacto->kilometraje = 1;  
+                    $contacto->color = 1;   
+                    $contacto->precio_estimado = 1;
+                    $contacto->negocio = 1;
+                    $contacto->save();
+                } 
+                else {
                     $respuesta = "No entendimos tu mensaje porfa coloca un numero del menu, si deseas volver a ver el menu escribe la palabra 'menu'";
                 }
             }
