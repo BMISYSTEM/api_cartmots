@@ -353,7 +353,7 @@ class WppController extends Controller
             if($contacto->finalizado == 1){
                 return;
             }
-            if($contacto->ingresos == 0 &&  $contacto->referncias == 1 && $contacto->modelo == 0  && $contacto->kilometraje == 0  && $contacto->color == 0   && $contacto->precio_estimado == 0){
+            if($contacto->ingresos == 0 &&  $contacto->ferencias == 1 && $contacto->modelo == 0  && $contacto->kilometraje == 0  && $contacto->color == 0   && $contacto->precio_estimado == 0){
                 $curl = curl_init();
                 //mensaje de presentacion 
                 $data = [
@@ -388,7 +388,7 @@ class WppController extends Controller
                 $contacto = contactos_chat::where('telefono', $from)->first();
                 $contacto->modelo = 1;
                 $contacto->save();
-            }elseif($contacto->ingresos == 0 &&  $contacto->referncias == 1 && $contacto->modelo == 1  && $contacto->kilometraje == 0  && $contacto->color == 0   && $contacto->precio_estimado == 0){
+            }elseif($contacto->ingresos == 0 &&  $contacto->ferencias == 1 && $contacto->modelo == 1  && $contacto->kilometraje == 0  && $contacto->color == 0   && $contacto->precio_estimado == 0){
                 $curl = curl_init();
                 //mensaje de presentacion 
                 $data = [
@@ -424,7 +424,7 @@ class WppController extends Controller
                 $contacto->kilometraje = 1;
                 $contacto->save();
             }
-            elseif($contacto->ingresos == 0 &&  $contacto->referncias == 1 && $contacto->modelo == 1  && $contacto->kilometraje == 1  && $contacto->color == 0   && $contacto->precio_estimado == 0){
+            elseif($contacto->ingresos == 0 &&  $contacto->ferencias == 1 && $contacto->modelo == 1  && $contacto->kilometraje == 1  && $contacto->color == 0   && $contacto->precio_estimado == 0){
                 $curl = curl_init();
                 //mensaje de presentacion 
                 $data = [
@@ -460,7 +460,7 @@ class WppController extends Controller
                 $contacto->color = 1;
                 $contacto->save();
             }
-            elseif($contacto->ingresos == 0 &&  $contacto->referncias == 1 && $contacto->modelo == 1  && $contacto->kilometraje == 1  && $contacto->color == 1   && $contacto->precio_estimado == 0){
+            elseif($contacto->ingresos == 0 &&  $contacto->ferencias == 1 && $contacto->modelo == 1  && $contacto->kilometraje == 1  && $contacto->color == 1   && $contacto->precio_estimado == 0){
                 $curl = curl_init();
                 //mensaje de presentacion 
                 $data = [
@@ -496,7 +496,7 @@ class WppController extends Controller
                 $contacto->precio_estimado = 1;
                 $contacto->save();
             }
-            elseif($contacto->negocio == 0 &&  $contacto->ingresos == 0 &&  $contacto->referncias == 1 && $contacto->modelo == 1  && $contacto->kilometraje == 1  && $contacto->color == 1   && $contacto->precio_estimado == 1){
+            elseif($contacto->negocio == 0 &&  $contacto->ingresos == 0 &&  $contacto->ferencias == 1 && $contacto->modelo == 1  && $contacto->kilometraje == 1  && $contacto->color == 1   && $contacto->precio_estimado == 1){
                 $curl2 = curl_init();
                 $message = [
                     "messaging_product" => "whatsapp",
@@ -549,7 +549,7 @@ class WppController extends Controller
                 $contacto->negocio = 1;
                 $contacto->save();
             }
-            elseif($contacto->ingresos == 0 &&  $contacto->referncias == 1 && $contacto->modelo == 1  && $contacto->kilometraje == 1  && $contacto->color == 1   && $contacto->precio_estimado == 1 && stripos($comentario, "contado1") !== false ){
+            elseif($contacto->ingresos == 0 &&  $contacto->ferencias == 1 && $contacto->modelo == 1  && $contacto->kilometraje == 1  && $contacto->color == 1   && $contacto->precio_estimado == 1 && stripos($comentario, "contado1") !== false ){
                 $curl2 = curl_init();
                 $message = [
                     "messaging_product" => "whatsapp",
@@ -582,7 +582,7 @@ class WppController extends Controller
                 $contacto->finalizado = 1;
                 $contacto->save();
             }
-            elseif($contacto->ingresos == 0 &&  $contacto->referncias == 1 && $contacto->modelo == 1  && $contacto->kilometraje == 1  && $contacto->color == 1   && $contacto->precio_estimado == 1 && stripos($comentario, "financiado1") !== false ){
+            elseif($contacto->ingresos == 0 &&  $contacto->ferencias == 1 && $contacto->modelo == 1  && $contacto->kilometraje == 1  && $contacto->color == 1   && $contacto->precio_estimado == 1 && stripos($comentario, "financiado1") !== false ){
                 $curl2 = curl_init();
                 $message = [
                     "messaging_product" => "whatsapp",
@@ -632,7 +632,7 @@ class WppController extends Controller
                 $response = curl_exec($curl2);
                 curl_close($curl2);
             }
-            elseif($contacto->negocio == 1 && $contacto->ingresos == 0 && $contacto->referncias == 1 && $contacto->modelo == 1  && $contacto->kilometraje == 1  && $contacto->color == 1   && $contacto->precio_estimado == 1){
+            elseif($contacto->negocio == 1 && $contacto->ingresos == 0 && $contacto->ferencias == 1 && $contacto->modelo == 1  && $contacto->kilometraje == 1  && $contacto->color == 1   && $contacto->precio_estimado == 1){
                 $curl2 = curl_init();
                 $message = [
                     "messaging_product" => "whatsapp",
@@ -665,7 +665,7 @@ class WppController extends Controller
                 $contacto->ingresos = 1;
                 $contacto->save();
             }
-            elseif($contacto->negocio == 1 && $contacto->ingresos == 1 && $contacto->referncias == 1 && $contacto->modelo == 1  && $contacto->kilometraje == 1  && $contacto->color == 1   && $contacto->precio_estimado == 1){
+            elseif($contacto->negocio == 1 && $contacto->ingresos == 1 && $contacto->ferencias == 1 && $contacto->modelo == 1  && $contacto->kilometraje == 1  && $contacto->color == 1   && $contacto->precio_estimado == 1){
                 $curl2 = curl_init();
                 $message = [
                     "messaging_product" => "whatsapp",
