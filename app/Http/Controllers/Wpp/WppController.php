@@ -695,7 +695,7 @@ class WppController extends Controller
                 $response = curl_exec($curl2);
                 curl_close($curl2);
                 $contacto = contactos_chat::where('telefono', $from)->first();
-                $contacto->ingresos = 1;
+                $contacto->finalizado = 1;
                 $contacto->save();
             }
             else{
