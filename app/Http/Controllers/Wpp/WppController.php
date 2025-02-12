@@ -323,14 +323,14 @@ class WppController extends Controller
                             [
                                 "type" => "reply",
                                 "reply" => [
-                                    "id" => "m1",
+                                    "id" => "ford",
                                     "title" => "Nuevo FORD"
                                 ]
                             ],
                             [
                                 "type" => "reply",
                                 "reply" => [
-                                    "id" => "m2",
+                                    "id" => "multimarca",
                                     "title" => "Usado Multimarca"
                                 ]
                             ]
@@ -359,7 +359,7 @@ class WppController extends Controller
             $contacto->bot = 0;
             $contacto->save();
         } else {
-            if (stripos($comentario, "FORD") !== false) {
+            if (stripos($comentario, "ford") !== false) {
                 $curl2 = curl_init();
                 $message = [
                     "messaging_product" => "whatsapp",
@@ -443,7 +443,7 @@ class WppController extends Controller
                 ));
                 $response = curl_exec($curl2);
                 curl_close($curl2);
-            } elseif (stripos($comentario, "MULTIMARCAS") !== false) {
+            } elseif (stripos($comentario, "multimarca") !== false) {
                 $curl2 = curl_init();
                 $message = [
                     "messaging_product" => "whatsapp",
