@@ -8,6 +8,7 @@ use App\Models\contactos_chat;
 use App\Models\messages_chat;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class WppController extends Controller
@@ -271,6 +272,7 @@ class WppController extends Controller
     function botMessage($comentario, $from, $id_telefono, $nuevo)
     {
         $respuesta = '';
+        Log::info("Mensaje = ".$comentario);
         if ($nuevo == 1) {
             /* $respuesta = "🔹 ¡Hola, buen día! ☀️\n👋 Mi nombre es Brandon Arbelaez, especialista en el sector financiero 💰 y automotriz 🚗.\n📌 Permíteme hacerte unas preguntas 📝 para poder asesorarte de la mejor manera.\n✨ ¡Estoy aquí para ayudarte!";
             $curl1 = curl_init();
