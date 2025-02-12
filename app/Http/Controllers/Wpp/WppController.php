@@ -259,7 +259,7 @@ class WppController extends Controller
     {
         $respuesta = '';
         if ($nuevo == 1 ) {
-           /*  $respuesta = "🔹 ¡Hola, buen día! ☀️\n👋 Mi nombre es Brandon Arbelaez, especialista en el sector financiero 💰 y automotriz 🚗.\n📌 Permíteme hacerte unas preguntas 📝 para poder asesorarte de la mejor manera.\n✨ ¡Estoy aquí para ayudarte!";
+            $respuesta = "🔹 ¡Hola, buen día! ☀️\n👋 Mi nombre es Brandon Arbelaez, especialista en el sector financiero 💰 y automotriz 🚗.\n📌 Permíteme hacerte unas preguntas 📝 para poder asesorarte de la mejor manera.\n✨ ¡Estoy aquí para ayudarte!";
             $curl = curl_init();
             //mensaje de presentacion 
             $data = [
@@ -287,40 +287,39 @@ class WppController extends Controller
                     'Authorization: Bearer EAAH7VDWCz74BO0U9OsdlULHEbXupK2u87sSidoZC9UcARVvTqo8ZCYZASVoZCBomljw9yMe3OMZCPN10QcUDEVscZAk1nJW2CoTGQARPP84wmzY1VuSHyed1fFN6gKgdjOvOsIo2rlAv6qHUJwLpTjU6TNmlrVUoGkVEqVtKlcYipCSCs4FpELXMorJA3AOFL6'
                 ),
             ));
-            curl_close($curl); */
+            curl_close($curl);
             $curl = curl_init();
-            // segundo mensaje 
+
             $message = [
                 "messaging_product" => "whatsapp",
                 "recipient_type" => "individual",
-                "to" => "573184482848",
+                "to" => $from,
                 "type" => "interactive",
                 "interactive" => [
                     "type" => "button",
                     "body" => [
-                        "text" => "prueba de botón"
+                        "text" => "Desea comprar vehiculo"
                     ],
                     "action" => [
                         "buttons" => [
                             [
                                 "type" => "reply",
                                 "reply" => [
-                                    "id" => "numero1",
-                                    "title" => "boton1"
+                                    "id" => "m1",
+                                    "title" => "Nuevo FORD"
                                 ]
                             ],
                             [
                                 "type" => "reply",
                                 "reply" => [
-                                    "id" => "numero2",
-                                    "title" => "boton2"
+                                    "id" => "m2",
+                                    "title" => "Usado Multimarca"
                                 ]
                             ]
                         ]
                     ]
                 ]
             ];
-            
             
             curl_setopt_array($curl, array(
                 CURLOPT_URL => 'https://graph.facebook.com/v21.0/474070335798438/messages',
@@ -331,13 +330,19 @@ class WppController extends Controller
                 CURLOPT_FOLLOWLOCATION => true,
                 CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
                 CURLOPT_CUSTOMREQUEST => 'POST',
-                CURLOPT_POSTFIELDS => json_encode($message),
+                CURLOPT_POSTFIELDS => json_encode($message, JSON_UNESCAPED_UNICODE), // Corrección aquí
                 CURLOPT_HTTPHEADER => array(
                     'Content-Type: application/json',
                     'Authorization: Bearer EAAH7VDWCz74BO0U9OsdlULHEbXupK2u87sSidoZC9UcARVvTqo8ZCYZASVoZCBomljw9yMe3OMZCPN10QcUDEVscZAk1nJW2CoTGQARPP84wmzY1VuSHyed1fFN6gKgdjOvOsIo2rlAv6qHUJwLpTjU6TNmlrVUoGkVEqVtKlcYipCSCs4FpELXMorJA3AOFL6'
                 ),
             ));
+            
+            $response = curl_exec($curl);
+            $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
             curl_close($curl);
+            
+            echo "HTTP Code: " . $httpcode . "\n";
+            echo "Response: " . $response . "\n";
         }else{
             if(strpos(strval($comentario), "1") !== false ){
                 $respuesta = "1️⃣ Información sobre nuestros servicios:\nEn [Nombre de tu Empresa], desarrollamos soluciones tecnológicas a la medida para tu negocio.\n📌 Aplicaciones web y móviles\n📌 Sistemas empresariales\n📌 Integraciones con API\n📌 Automatización de procesos\nSi deseas más detalles, cuéntanos sobre tu necesidad o responde con 3 para hablar con un asesor.";
