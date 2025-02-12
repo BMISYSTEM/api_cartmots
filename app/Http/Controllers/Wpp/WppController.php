@@ -364,64 +364,75 @@ class WppController extends Controller
                 $message = [
                     "messaging_product" => "whatsapp",
                     "recipient_type" => "individual",
-                    "to" => $from,
+                    "to" => $from, // Número de teléfono del destinatario
                     "type" => "interactive",
                     "interactive" => [
-                        "type" => "button",
+                        "type" => "list",
                         "body" => [
-                            "text" => "cual es la nave de tu preferencia ?"
+                            "text" => "Cual es la nave de tu preferencia:"
+                        ],
+                        "footer" => [
+                            "text" => "Elige una opción para continuar"
                         ],
                         "action" => [
-                            "buttons" => [
+                            "button" => "Ver Referencias",
+                            "sections" => [
                                 [
-                                    "type" => "reply",
-                                    "reply" => [
-                                        "id" => "mensajeRetoma1",
-                                        "title" => "Ford ranger"
+                                    "title" => "Vehiculos Ford",
+                                    "rows" => [
+                                        [
+                                            "id" => "retoma_1",
+                                            "title" => "Ford",
+                                            "description" => "Ford ranger"
+                                        ],
+                                        [
+                                            "id" => "retoma_2",
+                                            "title" => "Ford",
+                                            "description" => "Ford scape ecoobost"
+                                        ],
+                                        [
+                                            "id" => "retoma_3",
+                                            "title" => "Ford",
+                                            "description" => "ord scape hibrida  "
+                                        ],
+                                        [
+                                            "id" => "retoma_4",
+                                            "title" => "Ford",
+                                            "description" => "ford bronco "
+                                        ],
+                                        [
+                                            "id" => "retoma_5",
+                                            "title" => "Ford",
+                                            "description" => "ford f150 "
+                                        ],
+                                        [
+                                            "id" => "retoma_6",
+                                            "title" => "Ford",
+                                            "description" => "ford f150 hibrida "
+                                        ],
+                                        [
+                                            "id" => "retoma_7",
+                                            "title" => "Ford",
+                                            "description" => "ford f150 raptor "
+                                        ],
+                                        [
+                                            "id" => "retoma_8",
+                                            "title" => "Ford",
+                                            "description" => "ford ranger raptor  "
+                                        ],
+                                        [
+                                            "id" => "retoma_9",
+                                            "title" => "Ford",
+                                            "description" => "ford big bronco  "
+                                        ],
+                                        [
+                                            "id" => "retoma_10",
+                                            "title" => "Ford",
+                                            "description" => "ford mustang  "
+                                        ],
+                                        
                                     ]
-                                ],
-                                [
-                                    "type" => "reply",
-                                    "reply" => [
-                                        "id" => "mensajeRetoma2",
-                                        "title" => "Ford scape"
-                                    ]
-                                ],
-                                 [
-                                    "type" => "reply",
-                                    "reply" => [
-                                        "id" => "mensajeRetoma3",
-                                        "title" => "Ford ecoobost"
-                                    ]
-                                ],/*
-                                [
-                                    "type" => "reply",
-                                    "reply" => [
-                                        "id" => "mensajeRetoma4",
-                                        "title" => "Ford hibrida"
-                                    ]
-                                ],
-                                [
-                                    "type" => "reply",
-                                    "reply" => [
-                                        "id" => "mensajeRetoma5",
-                                        "title" => "ford bronco"
-                                    ]
-                                ],
-                                [
-                                    "type" => "reply",
-                                    "reply" => [
-                                        "id" => "mensajeRetoma6",
-                                        "title" => "ford f150"
-                                    ]
-                                ],
-                                [
-                                    "type" => "reply",
-                                    "reply" => [
-                                        "id" => "mensajeRetoma7",
-                                        "title" => "ford ranger raptor "
-                                    ]
-                                ], */
+                                ]
                             ]
                         ]
                     ]
@@ -492,8 +503,8 @@ class WppController extends Controller
                 ));
                 $response = curl_exec($curl2);
                 curl_close($curl2);
-            } elseif (strpos(strval($comentario), "3") !== false) {
-                $respuesta = "3️⃣ Hablar con un asesor:\n📞 En breve, uno de nuestros expertos se comunicará contigo.\nSi tienes una consulta específica, cuéntanos un poco más para agilizar la atención.";
+            } elseif (strpos($comentario, "retoma") !== false) {
+                $respuesta = "retoma";
             } elseif (strpos(strval($comentario), "menu") !== false) {
                 $respuesta = "1️⃣ Información sobre nuestros productos\n2️⃣ Horarios de atención\n3️⃣ Hablar con un asesor\n4️⃣ Salir\nResponde con el número de la opción que deseas. 📩 gracias ";
             } else {
