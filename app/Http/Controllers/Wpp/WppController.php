@@ -387,7 +387,7 @@ class WppController extends Controller
                                         "title" => "Ford scape"
                                     ]
                                 ],
-                                [
+                                /* [
                                     "type" => "reply",
                                     "reply" => [
                                         "id" => "mensajeRetoma3",
@@ -421,7 +421,7 @@ class WppController extends Controller
                                         "id" => "mensajeRetoma7",
                                         "title" => "ford ranger raptor "
                                     ]
-                                ],
+                                ], */
                             ]
                         ]
                     ]
@@ -453,9 +453,7 @@ class WppController extends Controller
                     "interactive" => [
                         "type" => "button",
                         "body" => [
-                            "text" => "perfecto !!! Contamos con un amplio inventario, finalizando
-                            la conversación te envio el link de la pagina donde puedes ver
-                            algunos de los vehiculos que tenemos disponibles.\nDeseas dejar tu vehiculo en parte de pago ? "
+                            "text" => "perfecto !!! Contamos con un amplio inventario, finalizando la conversación te envio el link de la pagina donde puedes ver algunos de los vehiculos que tenemos disponibles.\nDeseas dejar tu vehiculo en parte de pago ? "
                         ],
                         "action" => [
                             "buttons" => [
