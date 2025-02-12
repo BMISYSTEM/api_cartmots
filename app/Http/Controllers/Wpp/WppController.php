@@ -305,14 +305,14 @@ class WppController extends Controller
                             [
                                 "type" => "reply",
                                 "reply" => [
-                                    "id" => "ford",
+                                    "id" => "button1",
                                     "title" => "Nuevos FORD"
                                 ]
                             ],
                             [
                                 "type" => "reply",
                                 "reply" => [
-                                    "id" => "multimarca",
+                                    "id" => "button2",
                                     "title" => "Usados Multimarcas"
                                 ]
                             ]
