@@ -123,6 +123,29 @@ class WppController extends Controller
                         ]);
                     }
                 }
+                if (
+                    isset($req['entry'][0]['changes'][0]['value']['messages'][0]['from']) &&
+                    isset($req['entry'][0]['changes'][0]['value']['messages'][0]['interactive']['list_reply']['id']) &&
+                    isset($req['entry'][0]['changes'][0]['value']['messages'][0]['interactive']['list_reply']['title'])
+                ) {
+                    // 📌 Extraer información relevante
+                    $from = $req['entry'][0]['changes'][0]['value']['messages'][0]['from']; // Número de teléfono del remitente
+                    $name = $req['entry'][0]['changes'][0]['value']['contacts'][0]['profile']['name'] ?? 'Desconocido'; // Nombre del usuario
+                    $message_id = $req['entry'][0]['changes'][0]['value']['messages'][0]['id']; // ID del mensaje
+                    $selected_option_id = $req['entry'][0]['changes'][0]['value']['messages'][0]['interactive']['list_reply']['id']; // ID de la opción elegida
+                    $selected_option_title = $req['entry'][0]['changes'][0]['value']['messages'][0]['interactive']['list_reply']['title']; // Texto de la opción elegida
+                    $receiver_number = $req['entry'][0]['changes'][0]['value']['metadata']['display_phone_number']; // Número que recibió el mensaje
+                    $this->botMessage($message_id, $from, $receiver_number, 0);
+                    // 📝 Registrar en el log de Laravel
+                    Log::info("📩 Mensaje recibido en WhatsApp:");
+                    Log::info("🔹 Nombre: $name");
+                    Log::info("📞 Número: $from");
+                    Log::info("📥 ID del mensaje: $message_id");
+                    Log::info("✅ Opción seleccionada: $selected_option_title (ID: $selected_option_id)");
+                    Log::info("📲 Número receptor: $receiver_number");
+                } else {
+                    Log::warning("⚠️ No se encontró un mensaje válido en la solicitud.");
+                }
             }
 
             file_put_contents($filePath, "--------message---------", FILE_APPEND);
