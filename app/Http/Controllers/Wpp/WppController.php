@@ -260,9 +260,9 @@ class WppController extends Controller
         $respuesta = '';
         if ($nuevo == 1 ) {
             $respuesta = "🔹 ¡Hola, buen día! ☀️\n👋 Mi nombre es Brandon Arbelaez, especialista en el sector financiero 💰 y automotriz 🚗.\n📌 Permíteme hacerte unas preguntas 📝 para poder asesorarte de la mejor manera.\n✨ ¡Estoy aquí para ayudarte!";
-            $curl = curl_init();
+            $curl1 = curl_init();
             //mensaje de presentacion 
-            $data = [
+            $data1 = [
                 "messaging_product" => "whatsapp",
                 "recipient_type" => "individual",
                 "to" => $from,
@@ -272,7 +272,7 @@ class WppController extends Controller
                     "body" => $respuesta
                 ]
             ];
-            curl_setopt_array($curl, array(
+            curl_setopt_array($curl1, array(
                 CURLOPT_URL => 'https://graph.facebook.com/v21.0/474070335798438/messages',
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_ENCODING => '',
@@ -281,14 +281,14 @@ class WppController extends Controller
                 CURLOPT_FOLLOWLOCATION => true,
                 CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
                 CURLOPT_CUSTOMREQUEST => 'POST',
-                CURLOPT_POSTFIELDS => json_encode($data),
+                CURLOPT_POSTFIELDS => json_encode($data1),
                 CURLOPT_HTTPHEADER => array(
                     'Content-Type: application/json',
                     'Authorization: Bearer EAAH7VDWCz74BO0U9OsdlULHEbXupK2u87sSidoZC9UcARVvTqo8ZCYZASVoZCBomljw9yMe3OMZCPN10QcUDEVscZAk1nJW2CoTGQARPP84wmzY1VuSHyed1fFN6gKgdjOvOsIo2rlAv6qHUJwLpTjU6TNmlrVUoGkVEqVtKlcYipCSCs4FpELXMorJA3AOFL6'
                 ),
             ));
-            $response1 = curl_exec($curl);
-            curl_close($curl);
+            $response1 = curl_exec($curl1);
+            curl_close($curl1);
             sleep(3);
             $curl2 = curl_init();
             $message = [
