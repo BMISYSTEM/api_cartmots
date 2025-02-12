@@ -357,7 +357,7 @@ class WppController extends Controller
             $contacto->bot = 0;
             $contacto->save();
         } else {
-            if (strpos(strval($comentario), "FORD") !== false) {
+            if (strpos($comentario, "FORD")) {
                 $curl2 = curl_init();
                 $message = [
                     "messaging_product" => "whatsapp",
@@ -441,7 +441,7 @@ class WppController extends Controller
                 ));
                 $response = curl_exec($curl2);
                 curl_close($curl2);
-            } elseif (strpos(strval($comentario), "MULTIMARCAS") !== false) {
+            } elseif (strpos($comentario, "MULTIMARCAS")) {
                 $curl2 = curl_init();
                 $message = [
                     "messaging_product" => "whatsapp",
