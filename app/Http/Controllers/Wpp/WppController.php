@@ -923,7 +923,7 @@ class WppController extends Controller
                     $response = curl_exec($curl);
                     curl_close($curl);
                     $contacto = contactos_chat::where('telefono', $from)->first();
-                    $contacto->referencias = 1;
+                    $contacto->ferencias = 1;
                     $contacto->save();
                 } else {
                     $respuesta = "No entendimos tu mensaje porfa coloca un numero del menu, si deseas volver a ver el menu escribe la palabra 'menu'";
