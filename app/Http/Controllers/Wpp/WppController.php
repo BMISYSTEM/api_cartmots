@@ -297,39 +297,6 @@ class WppController extends Controller
         $respuesta = '';
         Log::info("Mensaje = ".$comentario);
         if ($nuevo == 1) {
-            /* $respuesta = "🔹 ¡Hola, buen día! ☀️\n👋 Mi nombre es Brandon Arbelaez, especialista en el sector financiero 💰 y automotriz 🚗.\n📌 Permíteme hacerte unas preguntas 📝 para poder asesorarte de la mejor manera.\n✨ ¡Estoy aquí para ayudarte!";
-            $curl1 = curl_init();
-            //mensaje de presentacion 
-            $data1 = [
-                "messaging_product" => "whatsapp",
-                "recipient_type" => "individual",
-                "to" => $from,
-                "type" => "text",
-                "text" => [
-                    "preview_url" => false,
-                    "body" => $respuesta
-                ]
-            ];
-            curl_setopt_array($curl1, array(
-                CURLOPT_URL => 'https://graph.facebook.com/v21.0/474070335798438/messages',
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_ENCODING => '',
-                CURLOPT_MAXREDIRS => 10,
-                CURLOPT_TIMEOUT => 0,
-                CURLOPT_FOLLOWLOCATION => true,
-                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                CURLOPT_CUSTOMREQUEST => 'POST',
-                CURLOPT_POSTFIELDS => json_encode($data1),
-                CURLOPT_HTTPHEADER => array(
-                    'Content-Type: application/json',
-                    'Authorization: Bearer EAAH7VDWCz74BO0U9OsdlULHEbXupK2u87sSidoZC9UcARVvTqo8ZCYZASVoZCBomljw9yMe3OMZCPN10QcUDEVscZAk1nJW2CoTGQARPP84wmzY1VuSHyed1fFN6gKgdjOvOsIo2rlAv6qHUJwLpTjU6TNmlrVUoGkVEqVtKlcYipCSCs4FpELXMorJA3AOFL6'
-                ),
-            ));
-            $response1 = curl_exec($curl1);
-            usleep(3000000); */
-            /*             curl_close($curl1);
- */
-            usleep(3000000);
             $curl2 = curl_init();
             $message = [
                 "messaging_product" => "whatsapp",
@@ -382,85 +349,24 @@ class WppController extends Controller
             $contacto->bot = 0;
             $contacto->save();
         } else {
-            if (stripos($comentario, "ford") !== false) {
-                $curl2 = curl_init();
-                $message = [
+            $contacto = contactos_chat::where('telefono', $from)->first();
+            if($contacto->finalizado == 1){
+                return;
+            }
+            if($contacto->ingresos == 0 &&  $contacto->referncias == 1 && $contacto->modelo == 0  && $contacto->kilometraje == 0  && $contacto->color == 0   && $contacto->precio_estimado == 0){
+                $curl = curl_init();
+                //mensaje de presentacion 
+                $data = [
                     "messaging_product" => "whatsapp",
                     "recipient_type" => "individual",
-                    "to" => $from, // Número de teléfono del destinatario
-                    "type" => "interactive",
-                    "interactive" => [
-                        "type" => "list",
-                        "body" => [
-                            "text" => "Cual es la nave de tu preferencia:"
-                        ],
-                        "footer" => [
-                            "text" => "Elige una opción para continuar"
-                        ],
-                        "action" => [
-                            "button" => "Ver Referencias",
-                            "sections" => [
-                                [
-                                    "title" => "Vehiculos Ford",
-                                    "rows" => [
-                                        [
-                                            "id" => "retoma_1",
-                                            "title" => "Ford",
-                                            "description" => "Ford ranger"
-                                        ],
-                                        [
-                                            "id" => "retoma_2",
-                                            "title" => "Ford",
-                                            "description" => "Ford scape ecoobost"
-                                        ],
-                                        [
-                                            "id" => "retoma_3",
-                                            "title" => "Ford",
-                                            "description" => "ord scape hibrida  "
-                                        ],
-                                        [
-                                            "id" => "retoma_4",
-                                            "title" => "Ford",
-                                            "description" => "ford bronco "
-                                        ],
-                                        [
-                                            "id" => "retoma_5",
-                                            "title" => "Ford",
-                                            "description" => "ford f150 "
-                                        ],
-                                        [
-                                            "id" => "retoma_6",
-                                            "title" => "Ford",
-                                            "description" => "ford f150 hibrida "
-                                        ],
-                                        [
-                                            "id" => "retoma_7",
-                                            "title" => "Ford",
-                                            "description" => "ford f150 raptor "
-                                        ],
-                                        [
-                                            "id" => "retoma_8",
-                                            "title" => "Ford",
-                                            "description" => "ford ranger raptor  "
-                                        ],
-                                        [
-                                            "id" => "retoma_9",
-                                            "title" => "Ford",
-                                            "description" => "ford big bronco  "
-                                        ],
-                                        [
-                                            "id" => "retoma_10",
-                                            "title" => "Ford",
-                                            "description" => "ford mustang  "
-                                        ],
-                                        
-                                    ]
-                                ]
-                            ]
-                        ]
+                    "to" => $from,
+                    "type" => "text",
+                    "text" => [
+                        "preview_url" => false,
+                        "body" => "Modelo:"
                     ]
                 ];
-                curl_setopt_array($curl2, array(
+                curl_setopt_array($curl, array(
                     CURLOPT_URL => 'https://graph.facebook.com/v21.0/474070335798438/messages',
                     CURLOPT_RETURNTRANSFER => true,
                     CURLOPT_ENCODING => '',
@@ -469,15 +375,128 @@ class WppController extends Controller
                     CURLOPT_FOLLOWLOCATION => true,
                     CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
                     CURLOPT_CUSTOMREQUEST => 'POST',
-                    CURLOPT_POSTFIELDS => json_encode($message, JSON_UNESCAPED_UNICODE), // Corrección aquí
+                    CURLOPT_POSTFIELDS => json_encode($data),
                     CURLOPT_HTTPHEADER => array(
                         'Content-Type: application/json',
                         'Authorization: Bearer EAAH7VDWCz74BO0U9OsdlULHEbXupK2u87sSidoZC9UcARVvTqo8ZCYZASVoZCBomljw9yMe3OMZCPN10QcUDEVscZAk1nJW2CoTGQARPP84wmzY1VuSHyed1fFN6gKgdjOvOsIo2rlAv6qHUJwLpTjU6TNmlrVUoGkVEqVtKlcYipCSCs4FpELXMorJA3AOFL6'
                     ),
                 ));
-                $response = curl_exec($curl2);
-                curl_close($curl2);
-            } elseif (stripos($comentario, "multimarca") !== false) {
+        
+        
+                $response = curl_exec($curl);
+                curl_close($curl);
+                $contacto = contactos_chat::where('telefono', $from)->first();
+                $contacto->modelo = 1;
+                $contacto->save();
+            }elseif($contacto->ingresos == 0 &&  $contacto->referncias == 1 && $contacto->modelo == 1  && $contacto->kilometraje == 0  && $contacto->color == 0   && $contacto->precio_estimado == 0){
+                $curl = curl_init();
+                //mensaje de presentacion 
+                $data = [
+                    "messaging_product" => "whatsapp",
+                    "recipient_type" => "individual",
+                    "to" => $from,
+                    "type" => "text",
+                    "text" => [
+                        "preview_url" => false,
+                        "body" => "Kilometraje:"
+                    ]
+                ];
+                curl_setopt_array($curl, array(
+                    CURLOPT_URL => 'https://graph.facebook.com/v21.0/474070335798438/messages',
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_ENCODING => '',
+                    CURLOPT_MAXREDIRS => 10,
+                    CURLOPT_TIMEOUT => 0,
+                    CURLOPT_FOLLOWLOCATION => true,
+                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                    CURLOPT_CUSTOMREQUEST => 'POST',
+                    CURLOPT_POSTFIELDS => json_encode($data),
+                    CURLOPT_HTTPHEADER => array(
+                        'Content-Type: application/json',
+                        'Authorization: Bearer EAAH7VDWCz74BO0U9OsdlULHEbXupK2u87sSidoZC9UcARVvTqo8ZCYZASVoZCBomljw9yMe3OMZCPN10QcUDEVscZAk1nJW2CoTGQARPP84wmzY1VuSHyed1fFN6gKgdjOvOsIo2rlAv6qHUJwLpTjU6TNmlrVUoGkVEqVtKlcYipCSCs4FpELXMorJA3AOFL6'
+                    ),
+                ));
+        
+        
+                $response = curl_exec($curl);
+                curl_close($curl);
+                $contacto = contactos_chat::where('telefono', $from)->first();
+                $contacto->kilometraje = 1;
+                $contacto->save();
+            }
+            elseif($contacto->ingresos == 0 &&  $contacto->referncias == 1 && $contacto->modelo == 1  && $contacto->kilometraje == 1  && $contacto->color == 0   && $contacto->precio_estimado == 0){
+                $curl = curl_init();
+                //mensaje de presentacion 
+                $data = [
+                    "messaging_product" => "whatsapp",
+                    "recipient_type" => "individual",
+                    "to" => $from,
+                    "type" => "text",
+                    "text" => [
+                        "preview_url" => false,
+                        "body" => "Color:"
+                    ]
+                ];
+                curl_setopt_array($curl, array(
+                    CURLOPT_URL => 'https://graph.facebook.com/v21.0/474070335798438/messages',
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_ENCODING => '',
+                    CURLOPT_MAXREDIRS => 10,
+                    CURLOPT_TIMEOUT => 0,
+                    CURLOPT_FOLLOWLOCATION => true,
+                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                    CURLOPT_CUSTOMREQUEST => 'POST',
+                    CURLOPT_POSTFIELDS => json_encode($data),
+                    CURLOPT_HTTPHEADER => array(
+                        'Content-Type: application/json',
+                        'Authorization: Bearer EAAH7VDWCz74BO0U9OsdlULHEbXupK2u87sSidoZC9UcARVvTqo8ZCYZASVoZCBomljw9yMe3OMZCPN10QcUDEVscZAk1nJW2CoTGQARPP84wmzY1VuSHyed1fFN6gKgdjOvOsIo2rlAv6qHUJwLpTjU6TNmlrVUoGkVEqVtKlcYipCSCs4FpELXMorJA3AOFL6'
+                    ),
+                ));
+        
+        
+                $response = curl_exec($curl);
+                curl_close($curl);
+                $contacto = contactos_chat::where('telefono', $from)->first();
+                $contacto->color = 1;
+                $contacto->save();
+            }
+            elseif($contacto->ingresos == 0 &&  $contacto->referncias == 1 && $contacto->modelo == 1  && $contacto->kilometraje == 1  && $contacto->color == 1   && $contacto->precio_estimado == 0){
+                $curl = curl_init();
+                //mensaje de presentacion 
+                $data = [
+                    "messaging_product" => "whatsapp",
+                    "recipient_type" => "individual",
+                    "to" => $from,
+                    "type" => "text",
+                    "text" => [
+                        "preview_url" => false,
+                        "body" => "Precio estimado:"
+                    ]
+                ];
+                curl_setopt_array($curl, array(
+                    CURLOPT_URL => 'https://graph.facebook.com/v21.0/474070335798438/messages',
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_ENCODING => '',
+                    CURLOPT_MAXREDIRS => 10,
+                    CURLOPT_TIMEOUT => 0,
+                    CURLOPT_FOLLOWLOCATION => true,
+                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                    CURLOPT_CUSTOMREQUEST => 'POST',
+                    CURLOPT_POSTFIELDS => json_encode($data),
+                    CURLOPT_HTTPHEADER => array(
+                        'Content-Type: application/json',
+                        'Authorization: Bearer EAAH7VDWCz74BO0U9OsdlULHEbXupK2u87sSidoZC9UcARVvTqo8ZCYZASVoZCBomljw9yMe3OMZCPN10QcUDEVscZAk1nJW2CoTGQARPP84wmzY1VuSHyed1fFN6gKgdjOvOsIo2rlAv6qHUJwLpTjU6TNmlrVUoGkVEqVtKlcYipCSCs4FpELXMorJA3AOFL6'
+                    ),
+                ));
+        
+        
+                $response = curl_exec($curl);
+                curl_close($curl);
+                $contacto = contactos_chat::where('telefono', $from)->first();
+                $contacto->precio_estimado = 1;
+                $contacto->save();
+            }
+            elseif($contacto->negocio == 0 &&  $contacto->ingresos == 0 &&  $contacto->referncias == 1 && $contacto->modelo == 1  && $contacto->kilometraje == 1  && $contacto->color == 1   && $contacto->precio_estimado == 1){
                 $curl2 = curl_init();
                 $message = [
                     "messaging_product" => "whatsapp",
@@ -487,22 +506,22 @@ class WppController extends Controller
                     "interactive" => [
                         "type" => "button",
                         "body" => [
-                            "text" => "perfecto !!! Contamos con un amplio inventario, finalizando la conversación te envio el link de la pagina donde puedes ver algunos de los vehiculos que tenemos disponibles.\nDeseas dejar tu vehiculo en parte de pago ? "
+                            "text" => "Quisiera saber como deseas hacer el negocio "
                         ],
                         "action" => [
                             "buttons" => [
                                 [
                                     "type" => "reply",
                                     "reply" => [
-                                        "id" => "retomaSi",
-                                        "title" => "Si"
+                                        "id" => "contado1",
+                                        "title" => "De Contado"
                                     ]
                                 ],
                                 [
                                     "type" => "reply",
                                     "reply" => [
-                                        "id" => "retomaNo",
-                                        "title" => "No"
+                                        "id" => "financiado1",
+                                        "title" => "Financiado"
                                     ]
                                 ]
                             ]
@@ -526,7 +545,44 @@ class WppController extends Controller
                 ));
                 $response = curl_exec($curl2);
                 curl_close($curl2);
-            } elseif (strpos($comentario, "retoma") !== false) {
+                $contacto = contactos_chat::where('telefono', $from)->first();
+                $contacto->negocio = 1;
+                $contacto->save();
+            }
+            elseif($contacto->ingresos == 0 &&  $contacto->referncias == 1 && $contacto->modelo == 1  && $contacto->kilometraje == 1  && $contacto->color == 1   && $contacto->precio_estimado == 1 && stripos($comentario, "contado1") !== false ){
+                $curl2 = curl_init();
+                $message = [
+                    "messaging_product" => "whatsapp",
+                    "recipient_type" => "individual",
+                    "to" => $from,
+                    "type" => "text",
+                    "text" => [
+                        "preview_url" => false,
+                        "body" => "Genial hemos finalizado En unos minutos uno de nuestros Asesores te contactara para continuar el proceso, gracias..."
+                    ]
+                ];
+                curl_setopt_array($curl2, array(
+                    CURLOPT_URL => 'https://graph.facebook.com/v21.0/474070335798438/messages',
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_ENCODING => '',
+                    CURLOPT_MAXREDIRS => 10,
+                    CURLOPT_TIMEOUT => 0,
+                    CURLOPT_FOLLOWLOCATION => true,
+                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                    CURLOPT_CUSTOMREQUEST => 'POST',
+                    CURLOPT_POSTFIELDS => json_encode($message, JSON_UNESCAPED_UNICODE), // Corrección aquí
+                    CURLOPT_HTTPHEADER => array(
+                        'Content-Type: application/json',
+                        'Authorization: Bearer EAAH7VDWCz74BO0U9OsdlULHEbXupK2u87sSidoZC9UcARVvTqo8ZCYZASVoZCBomljw9yMe3OMZCPN10QcUDEVscZAk1nJW2CoTGQARPP84wmzY1VuSHyed1fFN6gKgdjOvOsIo2rlAv6qHUJwLpTjU6TNmlrVUoGkVEqVtKlcYipCSCs4FpELXMorJA3AOFL6'
+                    ),
+                ));
+                $response = curl_exec($curl2);
+                curl_close($curl2);
+                $contacto = contactos_chat::where('telefono', $from)->first();
+                $contacto->finalizado = 1;
+                $contacto->save();
+            }
+            elseif($contacto->ingresos == 0 &&  $contacto->referncias == 1 && $contacto->modelo == 1  && $contacto->kilometraje == 1  && $contacto->color == 1   && $contacto->precio_estimado == 1 && stripos($comentario, "financiado1") !== false ){
                 $curl2 = curl_init();
                 $message = [
                     "messaging_product" => "whatsapp",
@@ -536,22 +592,22 @@ class WppController extends Controller
                     "interactive" => [
                         "type" => "button",
                         "body" => [
-                            "text" => "perfecto !!! Deseas dejar tu vehiculo en parte de pago ? "
+                            "text" => "Genial, te podemos ayudar con la financiación, voy hacerte unas preguntas y revisamos la viabilidad. "
                         ],
                         "action" => [
                             "buttons" => [
                                 [
                                     "type" => "reply",
                                     "reply" => [
-                                        "id" => "retomaSi",
-                                        "title" => "Si"
+                                        "id" => "empleado1",
+                                        "title" => "Soy empleado"
                                     ]
                                 ],
                                 [
                                     "type" => "reply",
                                     "reply" => [
-                                        "id" => "retomaNo",
-                                        "title" => "No"
+                                        "id" => "independiente1",
+                                        "title" => "Soy Independiente"
                                     ]
                                 ]
                             ]
@@ -575,10 +631,303 @@ class WppController extends Controller
                 ));
                 $response = curl_exec($curl2);
                 curl_close($curl2);
-            } elseif (strpos(strval($comentario), "menu") !== false) {
-                $respuesta = "1️⃣ Información sobre nuestros productos\n2️⃣ Horarios de atención\n3️⃣ Hablar con un asesor\n4️⃣ Salir\nResponde con el número de la opción que deseas. 📩 gracias ";
-            } else {
-                $respuesta = "No entendimos tu mensaje porfa coloca un numero del menu, si deseas volver a ver el menu escribe la palabra 'menu'";
+            }
+            elseif($contacto->negocio == 1 && $contacto->ingresos == 0 && $contacto->referncias == 1 && $contacto->modelo == 1  && $contacto->kilometraje == 1  && $contacto->color == 1   && $contacto->precio_estimado == 1){
+                $curl2 = curl_init();
+                $message = [
+                    "messaging_product" => "whatsapp",
+                    "recipient_type" => "individual",
+                    "to" => $from,
+                    "type" => "text",
+                    "text" => [
+                        "preview_url" => false,
+                        "body" => "Cual es tu ingreso mensual ? "
+                    ]
+                ];
+                curl_setopt_array($curl2, array(
+                    CURLOPT_URL => 'https://graph.facebook.com/v21.0/474070335798438/messages',
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_ENCODING => '',
+                    CURLOPT_MAXREDIRS => 10,
+                    CURLOPT_TIMEOUT => 0,
+                    CURLOPT_FOLLOWLOCATION => true,
+                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                    CURLOPT_CUSTOMREQUEST => 'POST',
+                    CURLOPT_POSTFIELDS => json_encode($message, JSON_UNESCAPED_UNICODE), // Corrección aquí
+                    CURLOPT_HTTPHEADER => array(
+                        'Content-Type: application/json',
+                        'Authorization: Bearer EAAH7VDWCz74BO0U9OsdlULHEbXupK2u87sSidoZC9UcARVvTqo8ZCYZASVoZCBomljw9yMe3OMZCPN10QcUDEVscZAk1nJW2CoTGQARPP84wmzY1VuSHyed1fFN6gKgdjOvOsIo2rlAv6qHUJwLpTjU6TNmlrVUoGkVEqVtKlcYipCSCs4FpELXMorJA3AOFL6'
+                    ),
+                ));
+                $response = curl_exec($curl2);
+                curl_close($curl2);
+                $contacto = contactos_chat::where('telefono', $from)->first();
+                $contacto->ingresos = 1;
+                $contacto->save();
+            }
+            elseif($contacto->negocio == 1 && $contacto->ingresos == 1 && $contacto->referncias == 1 && $contacto->modelo == 1  && $contacto->kilometraje == 1  && $contacto->color == 1   && $contacto->precio_estimado == 1){
+                $curl2 = curl_init();
+                $message = [
+                    "messaging_product" => "whatsapp",
+                    "recipient_type" => "individual",
+                    "to" => $from,
+                    "type" => "text",
+                    "text" => [
+                        "preview_url" => false,
+                        "body" => "SUPER !!! Hemos terminado, en unos momentos nos pondremos en contacto para continuar el proceso  "
+                    ]
+                ];
+                curl_setopt_array($curl2, array(
+                    CURLOPT_URL => 'https://graph.facebook.com/v21.0/474070335798438/messages',
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_ENCODING => '',
+                    CURLOPT_MAXREDIRS => 10,
+                    CURLOPT_TIMEOUT => 0,
+                    CURLOPT_FOLLOWLOCATION => true,
+                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                    CURLOPT_CUSTOMREQUEST => 'POST',
+                    CURLOPT_POSTFIELDS => json_encode($message, JSON_UNESCAPED_UNICODE), // Corrección aquí
+                    CURLOPT_HTTPHEADER => array(
+                        'Content-Type: application/json',
+                        'Authorization: Bearer EAAH7VDWCz74BO0U9OsdlULHEbXupK2u87sSidoZC9UcARVvTqo8ZCYZASVoZCBomljw9yMe3OMZCPN10QcUDEVscZAk1nJW2CoTGQARPP84wmzY1VuSHyed1fFN6gKgdjOvOsIo2rlAv6qHUJwLpTjU6TNmlrVUoGkVEqVtKlcYipCSCs4FpELXMorJA3AOFL6'
+                    ),
+                ));
+                $response = curl_exec($curl2);
+                curl_close($curl2);
+                $contacto = contactos_chat::where('telefono', $from)->first();
+                $contacto->ingresos = 1;
+                $contacto->save();
+            }
+            else{
+                if (stripos($comentario, "ford") !== false) {
+                    $curl2 = curl_init();
+                    $message = [
+                        "messaging_product" => "whatsapp",
+                        "recipient_type" => "individual",
+                        "to" => $from, // Número de teléfono del destinatario
+                        "type" => "interactive",
+                        "interactive" => [
+                            "type" => "list",
+                            "body" => [
+                                "text" => "Cual es la nave de tu preferencia:"
+                            ],
+                            "footer" => [
+                                "text" => "Elige una opción para continuar"
+                            ],
+                            "action" => [
+                                "button" => "Ver Referencias",
+                                "sections" => [
+                                    [
+                                        "title" => "Vehiculos Ford",
+                                        "rows" => [
+                                            [
+                                                "id" => "retoma_1",
+                                                "title" => "Ford",
+                                                "description" => "Ford ranger"
+                                            ],
+                                            [
+                                                "id" => "retoma_2",
+                                                "title" => "Ford",
+                                                "description" => "Ford scape ecoobost"
+                                            ],
+                                            [
+                                                "id" => "retoma_3",
+                                                "title" => "Ford",
+                                                "description" => "ord scape hibrida  "
+                                            ],
+                                            [
+                                                "id" => "retoma_4",
+                                                "title" => "Ford",
+                                                "description" => "ford bronco "
+                                            ],
+                                            [
+                                                "id" => "retoma_5",
+                                                "title" => "Ford",
+                                                "description" => "ford f150 "
+                                            ],
+                                            [
+                                                "id" => "retoma_6",
+                                                "title" => "Ford",
+                                                "description" => "ford f150 hibrida "
+                                            ],
+                                            [
+                                                "id" => "retoma_7",
+                                                "title" => "Ford",
+                                                "description" => "ford f150 raptor "
+                                            ],
+                                            [
+                                                "id" => "retoma_8",
+                                                "title" => "Ford",
+                                                "description" => "ford ranger raptor  "
+                                            ],
+                                            [
+                                                "id" => "retoma_9",
+                                                "title" => "Ford",
+                                                "description" => "ford big bronco  "
+                                            ],
+                                            [
+                                                "id" => "retoma_10",
+                                                "title" => "Ford",
+                                                "description" => "ford mustang  "
+                                            ],
+                                            
+                                        ]
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ];
+                    curl_setopt_array($curl2, array(
+                        CURLOPT_URL => 'https://graph.facebook.com/v21.0/474070335798438/messages',
+                        CURLOPT_RETURNTRANSFER => true,
+                        CURLOPT_ENCODING => '',
+                        CURLOPT_MAXREDIRS => 10,
+                        CURLOPT_TIMEOUT => 0,
+                        CURLOPT_FOLLOWLOCATION => true,
+                        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                        CURLOPT_CUSTOMREQUEST => 'POST',
+                        CURLOPT_POSTFIELDS => json_encode($message, JSON_UNESCAPED_UNICODE), // Corrección aquí
+                        CURLOPT_HTTPHEADER => array(
+                            'Content-Type: application/json',
+                            'Authorization: Bearer EAAH7VDWCz74BO0U9OsdlULHEbXupK2u87sSidoZC9UcARVvTqo8ZCYZASVoZCBomljw9yMe3OMZCPN10QcUDEVscZAk1nJW2CoTGQARPP84wmzY1VuSHyed1fFN6gKgdjOvOsIo2rlAv6qHUJwLpTjU6TNmlrVUoGkVEqVtKlcYipCSCs4FpELXMorJA3AOFL6'
+                        ),
+                    ));
+                    $response = curl_exec($curl2);
+                    curl_close($curl2);
+                } elseif (stripos($comentario, "multimarca") !== false) {
+                    $curl2 = curl_init();
+                    $message = [
+                        "messaging_product" => "whatsapp",
+                        "recipient_type" => "individual",
+                        "to" => $from,
+                        "type" => "interactive",
+                        "interactive" => [
+                            "type" => "button",
+                            "body" => [
+                                "text" => "perfecto !!! Contamos con un amplio inventario, finalizando la conversación te envio el link de la pagina donde puedes ver algunos de los vehiculos que tenemos disponibles.\nDeseas dejar tu vehiculo en parte de pago ? "
+                            ],
+                            "action" => [
+                                "buttons" => [
+                                    [
+                                        "type" => "reply",
+                                        "reply" => [
+                                            "id" => "retomaSi",
+                                            "title" => "Si"
+                                        ]
+                                    ],
+                                    [
+                                        "type" => "reply",
+                                        "reply" => [
+                                            "id" => "retomaNo",
+                                            "title" => "No"
+                                        ]
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ];
+                    curl_setopt_array($curl2, array(
+                        CURLOPT_URL => 'https://graph.facebook.com/v21.0/474070335798438/messages',
+                        CURLOPT_RETURNTRANSFER => true,
+                        CURLOPT_ENCODING => '',
+                        CURLOPT_MAXREDIRS => 10,
+                        CURLOPT_TIMEOUT => 0,
+                        CURLOPT_FOLLOWLOCATION => true,
+                        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                        CURLOPT_CUSTOMREQUEST => 'POST',
+                        CURLOPT_POSTFIELDS => json_encode($message, JSON_UNESCAPED_UNICODE), // Corrección aquí
+                        CURLOPT_HTTPHEADER => array(
+                            'Content-Type: application/json',
+                            'Authorization: Bearer EAAH7VDWCz74BO0U9OsdlULHEbXupK2u87sSidoZC9UcARVvTqo8ZCYZASVoZCBomljw9yMe3OMZCPN10QcUDEVscZAk1nJW2CoTGQARPP84wmzY1VuSHyed1fFN6gKgdjOvOsIo2rlAv6qHUJwLpTjU6TNmlrVUoGkVEqVtKlcYipCSCs4FpELXMorJA3AOFL6'
+                        ),
+                    ));
+                    $response = curl_exec($curl2);
+                    curl_close($curl2);
+                } elseif (strpos($comentario, "retoma") !== false) {
+                    $curl2 = curl_init();
+                    $message = [
+                        "messaging_product" => "whatsapp",
+                        "recipient_type" => "individual",
+                        "to" => $from,
+                        "type" => "interactive",
+                        "interactive" => [
+                            "type" => "button",
+                            "body" => [
+                                "text" => "perfecto !!! Deseas dejar tu vehiculo en parte de pago ? "
+                            ],
+                            "action" => [
+                                "buttons" => [
+                                    [
+                                        "type" => "reply",
+                                        "reply" => [
+                                            "id" => "retoSi",
+                                            "title" => "Si"
+                                        ]
+                                    ],
+                                    [
+                                        "type" => "reply",
+                                        "reply" => [
+                                            "id" => "retoNo",
+                                            "title" => "No"
+                                        ]
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ];
+                    curl_setopt_array($curl2, array(
+                        CURLOPT_URL => 'https://graph.facebook.com/v21.0/474070335798438/messages',
+                        CURLOPT_RETURNTRANSFER => true,
+                        CURLOPT_ENCODING => '',
+                        CURLOPT_MAXREDIRS => 10,
+                        CURLOPT_TIMEOUT => 0,
+                        CURLOPT_FOLLOWLOCATION => true,
+                        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                        CURLOPT_CUSTOMREQUEST => 'POST',
+                        CURLOPT_POSTFIELDS => json_encode($message, JSON_UNESCAPED_UNICODE), // Corrección aquí
+                        CURLOPT_HTTPHEADER => array(
+                            'Content-Type: application/json',
+                            'Authorization: Bearer EAAH7VDWCz74BO0U9OsdlULHEbXupK2u87sSidoZC9UcARVvTqo8ZCYZASVoZCBomljw9yMe3OMZCPN10QcUDEVscZAk1nJW2CoTGQARPP84wmzY1VuSHyed1fFN6gKgdjOvOsIo2rlAv6qHUJwLpTjU6TNmlrVUoGkVEqVtKlcYipCSCs4FpELXMorJA3AOFL6'
+                        ),
+                    ));
+                    $response = curl_exec($curl2);
+                    curl_close($curl2);
+                } elseif (strpos($comentario, "retoSi") !== false) {
+                    $curl = curl_init();
+                    //mensaje de presentacion 
+                    $data = [
+                        "messaging_product" => "whatsapp",
+                        "recipient_type" => "individual",
+                        "to" => $from,
+                        "type" => "text",
+                        "text" => [
+                            "preview_url" => false,
+                            "body" => "Porfavor ayudame con la informacion de tu auto. \n Referencia:"
+                        ]
+                    ];
+                    curl_setopt_array($curl, array(
+                        CURLOPT_URL => 'https://graph.facebook.com/v21.0/474070335798438/messages',
+                        CURLOPT_RETURNTRANSFER => true,
+                        CURLOPT_ENCODING => '',
+                        CURLOPT_MAXREDIRS => 10,
+                        CURLOPT_TIMEOUT => 0,
+                        CURLOPT_FOLLOWLOCATION => true,
+                        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                        CURLOPT_CUSTOMREQUEST => 'POST',
+                        CURLOPT_POSTFIELDS => json_encode($data),
+                        CURLOPT_HTTPHEADER => array(
+                            'Content-Type: application/json',
+                            'Authorization: Bearer EAAH7VDWCz74BO0U9OsdlULHEbXupK2u87sSidoZC9UcARVvTqo8ZCYZASVoZCBomljw9yMe3OMZCPN10QcUDEVscZAk1nJW2CoTGQARPP84wmzY1VuSHyed1fFN6gKgdjOvOsIo2rlAv6qHUJwLpTjU6TNmlrVUoGkVEqVtKlcYipCSCs4FpELXMorJA3AOFL6'
+                        ),
+                    ));
+                    $response = curl_exec($curl);
+                    curl_close($curl);
+                    $contacto = contactos_chat::where('telefono', $from)->first();
+                    $contacto->referencias = 1;
+                    $contacto->save();
+                } else {
+                    $respuesta = "No entendimos tu mensaje porfa coloca un numero del menu, si deseas volver a ver el menu escribe la palabra 'menu'";
+                }
             }
         }
         $curl = curl_init();
