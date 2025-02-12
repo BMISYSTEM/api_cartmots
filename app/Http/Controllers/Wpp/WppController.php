@@ -298,7 +298,7 @@ class WppController extends Controller
                 "interactive" => [
                     "type" => "button",
                     "body" => [
-                        "text" => "Deseas comprar vehiculo"
+                        "text" => "¿Deseas comprar un vehículo?"
                     ],
                     "action" => [
                         "buttons" => [
@@ -320,6 +320,7 @@ class WppController extends Controller
                     ]
                 ]
             ];
+            
             curl_setopt_array($curl, array(
                 CURLOPT_URL => 'https://graph.facebook.com/v21.0/474070335798438/messages',
                 CURLOPT_RETURNTRANSFER => true,
