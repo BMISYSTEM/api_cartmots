@@ -135,7 +135,7 @@ class WppController extends Controller
                     $selected_option_id = $req['entry'][0]['changes'][0]['value']['messages'][0]['interactive']['list_reply']['id']; // ID de la opción elegida
                     $selected_option_title = $req['entry'][0]['changes'][0]['value']['messages'][0]['interactive']['list_reply']['title']; // Texto de la opción elegida
                     $receiver_number = $req['entry'][0]['changes'][0]['value']['metadata']['display_phone_number']; // Número que recibió el mensaje
-                    $this->botMessage($message_id, $from, $receiver_number, 0);
+                    $this->botMessage($selected_option_id, $from, $receiver_number, 0);
                     // 📝 Registrar en el log de Laravel
                     Log::info("📩 Mensaje recibido en WhatsApp:");
                     Log::info("🔹 Nombre: $name");
