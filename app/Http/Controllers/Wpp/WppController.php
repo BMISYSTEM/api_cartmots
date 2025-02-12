@@ -290,7 +290,7 @@ class WppController extends Controller
             $response1 = curl_exec($curl);
             curl_close($curl);
             sleep(3);
-            $curl = curl_init();
+            $curl2 = curl_init();
             $message = [
                 "messaging_product" => "whatsapp",
                 "recipient_type" => "individual",
@@ -322,7 +322,7 @@ class WppController extends Controller
                 ]
             ];
             
-            curl_setopt_array($curl, array(
+            curl_setopt_array($curl2, array(
                 CURLOPT_URL => 'https://graph.facebook.com/v21.0/474070335798438/messages',
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_ENCODING => '',
@@ -337,9 +337,9 @@ class WppController extends Controller
                     'Authorization: Bearer EAAH7VDWCz74BO0U9OsdlULHEbXupK2u87sSidoZC9UcARVvTqo8ZCYZASVoZCBomljw9yMe3OMZCPN10QcUDEVscZAk1nJW2CoTGQARPP84wmzY1VuSHyed1fFN6gKgdjOvOsIo2rlAv6qHUJwLpTjU6TNmlrVUoGkVEqVtKlcYipCSCs4FpELXMorJA3AOFL6'
                 ),
             ));
-            $response = curl_exec($curl);
-            $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-            curl_close($curl);
+            $response = curl_exec($curl2);
+            $httpcode = curl_getinfo($curl2, CURLINFO_HTTP_CODE);
+            curl_close($curl2);
             
             echo "HTTP Code: " . $httpcode . "\n";
             echo "Response: " . $response . "\n";
