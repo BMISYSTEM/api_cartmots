@@ -289,7 +289,7 @@ class WppController extends Controller
             ));
             $response1 = curl_exec($curl1);
             curl_close($curl1);
-            sleep(3);
+            usleep(3000000);
             $curl2 = curl_init();
             $message = [
                 "messaging_product" => "whatsapp",
@@ -347,7 +347,7 @@ class WppController extends Controller
             $contacto = contactos_chat::where('telefono',$from)->first();
             $contacto->bot = 0;
             $contacto->save();
-            
+
         }else{
             if(strpos(strval($comentario), "1") !== false ){
                 $respuesta = "1️⃣ Información sobre nuestros servicios:\nEn [Nombre de tu Empresa], desarrollamos soluciones tecnológicas a la medida para tu negocio.\n📌 Aplicaciones web y móviles\n📌 Sistemas empresariales\n📌 Integraciones con API\n📌 Automatización de procesos\nSi deseas más detalles, cuéntanos sobre tu necesidad o responde con 3 para hablar con un asesor.";
