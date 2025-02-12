@@ -290,36 +290,37 @@ class WppController extends Controller
             curl_close($curl); */
             $curl = curl_init();
             // segundo mensaje 
-            $dataMessage2 = [
+            $message = [
                 "messaging_product" => "whatsapp",
                 "recipient_type" => "individual",
-                "to" => $from,
+                "to" => "573184482848",
                 "type" => "interactive",
                 "interactive" => [
                     "type" => "button",
                     "body" => [
-                        "text" => "¿Deseas comprar un vehículo?"
+                        "text" => "prueba de botón"
                     ],
                     "action" => [
                         "buttons" => [
                             [
                                 "type" => "reply",
                                 "reply" => [
-                                    "id" => "button1",
-                                    "title" => "Nuevos FORD"
+                                    "id" => "numero1",
+                                    "title" => "boton1"
                                 ]
                             ],
                             [
                                 "type" => "reply",
                                 "reply" => [
-                                    "id" => "button2",
-                                    "title" => "Usados Multimarcas"
+                                    "id" => "numero2",
+                                    "title" => "boton2"
                                 ]
                             ]
                         ]
                     ]
                 ]
             ];
+            
             
             curl_setopt_array($curl, array(
                 CURLOPT_URL => 'https://graph.facebook.com/v21.0/474070335798438/messages',
@@ -330,7 +331,7 @@ class WppController extends Controller
                 CURLOPT_FOLLOWLOCATION => true,
                 CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
                 CURLOPT_CUSTOMREQUEST => 'POST',
-                CURLOPT_POSTFIELDS => json_encode($dataMessage2),
+                CURLOPT_POSTFIELDS => json_encode($message),
                 CURLOPT_HTTPHEADER => array(
                     'Content-Type: application/json',
                     'Authorization: Bearer EAAH7VDWCz74BO0U9OsdlULHEbXupK2u87sSidoZC9UcARVvTqo8ZCYZASVoZCBomljw9yMe3OMZCPN10QcUDEVscZAk1nJW2CoTGQARPP84wmzY1VuSHyed1fFN6gKgdjOvOsIo2rlAv6qHUJwLpTjU6TNmlrVUoGkVEqVtKlcYipCSCs4FpELXMorJA3AOFL6'
