@@ -72,15 +72,7 @@ class WppController extends Controller
                         ]);
                     }
 
-                    // Crear mensaje
-                    messages_chat::create([
-                        'telefono' => $telefono,
-                        'message' => $message,
-                        'timestamp_message' => $req['entry'][0]['changes'][0]['value']['messages'][0]['timestamp'] ?? time(),
-                        'id_telefono' => $id_telefono,
-                        'send' => 0,
-                        'empresas' => $empresas
-                    ]);
+                    $this->saveMessgeRecive($message,$id_telefono,$empresas,$telefono);
                     $contactovalidation = contactos_chat::where('telefono', $telefono)->where('empresas', $empresas)->first();
                     if ($contacto->isEmpty()) {
                         $this->botMessage($comentario, $from, $id_telefono, 0);
@@ -90,9 +82,6 @@ class WppController extends Controller
                         $this->botMessage($comentario, $from, $id_telefono, 0);
                     }
                 }
-                /**envia los mensajes **/
-                /* $this->sendMessage($comentario, $from); */
-                /* $this->sendMessage($comentario, $from,$id_telefono); */
             } else {
                 
                 if (
@@ -102,21 +91,24 @@ class WppController extends Controller
                     ($type = $req['entry'][0]['changes'][0]['value']['messages'][0]['type']) &&
                     ($id_telefono = $req['entry'][0]['changes'][0]['value']['metadata']['display_phone_number'])
                 ) {
+
                     if (
                         $type === 'interactive' &&
                         isset($req['entry'][0]['changes'][0]['value']['messages'][0]['interactive']['button_reply']['id']) &&
                         isset($req['entry'][0]['changes'][0]['value']['messages'][0]['interactive']['button_reply']['title']) &&
                         ($buttonId = $req['entry'][0]['changes'][0]['value']['messages'][0]['interactive']['button_reply']['id']) &&
-                        ($id_telefono = $req['entry'][0]['changes'][0]['value']['messages'][0]['interactive']['button_reply']['id']) &&
                         ($buttonTitle = $req['entry'][0]['changes'][0]['value']['messages'][0]['interactive']['button_reply']['title'])
                     ) {
+                        $config_chat = config_chat::where('id_telefono', $id_telefono)->first();
+                        $empresas = $config_chat ? $config_chat->empresas : null;
+                        $this->saveMessgeRecive($buttonTitle,$id_telefono,$empresas,$from);
                         $this->botMessage($buttonId, $from, $id_telefono, 0);
                     } elseif (
                         $type === 'text' &&
                         isset($req['entry'][0]['changes'][0]['value']['messages'][0]['text']['body']) &&
                         ($comentario = $req['entry'][0]['changes'][0]['value']['messages'][0]['text']['body'])
                     ) {
-                        // Es un mensaje de texto
+                    
                         return response()->json([
                             'status' => 'success',
                             'message' => "El usuario $from envió el mensaje: $comentario"
@@ -126,7 +118,8 @@ class WppController extends Controller
                 if (
                     isset($req['entry'][0]['changes'][0]['value']['messages'][0]['from']) &&
                     isset($req['entry'][0]['changes'][0]['value']['messages'][0]['interactive']['list_reply']['id']) &&
-                    isset($req['entry'][0]['changes'][0]['value']['messages'][0]['interactive']['list_reply']['title'])
+                    isset($req['entry'][0]['changes'][0]['value']['messages'][0]['interactive']['list_reply']['title']) &&
+                    ($id_telefono = $req['entry'][0]['changes'][0]['value']['metadata']['display_phone_number'])
                 ) {
                     // 📌 Extraer información relevante
                     $from = $req['entry'][0]['changes'][0]['value']['messages'][0]['from']; // Número de teléfono del remitente
@@ -135,14 +128,11 @@ class WppController extends Controller
                     $selected_option_id = $req['entry'][0]['changes'][0]['value']['messages'][0]['interactive']['list_reply']['id']; // ID de la opción elegida
                     $selected_option_title = $req['entry'][0]['changes'][0]['value']['messages'][0]['interactive']['list_reply']['title']; // Texto de la opción elegida
                     $receiver_number = $req['entry'][0]['changes'][0]['value']['metadata']['display_phone_number']; // Número que recibió el mensaje
+
+                    $config_chat = config_chat::where('id_telefono', $id_telefono)->first();
+                    $empresas = $config_chat ? $config_chat->empresas : null;
+                    $this->saveMessgeRecive($selected_option_title,$id_telefono,$empresas,$from);
                     $this->botMessage($selected_option_id, $from, $receiver_number, 0);
-                    // 📝 Registrar en el log de Laravel
-                    Log::info("📩 Mensaje recibido en WhatsApp:");
-                    Log::info("🔹 Nombre: $name");
-                    Log::info("📞 Número: $from");
-                    Log::info("📥 ID del mensaje: $message_id");
-                    Log::info("✅ Opción seleccionada: $selected_option_title (ID: $selected_option_id)");
-                    Log::info("📲 Número receptor: $receiver_number");
                 } else {
                     Log::warning("⚠️ No se encontró un mensaje válido en la solicitud.");
                 }
@@ -153,7 +143,6 @@ class WppController extends Controller
             file_put_contents($filePath, "Error generado--.$th", FILE_APPEND);
             return response()->json(['message' => 'EVENT_RECEIVED'], 200);
         }
-
         return response()->json(['message' => 'EVENT_RECEIVED'], 200);
     }
 
@@ -1035,6 +1024,16 @@ class WppController extends Controller
             'id_telefono' => $telefonoId,
             'send' => 1,
             'empresas' => 8
+        ]);
+    }
+    function saveMessgeRecive($respuesta,$telefonoId,$empresa,$telefono){
+        messages_chat::create([
+            'telefono' => $telefono,
+            'message' => $respuesta,
+            'timestamp_message' => time(),
+            'id_telefono' => $telefonoId,
+            'send' => 0,
+            'empresas' => $empresa
         ]);
     }
 }
