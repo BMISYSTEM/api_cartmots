@@ -75,13 +75,13 @@ class WppController extends Controller
                     $this->saveMessgeRecive($message,$id_telefono,$empresas,$telefono);
                     
                     if ($contacto->isEmpty()) {
-                        Log::info('opcion=> ','primera opcion contacto es empty ');
+                        Log::info("opcion=> ","primera opcion contacto es empty ");
                         $this->botMessage($comentario, $from, $id_telefono, 0);
                     } else{
                         $contactovalidation = contactos_chat::where('telefono', $telefono)->where('empresas', $empresas)->first();
                         /* $contactovalidation->bot == 1 | 0  */
                         /* 1 = nuevo, 0 = ya se mando el primer mensaje  */
-                        Log::info('opcion=> ','segunda opcion contacto es 1 ');
+                        Log::info("opcion=> ","segunda opcion contacto es 1 ");
                         $this->botMessage($comentario, $from, $id_telefono, $contactovalidation->bot);
                     }
                 }
