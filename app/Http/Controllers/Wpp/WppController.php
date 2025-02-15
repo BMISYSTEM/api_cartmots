@@ -74,7 +74,6 @@ class WppController extends Controller
 
                     $this->saveMessgeRecive($message,$id_telefono,$empresas,$telefono);
                     $contactovalidation = contactos_chat::where('telefono', $telefono)->where('empresas', $empresas)->first();
-                    Log::info('contactovalidation->bot => ',$contactovalidation->bot);
                     if ($contacto->isEmpty()) {
                         Log::info('opcion=> ','primera opcion contacto es empty ');
                         $this->botMessage($comentario, $from, $id_telefono, 0);
