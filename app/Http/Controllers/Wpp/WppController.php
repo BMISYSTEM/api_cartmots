@@ -295,9 +295,11 @@ class WppController extends Controller
     function botMessage($comentario, $from, $id_telefono, $nuevo)
     {
         $respuesta = '';
+        $response=null;
         Log::info("Mensaje = ".$comentario);
         if ($nuevo == 1) {
             $curl2 = curl_init();
+            $respuesta = "🔹 ¡Hola, buen día! ☀️\n👋 Mi nombre es Brandon Arbelaez, especialista en el sector financiero 💰 y automotriz 🚗.\n📌 Permíteme hacerte unas preguntas 📝 para poder asesorarte de la mejor manera.\n✨ ¡Estoy aquí para ayudarte!\nDeseas comprar vehiculo?";
             $message = [
                 "messaging_product" => "whatsapp",
                 "recipient_type" => "individual",
@@ -306,7 +308,7 @@ class WppController extends Controller
                 "interactive" => [
                     "type" => "button",
                     "body" => [
-                        "text" => "🔹 ¡Hola, buen día! ☀️\n👋 Mi nombre es Brandon Arbelaez, especialista en el sector financiero 💰 y automotriz 🚗.\n📌 Permíteme hacerte unas preguntas 📝 para poder asesorarte de la mejor manera.\n✨ ¡Estoy aquí para ayudarte!\nDeseas comprar vehiculo?"
+                        "text" => $respuesta
                     ],
                     "action" => [
                         "buttons" => [
@@ -355,6 +357,7 @@ class WppController extends Controller
             }
             if($contacto->ingresos == 0 &&  $contacto->ferencias == 1 && $contacto->modelo == 0  && $contacto->kilometraje == 0  && $contacto->color == 0   && $contacto->precio_estimado == 0){
                 $curl = curl_init();
+                $respuesta = "Modelo:";
                 //mensaje de presentacion 
                 $data = [
                     "messaging_product" => "whatsapp",
@@ -363,7 +366,7 @@ class WppController extends Controller
                     "type" => "text",
                     "text" => [
                         "preview_url" => false,
-                        "body" => "Modelo:"
+                        "body" => $respuesta
                     ]
                 ];
                 curl_setopt_array($curl, array(
@@ -390,6 +393,7 @@ class WppController extends Controller
                 $contacto->save();
             }elseif($contacto->ingresos == 0 &&  $contacto->ferencias == 1 && $contacto->modelo == 1  && $contacto->kilometraje == 0  && $contacto->color == 0   && $contacto->precio_estimado == 0){
                 $curl = curl_init();
+                $respuesta = "Kilometraje:";
                 //mensaje de presentacion 
                 $data = [
                     "messaging_product" => "whatsapp",
@@ -398,7 +402,7 @@ class WppController extends Controller
                     "type" => "text",
                     "text" => [
                         "preview_url" => false,
-                        "body" => "Kilometraje:"
+                        "body" => $respuesta
                     ]
                 ];
                 curl_setopt_array($curl, array(
@@ -426,6 +430,7 @@ class WppController extends Controller
             }
             elseif($contacto->ingresos == 0 &&  $contacto->ferencias == 1 && $contacto->modelo == 1  && $contacto->kilometraje == 1  && $contacto->color == 0   && $contacto->precio_estimado == 0){
                 $curl = curl_init();
+                $respuesta ="Color:";
                 //mensaje de presentacion 
                 $data = [
                     "messaging_product" => "whatsapp",
@@ -434,7 +439,7 @@ class WppController extends Controller
                     "type" => "text",
                     "text" => [
                         "preview_url" => false,
-                        "body" => "Color:"
+                        "body" => $respuesta
                     ]
                 ];
                 curl_setopt_array($curl, array(
@@ -462,6 +467,7 @@ class WppController extends Controller
             }
             elseif($contacto->ingresos == 0 &&  $contacto->ferencias == 1 && $contacto->modelo == 1  && $contacto->kilometraje == 1  && $contacto->color == 1   && $contacto->precio_estimado == 0){
                 $curl = curl_init();
+                $respuesta ="Precio estimado:";
                 //mensaje de presentacion 
                 $data = [
                     "messaging_product" => "whatsapp",
@@ -470,7 +476,7 @@ class WppController extends Controller
                     "type" => "text",
                     "text" => [
                         "preview_url" => false,
-                        "body" => "Precio estimado:"
+                        "body" => $respuesta
                     ]
                 ];
                 curl_setopt_array($curl, array(
@@ -498,6 +504,7 @@ class WppController extends Controller
             }
             elseif($contacto->negocio == 0 &&  $contacto->ingresos == 0 &&  $contacto->ferencias == 1 && $contacto->modelo == 1  && $contacto->kilometraje == 1  && $contacto->color == 1   && $contacto->precio_estimado == 1){
                 $curl2 = curl_init();
+                $respuesta = "Quisiera saber como deseas hacer el negocio ";
                 $message = [
                     "messaging_product" => "whatsapp",
                     "recipient_type" => "individual",
@@ -506,7 +513,7 @@ class WppController extends Controller
                     "interactive" => [
                         "type" => "button",
                         "body" => [
-                            "text" => "Quisiera saber como deseas hacer el negocio "
+                            "text" => $respuesta
                         ],
                         "action" => [
                             "buttons" => [
@@ -551,6 +558,7 @@ class WppController extends Controller
             }
             elseif($contacto->ingresos == 0 &&  $contacto->ferencias == 1 && $contacto->modelo == 1  && $contacto->kilometraje == 1  && $contacto->color == 1   && $contacto->precio_estimado == 1 && stripos($comentario, "contado1") !== false ){
                 $curl2 = curl_init();
+                $respuesta = "Genial hemos finalizado En unos minutos uno de nuestros Asesores te contactara para continuar el proceso, gracias...";
                 $message = [
                     "messaging_product" => "whatsapp",
                     "recipient_type" => "individual",
@@ -558,7 +566,7 @@ class WppController extends Controller
                     "type" => "text",
                     "text" => [
                         "preview_url" => false,
-                        "body" => "Genial hemos finalizado En unos minutos uno de nuestros Asesores te contactara para continuar el proceso, gracias..."
+                        "body" => $respuesta
                     ]
                 ];
                 curl_setopt_array($curl2, array(
@@ -584,6 +592,7 @@ class WppController extends Controller
             }
             elseif($contacto->ingresos == 0 &&  $contacto->ferencias == 1 && $contacto->modelo == 1  && $contacto->kilometraje == 1  && $contacto->color == 1   && $contacto->precio_estimado == 1 && stripos($comentario, "financiado1") !== false ){
                 $curl2 = curl_init();
+                $respuesta = "Genial, te podemos ayudar con la financiación, voy hacerte unas preguntas y revisamos la viabilidad. ";
                 $message = [
                     "messaging_product" => "whatsapp",
                     "recipient_type" => "individual",
@@ -592,7 +601,7 @@ class WppController extends Controller
                     "interactive" => [
                         "type" => "button",
                         "body" => [
-                            "text" => "Genial, te podemos ayudar con la financiación, voy hacerte unas preguntas y revisamos la viabilidad. "
+                            "text" => $respuesta
                         ],
                         "action" => [
                             "buttons" => [
@@ -634,6 +643,7 @@ class WppController extends Controller
             }
             elseif($contacto->negocio == 1 && $contacto->ingresos == 0 && $contacto->ferencias == 1 && $contacto->modelo == 1  && $contacto->kilometraje == 1  && $contacto->color == 1   && $contacto->precio_estimado == 1){
                 $curl2 = curl_init();
+                $respuesta = "Cual es tu ingreso mensual ? ";
                 $message = [
                     "messaging_product" => "whatsapp",
                     "recipient_type" => "individual",
@@ -641,7 +651,7 @@ class WppController extends Controller
                     "type" => "text",
                     "text" => [
                         "preview_url" => false,
-                        "body" => "Cual es tu ingreso mensual ? "
+                        "body" => $respuesta
                     ]
                 ];
                 curl_setopt_array($curl2, array(
@@ -667,6 +677,7 @@ class WppController extends Controller
             }
             elseif($contacto->negocio == 1 && $contacto->ingresos == 1 && $contacto->ferencias == 1 && $contacto->modelo == 1  && $contacto->kilometraje == 1  && $contacto->color == 1   && $contacto->precio_estimado == 1){
                 $curl2 = curl_init();
+                $respuesta = "SUPER !!! Hemos terminado, en unos momentos nos pondremos en contacto para continuar el proceso  ";
                 $message = [
                     "messaging_product" => "whatsapp",
                     "recipient_type" => "individual",
@@ -674,7 +685,7 @@ class WppController extends Controller
                     "type" => "text",
                     "text" => [
                         "preview_url" => false,
-                        "body" => "SUPER !!! Hemos terminado, en unos momentos nos pondremos en contacto para continuar el proceso  "
+                        "body" => $respuesta
                     ]
                 ];
                 curl_setopt_array($curl2, array(
@@ -701,6 +712,7 @@ class WppController extends Controller
             else{
                 if (stripos($comentario, "ford") !== false) {
                     $curl2 = curl_init();
+                    $respuesta = "Cual es la nave de tu preferencia:";
                     $message = [
                         "messaging_product" => "whatsapp",
                         "recipient_type" => "individual",
@@ -709,7 +721,7 @@ class WppController extends Controller
                         "interactive" => [
                             "type" => "list",
                             "body" => [
-                                "text" => "Cual es la nave de tu preferencia:"
+                                "text" => $respuesta
                             ],
                             "footer" => [
                                 "text" => "Elige una opción para continuar"
@@ -796,6 +808,7 @@ class WppController extends Controller
                     curl_close($curl2);
                 } elseif (stripos($comentario, "multimarca") !== false) {
                     $curl2 = curl_init();
+                    $respuesta = "perfecto !!! Contamos con un amplio inventario, finalizando la conversación te envio el link de la pagina donde puedes ver algunos de los vehiculos que tenemos disponibles.\nDeseas dejar tu vehiculo en parte de pago ? ";
                     $message = [
                         "messaging_product" => "whatsapp",
                         "recipient_type" => "individual",
@@ -804,7 +817,7 @@ class WppController extends Controller
                         "interactive" => [
                             "type" => "button",
                             "body" => [
-                                "text" => "perfecto !!! Contamos con un amplio inventario, finalizando la conversación te envio el link de la pagina donde puedes ver algunos de los vehiculos que tenemos disponibles.\nDeseas dejar tu vehiculo en parte de pago ? "
+                                "text" => $respuesta
                             ],
                             "action" => [
                                 "buttons" => [
@@ -845,6 +858,7 @@ class WppController extends Controller
                     curl_close($curl2);
                 } elseif (strpos($comentario, "retoma") !== false) {
                     $curl2 = curl_init();
+                    $respuesta = "perfecto !!! Deseas dejar tu vehiculo en parte de pago ? ";
                     $message = [
                         "messaging_product" => "whatsapp",
                         "recipient_type" => "individual",
@@ -853,7 +867,7 @@ class WppController extends Controller
                         "interactive" => [
                             "type" => "button",
                             "body" => [
-                                "text" => "perfecto !!! Deseas dejar tu vehiculo en parte de pago ? "
+                                "text" => $respuesta
                             ],
                             "action" => [
                                 "buttons" => [
@@ -895,6 +909,7 @@ class WppController extends Controller
                 } 
                 elseif (strpos($comentario, "retoSi") !== false) {
                     $curl = curl_init();
+                    $respuesta ="Porfavor ayudame con la informacion de tu auto. \n Referencia:" ;
                     //mensaje de presentacion 
                     $data = [
                         "messaging_product" => "whatsapp",
@@ -903,7 +918,7 @@ class WppController extends Controller
                         "type" => "text",
                         "text" => [
                             "preview_url" => false,
-                            "body" => "Porfavor ayudame con la informacion de tu auto. \n Referencia:"
+                            "body" => $respuesta
                         ]
                     ];
                     curl_setopt_array($curl, array(
@@ -930,6 +945,7 @@ class WppController extends Controller
                 elseif (strpos($comentario, "retoNo") !== false) {
                     
                     $curl = curl_init();
+                    $respuesta = "Quisiera saber como deseas hacer el negocio ";
                     //mensaje de presentacion 
                     $message = [
                         "messaging_product" => "whatsapp",
@@ -939,7 +955,7 @@ class WppController extends Controller
                         "interactive" => [
                             "type" => "button",
                             "body" => [
-                                "text" => "Quisiera saber como deseas hacer el negocio "
+                                "text" => $respuesta
                             ],
                             "action" => [
                                 "buttons" => [
@@ -994,40 +1010,7 @@ class WppController extends Controller
             }
         }
         $curl = curl_init();
-        //mensaje de presentacion 
-        $data = [
-            "messaging_product" => "whatsapp",
-            "recipient_type" => "individual",
-            "to" => $from,
-            "type" => "text",
-            "text" => [
-                "preview_url" => false,
-                "body" => $respuesta
-            ]
-        ];
-
-
-
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://graph.facebook.com/v21.0/474070335798438/messages',
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POSTFIELDS => json_encode($data),
-            CURLOPT_HTTPHEADER => array(
-                'Content-Type: application/json',
-                'Authorization: Bearer EAAH7VDWCz74BO0U9OsdlULHEbXupK2u87sSidoZC9UcARVvTqo8ZCYZASVoZCBomljw9yMe3OMZCPN10QcUDEVscZAk1nJW2CoTGQARPP84wmzY1VuSHyed1fFN6gKgdjOvOsIo2rlAv6qHUJwLpTjU6TNmlrVUoGkVEqVtKlcYipCSCs4FpELXMorJA3AOFL6'
-            ),
-        ));
-
-
-        $response = curl_exec($curl);
-        curl_close($curl);
-
+        //mensaje de presentacion
         if ($response) {
             // Crear mensaje
             messages_chat::create([
