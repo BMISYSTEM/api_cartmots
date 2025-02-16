@@ -76,7 +76,7 @@ class WppController extends Controller
                     
                     if ($contacto->isEmpty()) {
                         Log::info("opcion=> ","primera opcion contacto es empty ");
-                        $this->botMessage($message, $from, $id_telefono, 0);
+                        $this->botMessage($message, $from, $id_telefono, 1);
                     } else{
                         $contactovalidation = contactos_chat::where('telefono', $telefono)->where('empresas', $empresas)->first();
                         /* $contactovalidation->bot == 1 | 0  */
