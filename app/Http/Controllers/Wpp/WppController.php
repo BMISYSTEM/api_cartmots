@@ -71,17 +71,15 @@ class WppController extends Controller
                             'bot' => 0
                         ]);
                     }
-
                     $this->saveMessgeRecive($message,$id_telefono,$empresas,$telefono);
-                    
                     if ($contacto->isEmpty()) {
-                        Log::info("opcion=> ","primera opcion contacto es empty ");
+                        Log::info("opcion=> ",["primera opcion contacto es empty "]);
                         $this->botMessage($message, $from, $id_telefono, 1);
                     } else{
                         $contactovalidation = contactos_chat::where('telefono', $telefono)->where('empresas', $empresas)->first();
                         /* $contactovalidation->bot == 1 | 0  */
                         /* 1 = nuevo, 0 = ya se mando el primer mensaje  */
-                        Log::info("opcion=> ","segunda opcion contacto es 1 ");
+                        Log::info("opcion=> ",["segunda opcion contacto es 1 "]);
                         $this->botMessage($message, $from, $id_telefono, $contactovalidation->bot);
                     }
                 }
@@ -287,7 +285,7 @@ class WppController extends Controller
     function botMessage($comentario, $from, $id_telefono, $nuevo)
     {
         $respuesta = '';
-        Log::info("Mensaje = ","primer comentario ");
+        Log::info("Mensaje = ",["primer comentario "]);
         if ($nuevo == 1) {
             $curl2 = curl_init();
             $respuesta = "🔹 ¡Hola, buen día! ☀️\n👋 Mi nombre es Brandon Arbelaez, especialista en el sector financiero 💰 y automotriz 🚗.\n📌 Permíteme hacerte unas preguntas 📝 para poder asesorarte de la mejor manera.\n✨ ¡Estoy aquí para ayudarte!\nDeseas comprar vehiculo?";
