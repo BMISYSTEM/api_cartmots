@@ -120,7 +120,7 @@ class WppController extends Controller
                     isset($req['entry'][0]['changes'][0]['value']['messages'][0]['from']) &&
                     isset($req['entry'][0]['changes'][0]['value']['messages'][0]['interactive']['list_reply']['id']) &&
                     isset($req['entry'][0]['changes'][0]['value']['messages'][0]['interactive']['list_reply']['title']) &&
-                    ($id_telefono = $req['entry'][0]['changes'][0]['value']['metadata']['display_phone_number'])
+                    ($id_telefono = $req['entry'][0]['changes'][0]['value']['metadata']['phone_number_id'])
                 ) {
                     // 📌 Extraer información relevante
                     $from = $req['entry'][0]['changes'][0]['value']['messages'][0]['from']; // Número de teléfono del remitente
