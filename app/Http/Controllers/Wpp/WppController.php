@@ -132,7 +132,7 @@ class WppController extends Controller
 
                     $config_chat = config_chat::where('id_telefono', $id_telefono)->first();
                     $empresas = $config_chat ? $config_chat->empresas : null;
-                    $this->saveMessgeRecive($selected_option_title,$id_telefono,$empresas,$from);
+                    $this->saveMessgeRecive($selected_option_id,$id_telefono,$empresas,$from);
                     $this->botMessage($selected_option_id, $from, $receiver_number, 0);
                 } else {
                     Log::warning("⚠️ No se encontró un mensaje válido en la solicitud.");
@@ -733,53 +733,53 @@ class WppController extends Controller
                                         "rows" => [
                                             [
                                                 "id" => "retoma_1",
-                                                "title" => "Ford",
-                                                "description" => "Ford ranger"
+                                                "title" => "Ford ranger",
+                                                "description" => ""
                                             ],
                                             [
                                                 "id" => "retoma_2",
-                                                "title" => "Ford",
-                                                "description" => "Ford scape ecoobost"
+                                                "title" => "Ford scape ecoobost",
+                                                "description" => ""
                                             ],
                                             [
                                                 "id" => "retoma_3",
-                                                "title" => "Ford",
-                                                "description" => "ord scape hibrida  "
+                                                "title" => "Ford scape hibrida ",
+                                                "description" => " "
                                             ],
                                             [
                                                 "id" => "retoma_4",
-                                                "title" => "Ford",
-                                                "description" => "ford bronco "
+                                                "title" => "Ford bronco",
+                                                "description" => " "
                                             ],
                                             [
                                                 "id" => "retoma_5",
-                                                "title" => "Ford",
-                                                "description" => "ford f150 "
+                                                "title" => "Ford f150 ",
+                                                "description" => ""
                                             ],
                                             [
                                                 "id" => "retoma_6",
-                                                "title" => "Ford",
-                                                "description" => "ford f150 hibrida "
+                                                "title" => "Ford f150 hibrida ",
+                                                "description" => ""
                                             ],
                                             [
                                                 "id" => "retoma_7",
-                                                "title" => "Ford",
-                                                "description" => "ford f150 raptor "
+                                                "title" => "Ford f150 raptor",
+                                                "description" => " "
                                             ],
                                             [
                                                 "id" => "retoma_8",
-                                                "title" => "Ford",
-                                                "description" => "ford ranger raptor  "
+                                                "title" => "Ford ranger raptor ",
+                                                "description" => " "
                                             ],
                                             [
                                                 "id" => "retoma_9",
-                                                "title" => "Ford",
-                                                "description" => "ford big bronco  "
+                                                "title" => "Ford big bronco ",
+                                                "description" => " "
                                             ],
                                             [
                                                 "id" => "retoma_10",
-                                                "title" => "Ford",
-                                                "description" => "ford mustang  "
+                                                "title" => "Ford mustang ",
+                                                "description" => " "
                                             ],
                                             
                                         ]
