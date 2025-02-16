@@ -90,7 +90,7 @@ class WppController extends Controller
                     isset($req['entry'][0]['changes'][0]['value']['messages'][0]['type']) &&
                     ($from = $req['entry'][0]['changes'][0]['value']['messages'][0]['from']) &&
                     ($type = $req['entry'][0]['changes'][0]['value']['messages'][0]['type']) &&
-                    ($id_telefono = $req['entry'][0]['changes'][0]['value']['metadata']['display_phone_number'])
+                    ($id_telefono = $req['entry'][0]['changes'][0]['value']['metadata']['phone_number_id'])
                 ) {
 
                     if (
