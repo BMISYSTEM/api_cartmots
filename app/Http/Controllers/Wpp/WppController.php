@@ -675,7 +675,18 @@ class WppController extends Controller
             }
             elseif($contacto->negocio == 1 && $contacto->ingresos == 1 && $contacto->ferencias == 1 && $contacto->modelo == 1  && $contacto->kilometraje == 1  && $contacto->color == 1   && $contacto->precio_estimado == 1){
                 $curl2 = curl_init();
-                $respuesta = "SUPER !!! Hemos terminado, en unos momentos nos pondremos en contacto para continuar el proceso  ";
+                $respuesta = "¡SUPER! De acuerdo con lo que me cuentas, es muy probable que tu crédito sea aprobado.  
+                Por favor, déjame estos datos para enviar tu solicitud a estudio. En unas horas me contactaré contigo con una respuesta:";
+                
+                $respuesta .= "\n\n🔹 *Datos requeridos:*"
+                            . "\n- Nombre completo y número de cédula"
+                            . "\n- Dirección de residencia"
+                            . "\n- Ciudad"
+                            . "\n- Nombre de la empresa"
+                            . "\n- Dirección de la empresa"
+                            . "\n- Antigüedad en la empresa"
+                            . "\n- 1 referencia familiar (nombre y teléfono)"
+                            . "\n- 1 referencia personal (nombre y teléfono)";
                 $message = [
                     "messaging_product" => "whatsapp",
                     "recipient_type" => "individual",
