@@ -277,7 +277,8 @@ class WppController extends Controller
                         ch.id_telefono,
                         ch.empresas,
                         ult_messag.message,
-                        ult_messag.created_at
+                        ult_messag.created_at,
+                        ((ch.ferencias + ch.modelo + ch.kilometraje + ch.color + ch.precio_estimado + ch.ingresos + ch.negocio) / 7 ) * 100 as 	puntuacion
                     FROM contactos_chats ch
                     INNER JOIN (
                         SELECT m1.*
