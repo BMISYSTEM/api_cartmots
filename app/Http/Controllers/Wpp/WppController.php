@@ -271,6 +271,7 @@ class WppController extends Controller
             {
                 $contactos = DB::select("
                     SELECT 
+                        ch.id,
                         ch.id_users,
                         ch.nombre,
                         ch.telefono,
@@ -296,6 +297,7 @@ class WppController extends Controller
             }else{
                 $contactos = DB::select("
                     SELECT 
+                        ch.id,
                         ch.id_users,
                         ch.nombre,
                         ch.telefono,
@@ -1099,5 +1101,11 @@ class WppController extends Controller
             'send' => 0,
             'empresas' => $empresa
         ]);
+    }
+
+
+    function updateEstadoContact(Request $request) 
+    {
+        $contacto = contactos_chat::find();
     }
 }
