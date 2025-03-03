@@ -276,6 +276,7 @@ class WppController extends Controller
                         ch.telefono,
                         ch.id_telefono,
                         ch.empresas,
+                        ch.estado,
                         ult_messag.message,
                         ult_messag.created_at,
                         ((ch.ferencias + ch.modelo + ch.kilometraje + ch.color + ch.precio_estimado + ch.ingresos + ch.negocio) / 7 ) * 100 as 	puntuacion
@@ -300,6 +301,7 @@ class WppController extends Controller
                         ch.telefono,
                         ch.id_telefono,
                         ch.empresas,
+                        ch.estado,
                         ult_messag.message,
                         ult_messag.created_at,
                         ((ch.ferencias + ch.modelo + ch.kilometraje + ch.color + ch.precio_estimado + ch.ingresos + ch.negocio) / 7 ) * 100 as 	puntuacion
