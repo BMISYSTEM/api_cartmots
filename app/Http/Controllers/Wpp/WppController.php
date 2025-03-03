@@ -8,6 +8,7 @@ use App\Models\contactos_chat;
 use App\Models\messages_chat;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
@@ -15,7 +16,7 @@ class WppController extends Controller
 {
     const token = "WPPAPLICATION";
     const webhook_url = "https://public.cartmots.com/api/wpp";
-
+    const llaveAuto2 = "EAASi45ruqf4BO56CoDj68YpO61OpJ6geb9Kes6ZCu9IueTFaPvs2c869T4LPCYTIKtdycMcXIwMer46oMYMafoIShd4SVDQZBcANv4mvebLDI8ZBinC889XeGHL3UcBzwLozIzcwpMlnDGK9hknlsvGywnYZArxQdu2vDnzpmWmVAHF0yWUmGRoCJHOKdeO91AZDZD";
     function verificarToken(Request $req)
     {
         try {
@@ -263,14 +264,62 @@ class WppController extends Controller
     {
         $empresa = Auth::user()->empresas;
         $id_user = Auth::user()->id;
+        $admin = Auth::user()->rol;
+        $contactos = "";
         try {
-            $contactos = contactos_chat::where('empresas', $empresa)->where('id_users', $id_user)->get();
+            if($admin == 1 )
+            {
+                $contactos = DB::select("
+                    SELECT 
+                        ch.id_users,
+                        ch.nombre,
+                        ch.telefono,
+                        ch.id_telefono,
+                        ch.empresas,
+                        ult_messag.message,
+                        ult_messag.created_at
+                    FROM contactos_chats ch
+                    INNER JOIN (
+                        SELECT m1.*
+                        FROM messages_chats m1
+                        INNER JOIN (
+                            SELECT telefono, MAX(created_at) AS max_created_at
+                            FROM messages_chats
+                            GROUP BY telefono
+                        ) m2 ON m1.telefono = m2.telefono AND m1.created_at = m2.max_created_at
+                    ) ult_messag ON ch.telefono = ult_messag.telefono
+                    where ch.empresas = ".$empresa."
+                    ORDER BY ult_messag.created_at DESC;
+                ");
+            }else{
+                $contactos = DB::select("
+                    SELECT 
+                        ch.id_users,
+                        ch.nombre,
+                        ch.telefono,
+                        ch.id_telefono,
+                        ch.empresas,
+                        ult_messag.message,
+                        ult_messag.created_at
+                    FROM contactos_chats ch
+                    INNER JOIN (
+                        SELECT m1.*
+                        FROM messages_chats m1
+                        INNER JOIN (
+                            SELECT telefono, MAX(created_at) AS max_created_at
+                            FROM messages_chats
+                            GROUP BY telefono
+                        ) m2 ON m1.telefono = m2.telefono AND m1.created_at = m2.max_created_at
+                    ) ult_messag ON ch.telefono = ult_messag.telefono
+                    where id_users = ".$id_user." and ch.empresas = ".$empresa."
+                    ORDER BY ult_messag.created_at DESC;
+                ");
+            }
             return response()->json(['succes' => $contactos]);
         } catch (\Throwable $th) {
             return response()->json(['error' => 'Error generado ' . $th], 500);
         }
     }
-
     function allMessages(Request $request)
     {
         $telefono = $request->query('telefono');
@@ -675,8 +724,7 @@ class WppController extends Controller
             }
             elseif($contacto->negocio == 1 && $contacto->ingresos == 1 && $contacto->ferencias == 1 && $contacto->modelo == 1  && $contacto->kilometraje == 1  && $contacto->color == 1   && $contacto->precio_estimado == 1){
                 $curl2 = curl_init();
-                $respuesta = "¡SUPER! De acuerdo con lo que me cuentas, es muy probable que tu crédito sea aprobado.  
-                Por favor, déjame estos datos para enviar tu solicitud a estudio. En unas horas me contactaré contigo con una respuesta:";
+                $respuesta = "¡SUPER! De acuerdo con lo que me cuentas, es muy probable que tu crédito sea aprobado. \n\nPor favor, déjame estos datos para enviar tu solicitud a estudio. En unas horas me contactaré contigo con una respuesta:";
                 
                 $respuesta .= "\n\n🔹 *Datos requeridos:*"
                             . "\n- Nombre completo y número de cédula"
