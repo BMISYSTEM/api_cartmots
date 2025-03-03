@@ -17,6 +17,7 @@ class estado extends Model
         'rechazado',
         'finalizado',
         'vendido',
+        'chat'
     ];
     
 }

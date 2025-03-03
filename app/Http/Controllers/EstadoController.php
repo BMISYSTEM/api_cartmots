@@ -24,17 +24,14 @@ class EstadoController extends Controller
             'rechazado'  => $estado['rechazado'],
             'vendido'  => $estado['vendido'],
             'finalizado'  => $estado['finalizado'],
+            'chat'  => $estado['chat'],
             'empresas'  => $empresas,
         ]);
         return "se creo correctamente";
     }
     public function update(Request $request)
     { 
-       
-       
-        
             $mensaje = 'Faltan campos';
-        
             $empresas = Auth::user()->empresas;
             $id = $request['id'];
             $estadoupdate = estado::find($id);
@@ -45,12 +42,10 @@ class EstadoController extends Controller
             $estadoupdate->rechazado = $request['rechazado'];
             $estadoupdate->finalizado = $request['finalizado'];
             $estadoupdate->vendido = $request['vendido'];
+            $estadoupdate->chat = $request['chat'];
             $estadoupdate->empresas  = $empresas;
             $estadoupdate->save();
             $mensaje = 'Se actualizo de forma correcta';
-        
-        
-        
         return $mensaje;
     }
     public function index()

@@ -29,6 +29,7 @@ class Estados extends FormRequest
             'rechazado'=> ['required'],
             'finalizado'=> ['required'],
             'vendido'=> ['required'],
+            'chat'=> ['required'],
 
         ];
     }
