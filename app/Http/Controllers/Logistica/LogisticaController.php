@@ -97,7 +97,7 @@ class LogisticaController extends Controller
         $request = $request->validate(
             [
                 'id' => 'required|exists:logisticas,id,empresas,' . $empresa,
-                'placa' => 'required|exists:vehiculos,placa,empresas,' . $empresa,
+                'placa' => 'nullable',
                 'actividads' => 'required|exists:actividads,id,empresas,' . $empresa,
                 'motivos' => 'required|exists:motivos,id,empresas,' . $empresa,
                 'fecha' => 'required|date|date_format:Y-m-d H:i:s',
@@ -118,8 +118,6 @@ class LogisticaController extends Controller
             ]
         );
         $estatus = $this->logistica->updateMovimiento($request['id'], $request['placa'], $request['actividads'], $request['motivos'], $request['fecha'], $request['Valor'], $request['finalizado'], $request['operacion'] ?? 0);
-
-
         // respuesta
         return response()->json($estatus, array_key_exists('error', $estatus) ? 500 : 200);
     }
