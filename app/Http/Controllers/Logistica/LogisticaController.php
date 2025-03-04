@@ -392,7 +392,7 @@ class LogisticaController extends Controller
             $movimientos = DB::select("select l.*,a.nombre as nombre_actividad,m.nombre as nombre_motivo from logisticas l 
                                         inner join actividads a on l.actividads = a.id
                                         inner join motivos m on l.motivos = m.id
-                                        where l.cargar_cuenta = 4  and l.empresas = '" . $empresa . "' and l.usuario = '" . $id . "'");
+                                        where l.cargar_cuenta = 4  and l.empresas = '" . $empresa . "' and l.usuario = '" . $id . "' order by l.created_at desc");
             return response()->json(['succes' => $movimientos]);
         } catch (\Throwable $th) {
             return response()->json(['error' => $th->getMessage()], 500);
