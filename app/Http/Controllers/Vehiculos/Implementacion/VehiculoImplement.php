@@ -296,6 +296,7 @@ class VehiculoImplement implements VehiculoInterface
                     v.servicio,
                     v.serie,
                     v.vin,
+                    v.carroseria,
                     mar.nombre as marca_nombre,
                     m.year as model_nombre,
                     e.estado as estado_nombre,
@@ -356,6 +357,7 @@ class VehiculoImplement implements VehiculoInterface
                     v.tipo,
                     v.servicio,
                     v.serie,
+                    v.carroseria,
                     mar.nombre as marca_nombre,
                     m.year as model_nombre,
                     e.estado as estado_nombre
@@ -468,6 +470,7 @@ class VehiculoImplement implements VehiculoInterface
                 v.version, 
                 v.linea, 
                 v.soat, 
+                v.carroseria,
                 v.tecnomecanica from vehiculos v
                 inner join marcas m on v.marcas = m.id
                 inner join modelos mo on v.modelos = mo.id
