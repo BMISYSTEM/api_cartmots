@@ -137,7 +137,9 @@ class NotasController extends Controller
         v.matricula,
         v.tipo,
         v.servicio,
-        v.serie
+        v.serie,
+        model.year as nombre_modelo,
+        v.carroseria
         from negocios n
         inner join users user on n.asesor = user.id and n.empresas = user.empresas
         inner join clientes cl on n.cliente = cl.id and n.empresas = cl.empresas
