@@ -63,7 +63,7 @@ class VehiculoController extends Controller
             $request['servicio'] ?? 'sin definir',
             $request['serie'] ?? 'sin definir',
             $request['vin'] ?? 'sin definir',
-        
+            $request['carroseria'] ?? 'sin definir',
         );
         // echo $request['tecnicomecanica'];
         return response()->json($estatus, array_key_exists('error', $estatus) ? 500 : 200);
@@ -101,6 +101,8 @@ class VehiculoController extends Controller
             $request['servicio'] ?? 'sin definir',
             $request['serie'] ?? 'sin definir',
             $request['vin'] ?? 'sin definir',
+            $request['carroseria'] ?? 'sin definir',
+
         );
         return response()->json($estatus, array_key_exists('error', $estatus) ? 500 : 200);
     }

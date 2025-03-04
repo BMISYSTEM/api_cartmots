@@ -42,6 +42,7 @@ class vehiculo extends Model
         'tipo',
         'servicio',
         'serie',
+        'carroseria'
     ];
 
 

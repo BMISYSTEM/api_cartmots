@@ -64,7 +64,7 @@ class VehiculoImplement implements VehiculoInterface
                                 string $servicio,
                                 string $serie,
                                 string $vin,
-
+                                String $carroseria
                                 ): array
     {
         try {
@@ -108,6 +108,7 @@ class VehiculoImplement implements VehiculoInterface
                     'tipo'=>$tipo,
                     'servicio'=>$servicio,
                     'serie'=>$serie,
+                    'carroseria'=>$carroseria
 
                 ]
             );
@@ -165,7 +166,8 @@ class VehiculoImplement implements VehiculoInterface
                                 string $tipo,
                                 string $servicio,
                                 string $serie,
-                                string $vin
+                                string $vin,
+                                String $carroseria
                                 ): array
     {
         try {
@@ -205,6 +207,7 @@ class VehiculoImplement implements VehiculoInterface
             $vehiculo->servicio = $servicio;
             $vehiculo->serie = $serie;
             $vehiculo->vin = $vin;
+            $vehiculo->carroseria = $carroseria;
             /**
              * Se guardan los campos anteriores
              */

@@ -54,7 +54,9 @@ interface VehiculoInterface
                                     string $tipo,
                                     string $servicio,
                                     string $serie,
-                                    string $vin
+                                    string $vin,
+                                    String $carroseria
+
                                     ): array;
 
     /** Actualiza la informacion de un vehiculo
@@ -105,7 +107,8 @@ interface VehiculoInterface
                                     string $tipo,
                                     string $servicio,
                                     string $serie,
-                                    string $vin
+                                    string $vin,
+                                    String $carroseria
                                     ): array;
 
     /** Elimina un vehiculo

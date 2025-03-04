@@ -49,6 +49,7 @@ class Vehiculos extends FormRequest
             'tipo'=>'nullable',
             'servicio'=>'nullable',
             'serie'=>'nullable',
+            'carroseria'=>'nullable',
             
         ];
     }
