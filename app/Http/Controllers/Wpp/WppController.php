@@ -213,7 +213,7 @@ class WppController extends Controller
 
 
         curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://graph.facebook.com/v21.0/474070335798438/messages',
+            CURLOPT_URL => 'https://graph.facebook.com/v21.0/585227118006200/messages',
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -224,7 +224,7 @@ class WppController extends Controller
             CURLOPT_POSTFIELDS => json_encode($data),
             CURLOPT_HTTPHEADER => array(
                 'Content-Type: application/json',
-                'Authorization: Bearer EAAH7VDWCz74BO0U9OsdlULHEbXupK2u87sSidoZC9UcARVvTqo8ZCYZASVoZCBomljw9yMe3OMZCPN10QcUDEVscZAk1nJW2CoTGQARPP84wmzY1VuSHyed1fFN6gKgdjOvOsIo2rlAv6qHUJwLpTjU6TNmlrVUoGkVEqVtKlcYipCSCs4FpELXMorJA3AOFL6'
+                'Authorization: Bearer EAAaOVZBlj55UBO8JEl58zM99tsm7GZBjgA0OZBh65CO7ZCnA82DbP5WfaLcYxfxY2Qr4fI8NvolfPgOZAhpV2bmRD8R1s3JgplJ6ER9xU43pkDS11v2qItVZAosD4YUbL2vr9ox9bhfSPXg8fUEE82zB5aFPBFRDyuoyyzBP6efR8OAgZAKqQAgMJDIJJg6jSI5zAZDZD'
             ),
         ));
 
@@ -375,7 +375,7 @@ class WppController extends Controller
                 ]
             ];
             curl_setopt_array($curl2, array(
-                CURLOPT_URL => 'https://graph.facebook.com/v21.0/474070335798438/messages',
+                CURLOPT_URL => 'https://graph.facebook.com/v21.0/585227118006200/messages',
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_ENCODING => '',
                 CURLOPT_MAXREDIRS => 10,
@@ -386,7 +386,7 @@ class WppController extends Controller
                 CURLOPT_POSTFIELDS => json_encode($message, JSON_UNESCAPED_UNICODE), // Corrección aquí
                 CURLOPT_HTTPHEADER => array(
                     'Content-Type: application/json',
-                    'Authorization: Bearer EAAH7VDWCz74BO0U9OsdlULHEbXupK2u87sSidoZC9UcARVvTqo8ZCYZASVoZCBomljw9yMe3OMZCPN10QcUDEVscZAk1nJW2CoTGQARPP84wmzY1VuSHyed1fFN6gKgdjOvOsIo2rlAv6qHUJwLpTjU6TNmlrVUoGkVEqVtKlcYipCSCs4FpELXMorJA3AOFL6'
+                    'Authorization: Bearer EAAaOVZBlj55UBO8JEl58zM99tsm7GZBjgA0OZBh65CO7ZCnA82DbP5WfaLcYxfxY2Qr4fI8NvolfPgOZAhpV2bmRD8R1s3JgplJ6ER9xU43pkDS11v2qItVZAosD4YUbL2vr9ox9bhfSPXg8fUEE82zB5aFPBFRDyuoyyzBP6efR8OAgZAKqQAgMJDIJJg6jSI5zAZDZD'
                 ),
             ));
             $response = curl_exec($curl2);
@@ -394,7 +394,7 @@ class WppController extends Controller
             $contacto = contactos_chat::where('telefono', $from)->first();
             $contacto->bot = 0;
             $contacto->save();
-            $this->saveMessgeSend($respuesta,$id_telefono);
+            $this->saveMessgeSend($respuesta,$id_telefono,$from);
         } else {
             $contacto = contactos_chat::where('telefono', $from)->first();
             if($contacto->finalizado == 1){
@@ -415,7 +415,7 @@ class WppController extends Controller
                     ]
                 ];
                 curl_setopt_array($curl, array(
-                    CURLOPT_URL => 'https://graph.facebook.com/v21.0/474070335798438/messages',
+                    CURLOPT_URL => 'https://graph.facebook.com/v21.0/585227118006200/messages',
                     CURLOPT_RETURNTRANSFER => true,
                     CURLOPT_ENCODING => '',
                     CURLOPT_MAXREDIRS => 10,
@@ -426,7 +426,7 @@ class WppController extends Controller
                     CURLOPT_POSTFIELDS => json_encode($data),
                     CURLOPT_HTTPHEADER => array(
                         'Content-Type: application/json',
-                        'Authorization: Bearer EAAH7VDWCz74BO0U9OsdlULHEbXupK2u87sSidoZC9UcARVvTqo8ZCYZASVoZCBomljw9yMe3OMZCPN10QcUDEVscZAk1nJW2CoTGQARPP84wmzY1VuSHyed1fFN6gKgdjOvOsIo2rlAv6qHUJwLpTjU6TNmlrVUoGkVEqVtKlcYipCSCs4FpELXMorJA3AOFL6'
+                        'Authorization: Bearer EAAaOVZBlj55UBO8JEl58zM99tsm7GZBjgA0OZBh65CO7ZCnA82DbP5WfaLcYxfxY2Qr4fI8NvolfPgOZAhpV2bmRD8R1s3JgplJ6ER9xU43pkDS11v2qItVZAosD4YUbL2vr9ox9bhfSPXg8fUEE82zB5aFPBFRDyuoyyzBP6efR8OAgZAKqQAgMJDIJJg6jSI5zAZDZD'
                     ),
                 ));
         
@@ -436,7 +436,7 @@ class WppController extends Controller
                 $contacto = contactos_chat::where('telefono', $from)->first();
                 $contacto->modelo = 1;
                 $contacto->save();
-                $this->saveMessgeSend($respuesta,$id_telefono);
+                $this->saveMessgeSend($respuesta,$id_telefono,$from);
             }elseif($contacto->ingresos == 0 &&  $contacto->ferencias == 1 && $contacto->modelo == 1  && $contacto->kilometraje == 0  && $contacto->color == 0   && $contacto->precio_estimado == 0){
                 $curl = curl_init();
                 $respuesta = "Kilometraje:";
@@ -452,7 +452,7 @@ class WppController extends Controller
                     ]
                 ];
                 curl_setopt_array($curl, array(
-                    CURLOPT_URL => 'https://graph.facebook.com/v21.0/474070335798438/messages',
+                    CURLOPT_URL => 'https://graph.facebook.com/v21.0/585227118006200/messages',
                     CURLOPT_RETURNTRANSFER => true,
                     CURLOPT_ENCODING => '',
                     CURLOPT_MAXREDIRS => 10,
@@ -463,7 +463,7 @@ class WppController extends Controller
                     CURLOPT_POSTFIELDS => json_encode($data),
                     CURLOPT_HTTPHEADER => array(
                         'Content-Type: application/json',
-                        'Authorization: Bearer EAAH7VDWCz74BO0U9OsdlULHEbXupK2u87sSidoZC9UcARVvTqo8ZCYZASVoZCBomljw9yMe3OMZCPN10QcUDEVscZAk1nJW2CoTGQARPP84wmzY1VuSHyed1fFN6gKgdjOvOsIo2rlAv6qHUJwLpTjU6TNmlrVUoGkVEqVtKlcYipCSCs4FpELXMorJA3AOFL6'
+                        'Authorization: Bearer EAAaOVZBlj55UBO8JEl58zM99tsm7GZBjgA0OZBh65CO7ZCnA82DbP5WfaLcYxfxY2Qr4fI8NvolfPgOZAhpV2bmRD8R1s3JgplJ6ER9xU43pkDS11v2qItVZAosD4YUbL2vr9ox9bhfSPXg8fUEE82zB5aFPBFRDyuoyyzBP6efR8OAgZAKqQAgMJDIJJg6jSI5zAZDZD'
                     ),
                 ));
         
@@ -473,7 +473,7 @@ class WppController extends Controller
                 $contacto = contactos_chat::where('telefono', $from)->first();
                 $contacto->kilometraje = 1;
                 $contacto->save();
-                $this->saveMessgeSend($respuesta,$id_telefono);
+                $this->saveMessgeSend($respuesta,$id_telefono,$from);
             }
             elseif($contacto->ingresos == 0 &&  $contacto->ferencias == 1 && $contacto->modelo == 1  && $contacto->kilometraje == 1  && $contacto->color == 0   && $contacto->precio_estimado == 0){
                 $curl = curl_init();
@@ -490,7 +490,7 @@ class WppController extends Controller
                     ]
                 ];
                 curl_setopt_array($curl, array(
-                    CURLOPT_URL => 'https://graph.facebook.com/v21.0/474070335798438/messages',
+                    CURLOPT_URL => 'https://graph.facebook.com/v21.0/585227118006200/messages',
                     CURLOPT_RETURNTRANSFER => true,
                     CURLOPT_ENCODING => '',
                     CURLOPT_MAXREDIRS => 10,
@@ -501,7 +501,7 @@ class WppController extends Controller
                     CURLOPT_POSTFIELDS => json_encode($data),
                     CURLOPT_HTTPHEADER => array(
                         'Content-Type: application/json',
-                        'Authorization: Bearer EAAH7VDWCz74BO0U9OsdlULHEbXupK2u87sSidoZC9UcARVvTqo8ZCYZASVoZCBomljw9yMe3OMZCPN10QcUDEVscZAk1nJW2CoTGQARPP84wmzY1VuSHyed1fFN6gKgdjOvOsIo2rlAv6qHUJwLpTjU6TNmlrVUoGkVEqVtKlcYipCSCs4FpELXMorJA3AOFL6'
+                        'Authorization: Bearer EAAaOVZBlj55UBO8JEl58zM99tsm7GZBjgA0OZBh65CO7ZCnA82DbP5WfaLcYxfxY2Qr4fI8NvolfPgOZAhpV2bmRD8R1s3JgplJ6ER9xU43pkDS11v2qItVZAosD4YUbL2vr9ox9bhfSPXg8fUEE82zB5aFPBFRDyuoyyzBP6efR8OAgZAKqQAgMJDIJJg6jSI5zAZDZD'
                     ),
                 ));
         
@@ -511,7 +511,7 @@ class WppController extends Controller
                 $contacto = contactos_chat::where('telefono', $from)->first();
                 $contacto->color = 1;
                 $contacto->save();
-                $this->saveMessgeSend($respuesta,$id_telefono);
+                $this->saveMessgeSend($respuesta,$id_telefono,$from);
             }
             elseif($contacto->ingresos == 0 &&  $contacto->ferencias == 1 && $contacto->modelo == 1  && $contacto->kilometraje == 1  && $contacto->color == 1   && $contacto->precio_estimado == 0){
                 $curl = curl_init();
@@ -528,7 +528,7 @@ class WppController extends Controller
                     ]
                 ];
                 curl_setopt_array($curl, array(
-                    CURLOPT_URL => 'https://graph.facebook.com/v21.0/474070335798438/messages',
+                    CURLOPT_URL => 'https://graph.facebook.com/v21.0/585227118006200/messages',
                     CURLOPT_RETURNTRANSFER => true,
                     CURLOPT_ENCODING => '',
                     CURLOPT_MAXREDIRS => 10,
@@ -539,7 +539,7 @@ class WppController extends Controller
                     CURLOPT_POSTFIELDS => json_encode($data),
                     CURLOPT_HTTPHEADER => array(
                         'Content-Type: application/json',
-                        'Authorization: Bearer EAAH7VDWCz74BO0U9OsdlULHEbXupK2u87sSidoZC9UcARVvTqo8ZCYZASVoZCBomljw9yMe3OMZCPN10QcUDEVscZAk1nJW2CoTGQARPP84wmzY1VuSHyed1fFN6gKgdjOvOsIo2rlAv6qHUJwLpTjU6TNmlrVUoGkVEqVtKlcYipCSCs4FpELXMorJA3AOFL6'
+                        'Authorization: Bearer EAAaOVZBlj55UBO8JEl58zM99tsm7GZBjgA0OZBh65CO7ZCnA82DbP5WfaLcYxfxY2Qr4fI8NvolfPgOZAhpV2bmRD8R1s3JgplJ6ER9xU43pkDS11v2qItVZAosD4YUbL2vr9ox9bhfSPXg8fUEE82zB5aFPBFRDyuoyyzBP6efR8OAgZAKqQAgMJDIJJg6jSI5zAZDZD'
                     ),
                 ));
         
@@ -549,7 +549,7 @@ class WppController extends Controller
                 $contacto = contactos_chat::where('telefono', $from)->first();
                 $contacto->precio_estimado = 1;
                 $contacto->save();
-                $this->saveMessgeSend($respuesta,$id_telefono);
+                $this->saveMessgeSend($respuesta,$id_telefono,$from);
             }
             elseif($contacto->negocio == 0 &&  $contacto->ingresos == 0 &&  $contacto->ferencias == 1 && $contacto->modelo == 1  && $contacto->kilometraje == 1  && $contacto->color == 1   && $contacto->precio_estimado == 1){
                 $curl2 = curl_init();
@@ -585,7 +585,7 @@ class WppController extends Controller
                     ]
                 ];
                 curl_setopt_array($curl2, array(
-                    CURLOPT_URL => 'https://graph.facebook.com/v21.0/474070335798438/messages',
+                    CURLOPT_URL => 'https://graph.facebook.com/v21.0/585227118006200/messages',
                     CURLOPT_RETURNTRANSFER => true,
                     CURLOPT_ENCODING => '',
                     CURLOPT_MAXREDIRS => 10,
@@ -596,7 +596,7 @@ class WppController extends Controller
                     CURLOPT_POSTFIELDS => json_encode($message, JSON_UNESCAPED_UNICODE), // Corrección aquí
                     CURLOPT_HTTPHEADER => array(
                         'Content-Type: application/json',
-                        'Authorization: Bearer EAAH7VDWCz74BO0U9OsdlULHEbXupK2u87sSidoZC9UcARVvTqo8ZCYZASVoZCBomljw9yMe3OMZCPN10QcUDEVscZAk1nJW2CoTGQARPP84wmzY1VuSHyed1fFN6gKgdjOvOsIo2rlAv6qHUJwLpTjU6TNmlrVUoGkVEqVtKlcYipCSCs4FpELXMorJA3AOFL6'
+                        'Authorization: Bearer EAAaOVZBlj55UBO8JEl58zM99tsm7GZBjgA0OZBh65CO7ZCnA82DbP5WfaLcYxfxY2Qr4fI8NvolfPgOZAhpV2bmRD8R1s3JgplJ6ER9xU43pkDS11v2qItVZAosD4YUbL2vr9ox9bhfSPXg8fUEE82zB5aFPBFRDyuoyyzBP6efR8OAgZAKqQAgMJDIJJg6jSI5zAZDZD'
                     ),
                 ));
                 $response = curl_exec($curl2);
@@ -604,7 +604,7 @@ class WppController extends Controller
                 $contacto = contactos_chat::where('telefono', $from)->first();
                 $contacto->negocio = 1;
                 $contacto->save();
-                $this->saveMessgeSend($respuesta,$id_telefono);
+                $this->saveMessgeSend($respuesta,$id_telefono,$from);
             }
             elseif($contacto->ingresos == 0 &&  $contacto->ferencias == 1 && $contacto->modelo == 1  && $contacto->kilometraje == 1  && $contacto->color == 1   && $contacto->precio_estimado == 1 && stripos($comentario, "contado1") !== false ){
                 $curl2 = curl_init();
@@ -620,7 +620,7 @@ class WppController extends Controller
                     ]
                 ];
                 curl_setopt_array($curl2, array(
-                    CURLOPT_URL => 'https://graph.facebook.com/v21.0/474070335798438/messages',
+                    CURLOPT_URL => 'https://graph.facebook.com/v21.0/585227118006200/messages',
                     CURLOPT_RETURNTRANSFER => true,
                     CURLOPT_ENCODING => '',
                     CURLOPT_MAXREDIRS => 10,
@@ -631,7 +631,7 @@ class WppController extends Controller
                     CURLOPT_POSTFIELDS => json_encode($message, JSON_UNESCAPED_UNICODE), // Corrección aquí
                     CURLOPT_HTTPHEADER => array(
                         'Content-Type: application/json',
-                        'Authorization: Bearer EAAH7VDWCz74BO0U9OsdlULHEbXupK2u87sSidoZC9UcARVvTqo8ZCYZASVoZCBomljw9yMe3OMZCPN10QcUDEVscZAk1nJW2CoTGQARPP84wmzY1VuSHyed1fFN6gKgdjOvOsIo2rlAv6qHUJwLpTjU6TNmlrVUoGkVEqVtKlcYipCSCs4FpELXMorJA3AOFL6'
+                        'Authorization: Bearer EAAaOVZBlj55UBO8JEl58zM99tsm7GZBjgA0OZBh65CO7ZCnA82DbP5WfaLcYxfxY2Qr4fI8NvolfPgOZAhpV2bmRD8R1s3JgplJ6ER9xU43pkDS11v2qItVZAosD4YUbL2vr9ox9bhfSPXg8fUEE82zB5aFPBFRDyuoyyzBP6efR8OAgZAKqQAgMJDIJJg6jSI5zAZDZD'
                     ),
                 ));
                 $response = curl_exec($curl2);
@@ -639,7 +639,7 @@ class WppController extends Controller
                 $contacto = contactos_chat::where('telefono', $from)->first();
                 $contacto->finalizado = 1;
                 $contacto->save();
-                $this->saveMessgeSend($respuesta,$id_telefono);
+                $this->saveMessgeSend($respuesta,$id_telefono,$from);
             }
             elseif($contacto->ingresos == 0 &&  $contacto->ferencias == 1 && $contacto->modelo == 1  && $contacto->kilometraje == 1  && $contacto->color == 1   && $contacto->precio_estimado == 1 && stripos($comentario, "financiado1") !== false ){
                 $curl2 = curl_init();
@@ -675,7 +675,7 @@ class WppController extends Controller
                     ]
                 ];
                 curl_setopt_array($curl2, array(
-                    CURLOPT_URL => 'https://graph.facebook.com/v21.0/474070335798438/messages',
+                    CURLOPT_URL => 'https://graph.facebook.com/v21.0/585227118006200/messages',
                     CURLOPT_RETURNTRANSFER => true,
                     CURLOPT_ENCODING => '',
                     CURLOPT_MAXREDIRS => 10,
@@ -686,12 +686,12 @@ class WppController extends Controller
                     CURLOPT_POSTFIELDS => json_encode($message, JSON_UNESCAPED_UNICODE), // Corrección aquí
                     CURLOPT_HTTPHEADER => array(
                         'Content-Type: application/json',
-                        'Authorization: Bearer EAAH7VDWCz74BO0U9OsdlULHEbXupK2u87sSidoZC9UcARVvTqo8ZCYZASVoZCBomljw9yMe3OMZCPN10QcUDEVscZAk1nJW2CoTGQARPP84wmzY1VuSHyed1fFN6gKgdjOvOsIo2rlAv6qHUJwLpTjU6TNmlrVUoGkVEqVtKlcYipCSCs4FpELXMorJA3AOFL6'
+                        'Authorization: Bearer EAAaOVZBlj55UBO8JEl58zM99tsm7GZBjgA0OZBh65CO7ZCnA82DbP5WfaLcYxfxY2Qr4fI8NvolfPgOZAhpV2bmRD8R1s3JgplJ6ER9xU43pkDS11v2qItVZAosD4YUbL2vr9ox9bhfSPXg8fUEE82zB5aFPBFRDyuoyyzBP6efR8OAgZAKqQAgMJDIJJg6jSI5zAZDZD'
                     ),
                 ));
                 $response = curl_exec($curl2);
                 curl_close($curl2);
-                $this->saveMessgeSend($respuesta,$id_telefono);
+                $this->saveMessgeSend($respuesta,$id_telefono,$from);
             }
             elseif($contacto->negocio == 1 && $contacto->ingresos == 0 && $contacto->ferencias == 1 && $contacto->modelo == 1  && $contacto->kilometraje == 1  && $contacto->color == 1   && $contacto->precio_estimado == 1){
                 $curl2 = curl_init();
@@ -707,7 +707,7 @@ class WppController extends Controller
                     ]
                 ];
                 curl_setopt_array($curl2, array(
-                    CURLOPT_URL => 'https://graph.facebook.com/v21.0/474070335798438/messages',
+                    CURLOPT_URL => 'https://graph.facebook.com/v21.0/585227118006200/messages',
                     CURLOPT_RETURNTRANSFER => true,
                     CURLOPT_ENCODING => '',
                     CURLOPT_MAXREDIRS => 10,
@@ -718,7 +718,7 @@ class WppController extends Controller
                     CURLOPT_POSTFIELDS => json_encode($message, JSON_UNESCAPED_UNICODE), // Corrección aquí
                     CURLOPT_HTTPHEADER => array(
                         'Content-Type: application/json',
-                        'Authorization: Bearer EAAH7VDWCz74BO0U9OsdlULHEbXupK2u87sSidoZC9UcARVvTqo8ZCYZASVoZCBomljw9yMe3OMZCPN10QcUDEVscZAk1nJW2CoTGQARPP84wmzY1VuSHyed1fFN6gKgdjOvOsIo2rlAv6qHUJwLpTjU6TNmlrVUoGkVEqVtKlcYipCSCs4FpELXMorJA3AOFL6'
+                        'Authorization: Bearer EAAaOVZBlj55UBO8JEl58zM99tsm7GZBjgA0OZBh65CO7ZCnA82DbP5WfaLcYxfxY2Qr4fI8NvolfPgOZAhpV2bmRD8R1s3JgplJ6ER9xU43pkDS11v2qItVZAosD4YUbL2vr9ox9bhfSPXg8fUEE82zB5aFPBFRDyuoyyzBP6efR8OAgZAKqQAgMJDIJJg6jSI5zAZDZD'
                     ),
                 ));
                 $response = curl_exec($curl2);
@@ -726,7 +726,7 @@ class WppController extends Controller
                 $contacto = contactos_chat::where('telefono', $from)->first();
                 $contacto->ingresos = 1;
                 $contacto->save();
-                $this->saveMessgeSend($respuesta,$id_telefono);
+                $this->saveMessgeSend($respuesta,$id_telefono,$from);
             }
             elseif($contacto->negocio == 1 && $contacto->ingresos == 1 && $contacto->ferencias == 1 && $contacto->modelo == 1  && $contacto->kilometraje == 1  && $contacto->color == 1   && $contacto->precio_estimado == 1){
                 $curl2 = curl_init();
@@ -752,7 +752,7 @@ class WppController extends Controller
                     ]
                 ];
                 curl_setopt_array($curl2, array(
-                    CURLOPT_URL => 'https://graph.facebook.com/v21.0/474070335798438/messages',
+                    CURLOPT_URL => 'https://graph.facebook.com/v21.0/585227118006200/messages',
                     CURLOPT_RETURNTRANSFER => true,
                     CURLOPT_ENCODING => '',
                     CURLOPT_MAXREDIRS => 10,
@@ -763,7 +763,7 @@ class WppController extends Controller
                     CURLOPT_POSTFIELDS => json_encode($message, JSON_UNESCAPED_UNICODE), // Corrección aquí
                     CURLOPT_HTTPHEADER => array(
                         'Content-Type: application/json',
-                        'Authorization: Bearer EAAH7VDWCz74BO0U9OsdlULHEbXupK2u87sSidoZC9UcARVvTqo8ZCYZASVoZCBomljw9yMe3OMZCPN10QcUDEVscZAk1nJW2CoTGQARPP84wmzY1VuSHyed1fFN6gKgdjOvOsIo2rlAv6qHUJwLpTjU6TNmlrVUoGkVEqVtKlcYipCSCs4FpELXMorJA3AOFL6'
+                        'Authorization: Bearer EAAaOVZBlj55UBO8JEl58zM99tsm7GZBjgA0OZBh65CO7ZCnA82DbP5WfaLcYxfxY2Qr4fI8NvolfPgOZAhpV2bmRD8R1s3JgplJ6ER9xU43pkDS11v2qItVZAosD4YUbL2vr9ox9bhfSPXg8fUEE82zB5aFPBFRDyuoyyzBP6efR8OAgZAKqQAgMJDIJJg6jSI5zAZDZD'
                     ),
                 ));
                 $response = curl_exec($curl2);
@@ -771,7 +771,7 @@ class WppController extends Controller
                 $contacto = contactos_chat::where('telefono', $from)->first();
                 $contacto->finalizado = 1;
                 $contacto->save();
-                $this->saveMessgeSend($respuesta,$id_telefono);
+                $this->saveMessgeSend($respuesta,$id_telefono,$from);
             }
             else{
                 if (stripos($comentario, "ford") !== false) {
@@ -854,7 +854,7 @@ class WppController extends Controller
                         ]
                     ];
                     curl_setopt_array($curl2, array(
-                        CURLOPT_URL => 'https://graph.facebook.com/v21.0/474070335798438/messages',
+                        CURLOPT_URL => 'https://graph.facebook.com/v21.0/585227118006200/messages',
                         CURLOPT_RETURNTRANSFER => true,
                         CURLOPT_ENCODING => '',
                         CURLOPT_MAXREDIRS => 10,
@@ -865,12 +865,12 @@ class WppController extends Controller
                         CURLOPT_POSTFIELDS => json_encode($message, JSON_UNESCAPED_UNICODE), // Corrección aquí
                         CURLOPT_HTTPHEADER => array(
                             'Content-Type: application/json',
-                            'Authorization: Bearer EAAH7VDWCz74BO0U9OsdlULHEbXupK2u87sSidoZC9UcARVvTqo8ZCYZASVoZCBomljw9yMe3OMZCPN10QcUDEVscZAk1nJW2CoTGQARPP84wmzY1VuSHyed1fFN6gKgdjOvOsIo2rlAv6qHUJwLpTjU6TNmlrVUoGkVEqVtKlcYipCSCs4FpELXMorJA3AOFL6'
+                            'Authorization: Bearer EAAaOVZBlj55UBO8JEl58zM99tsm7GZBjgA0OZBh65CO7ZCnA82DbP5WfaLcYxfxY2Qr4fI8NvolfPgOZAhpV2bmRD8R1s3JgplJ6ER9xU43pkDS11v2qItVZAosD4YUbL2vr9ox9bhfSPXg8fUEE82zB5aFPBFRDyuoyyzBP6efR8OAgZAKqQAgMJDIJJg6jSI5zAZDZD'
                         ),
                     ));
                     $response = curl_exec($curl2);
                     curl_close($curl2);
-                    $this->saveMessgeSend($respuesta,$id_telefono);
+                    $this->saveMessgeSend($respuesta,$id_telefono,$from);
                 } elseif (stripos($comentario, "multimarca") !== false) {
                     $curl2 = curl_init();
                     $respuesta = "perfecto !!! Contamos con un amplio inventario, finalizando la conversación te envio el link de la pagina donde puedes ver algunos de los vehiculos que tenemos disponibles.\nDeseas dejar tu vehiculo en parte de pago ? ";
@@ -905,7 +905,7 @@ class WppController extends Controller
                         ]
                     ];
                     curl_setopt_array($curl2, array(
-                        CURLOPT_URL => 'https://graph.facebook.com/v21.0/474070335798438/messages',
+                        CURLOPT_URL => 'https://graph.facebook.com/v21.0/585227118006200/messages',
                         CURLOPT_RETURNTRANSFER => true,
                         CURLOPT_ENCODING => '',
                         CURLOPT_MAXREDIRS => 10,
@@ -916,12 +916,12 @@ class WppController extends Controller
                         CURLOPT_POSTFIELDS => json_encode($message, JSON_UNESCAPED_UNICODE), // Corrección aquí
                         CURLOPT_HTTPHEADER => array(
                             'Content-Type: application/json',
-                            'Authorization: Bearer EAAH7VDWCz74BO0U9OsdlULHEbXupK2u87sSidoZC9UcARVvTqo8ZCYZASVoZCBomljw9yMe3OMZCPN10QcUDEVscZAk1nJW2CoTGQARPP84wmzY1VuSHyed1fFN6gKgdjOvOsIo2rlAv6qHUJwLpTjU6TNmlrVUoGkVEqVtKlcYipCSCs4FpELXMorJA3AOFL6'
+                            'Authorization: Bearer EAAaOVZBlj55UBO8JEl58zM99tsm7GZBjgA0OZBh65CO7ZCnA82DbP5WfaLcYxfxY2Qr4fI8NvolfPgOZAhpV2bmRD8R1s3JgplJ6ER9xU43pkDS11v2qItVZAosD4YUbL2vr9ox9bhfSPXg8fUEE82zB5aFPBFRDyuoyyzBP6efR8OAgZAKqQAgMJDIJJg6jSI5zAZDZD'
                         ),
                     ));
                     $response = curl_exec($curl2);
                     curl_close($curl2);
-                    $this->saveMessgeSend($respuesta,$id_telefono);
+                    $this->saveMessgeSend($respuesta,$id_telefono,$from);
                 } elseif (strpos($comentario, "retoma") !== false) {
                     $curl2 = curl_init();
                     $respuesta = "perfecto !!! Deseas dejar tu vehiculo en parte de pago ? ";
@@ -956,7 +956,7 @@ class WppController extends Controller
                         ]
                     ];
                     curl_setopt_array($curl2, array(
-                        CURLOPT_URL => 'https://graph.facebook.com/v21.0/474070335798438/messages',
+                        CURLOPT_URL => 'https://graph.facebook.com/v21.0/585227118006200/messages',
                         CURLOPT_RETURNTRANSFER => true,
                         CURLOPT_ENCODING => '',
                         CURLOPT_MAXREDIRS => 10,
@@ -967,12 +967,12 @@ class WppController extends Controller
                         CURLOPT_POSTFIELDS => json_encode($message, JSON_UNESCAPED_UNICODE), // Corrección aquí
                         CURLOPT_HTTPHEADER => array(
                             'Content-Type: application/json',
-                            'Authorization: Bearer EAAH7VDWCz74BO0U9OsdlULHEbXupK2u87sSidoZC9UcARVvTqo8ZCYZASVoZCBomljw9yMe3OMZCPN10QcUDEVscZAk1nJW2CoTGQARPP84wmzY1VuSHyed1fFN6gKgdjOvOsIo2rlAv6qHUJwLpTjU6TNmlrVUoGkVEqVtKlcYipCSCs4FpELXMorJA3AOFL6'
+                            'Authorization: Bearer EAAaOVZBlj55UBO8JEl58zM99tsm7GZBjgA0OZBh65CO7ZCnA82DbP5WfaLcYxfxY2Qr4fI8NvolfPgOZAhpV2bmRD8R1s3JgplJ6ER9xU43pkDS11v2qItVZAosD4YUbL2vr9ox9bhfSPXg8fUEE82zB5aFPBFRDyuoyyzBP6efR8OAgZAKqQAgMJDIJJg6jSI5zAZDZD'
                         ),
                     ));
                     $response = curl_exec($curl2);
                     curl_close($curl2);
-                    $this->saveMessgeSend($respuesta,$id_telefono);
+                    $this->saveMessgeSend($respuesta,$id_telefono,$from);
                 } 
                 elseif (strpos($comentario, "retoSi") !== false) {
                     $curl = curl_init();
@@ -989,7 +989,7 @@ class WppController extends Controller
                         ]
                     ];
                     curl_setopt_array($curl, array(
-                        CURLOPT_URL => 'https://graph.facebook.com/v21.0/474070335798438/messages',
+                        CURLOPT_URL => 'https://graph.facebook.com/v21.0/585227118006200/messages',
                         CURLOPT_RETURNTRANSFER => true,
                         CURLOPT_ENCODING => '',
                         CURLOPT_MAXREDIRS => 10,
@@ -1000,7 +1000,7 @@ class WppController extends Controller
                         CURLOPT_POSTFIELDS => json_encode($data),
                         CURLOPT_HTTPHEADER => array(
                             'Content-Type: application/json',
-                            'Authorization: Bearer EAAH7VDWCz74BO0U9OsdlULHEbXupK2u87sSidoZC9UcARVvTqo8ZCYZASVoZCBomljw9yMe3OMZCPN10QcUDEVscZAk1nJW2CoTGQARPP84wmzY1VuSHyed1fFN6gKgdjOvOsIo2rlAv6qHUJwLpTjU6TNmlrVUoGkVEqVtKlcYipCSCs4FpELXMorJA3AOFL6'
+                            'Authorization: Bearer EAAaOVZBlj55UBO8JEl58zM99tsm7GZBjgA0OZBh65CO7ZCnA82DbP5WfaLcYxfxY2Qr4fI8NvolfPgOZAhpV2bmRD8R1s3JgplJ6ER9xU43pkDS11v2qItVZAosD4YUbL2vr9ox9bhfSPXg8fUEE82zB5aFPBFRDyuoyyzBP6efR8OAgZAKqQAgMJDIJJg6jSI5zAZDZD'
                         ),
                     ));
                     $response = curl_exec($curl);
@@ -1008,7 +1008,7 @@ class WppController extends Controller
                     $contacto = contactos_chat::where('telefono', $from)->first();
                     $contacto->ferencias = 1;
                     $contacto->save();
-                    $this->saveMessgeSend($respuesta,$id_telefono);
+                    $this->saveMessgeSend($respuesta,$id_telefono,$from);
                 } 
                 elseif (strpos($comentario, "retoNo") !== false) {
                     
@@ -1046,7 +1046,7 @@ class WppController extends Controller
                         ]
                     ];
                     curl_setopt_array($curl, array(
-                        CURLOPT_URL => 'https://graph.facebook.com/v21.0/474070335798438/messages',
+                        CURLOPT_URL => 'https://graph.facebook.com/v21.0/585227118006200/messages',
                         CURLOPT_RETURNTRANSFER => true,
                         CURLOPT_ENCODING => '',
                         CURLOPT_MAXREDIRS => 10,
@@ -1057,7 +1057,7 @@ class WppController extends Controller
                         CURLOPT_POSTFIELDS => json_encode($message),
                         CURLOPT_HTTPHEADER => array(
                             'Content-Type: application/json',
-                            'Authorization: Bearer EAAH7VDWCz74BO0U9OsdlULHEbXupK2u87sSidoZC9UcARVvTqo8ZCYZASVoZCBomljw9yMe3OMZCPN10QcUDEVscZAk1nJW2CoTGQARPP84wmzY1VuSHyed1fFN6gKgdjOvOsIo2rlAv6qHUJwLpTjU6TNmlrVUoGkVEqVtKlcYipCSCs4FpELXMorJA3AOFL6'
+                            'Authorization: Bearer EAAaOVZBlj55UBO8JEl58zM99tsm7GZBjgA0OZBh65CO7ZCnA82DbP5WfaLcYxfxY2Qr4fI8NvolfPgOZAhpV2bmRD8R1s3JgplJ6ER9xU43pkDS11v2qItVZAosD4YUbL2vr9ox9bhfSPXg8fUEE82zB5aFPBFRDyuoyyzBP6efR8OAgZAKqQAgMJDIJJg6jSI5zAZDZD'
                         ),
                     ));
                     $response = curl_exec($curl);
@@ -1071,7 +1071,7 @@ class WppController extends Controller
                     $contacto->precio_estimado = 1;
                     $contacto->negocio = 1;
                     $contacto->save();
-                    $this->saveMessgeSend($respuesta,$id_telefono);
+                    $this->saveMessgeSend($respuesta,$id_telefono,$from);
                 } 
                 else {
                     $respuesta = "No entendimos tu mensaje porfa coloca un numero del menu, si deseas volver a ver el menu escribe la palabra 'menu'";
@@ -1082,9 +1082,9 @@ class WppController extends Controller
         
     }
 
-    function saveMessgeSend($respuesta,$telefonoId){
+    function saveMessgeSend($respuesta,$telefonoId,$telefono){
         messages_chat::create([
-            'telefono' => '573184482848',
+            'telefono' => $telefono,
             'message' => $respuesta,
             'timestamp_message' => time(),
             'id_telefono' => $telefonoId,
