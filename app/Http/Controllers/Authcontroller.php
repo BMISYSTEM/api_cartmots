@@ -165,7 +165,7 @@ class Authcontroller extends Controller
         $empresas = Auth::user()->empresas;
         $vista = DB::select(
         "   select 
-            u.id,u.activo,u.name,u.apellido,u.cedula,u.email,u.img, p.dashboard,
+            u.id,u.activo,u.name,u.apellido,u.cedula,u.email,u.img, p.dashboard,p.costos,
             u.created_at,u.rol,
             p.administrador, p.usuarios, p.recepcion, p.ajustes, 
             p.campanas, p.contabilidad, p.transferencias, p.proveedor
@@ -189,6 +189,7 @@ class Authcontroller extends Controller
             'contabilidad' => $request['contabilidad'],
             'transferencias' => $request['transferencias'],
             'proveedor' => $request['proveedor'],
+            'costos'=>$request['costos']
            ]
         );
         return 'Actualizado...';
