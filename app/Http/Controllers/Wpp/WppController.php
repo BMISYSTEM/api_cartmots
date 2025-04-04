@@ -301,18 +301,12 @@ class WppController extends Controller
             $message = "🔹¡Hola, buen día! ☀️\n👋 Mi nombre es Brandon Arbelaez, especialista en el sector financiero 💰 y automotriz 🚗.\n📌 Permíteme hacerte unas preguntas 📝 para poder asesorarte de la mejor manera.\n✨ ¡Estoy aquí para ayudarte!\nDeseas comprar vehiculo?";
             $option = [
                 [
-                    "type" => "reply",
-                    "reply" => [
                         "id" => "ford",
                         "title" => "Nuevo FORD"
-                    ]
                 ],
                 [
-                    "type" => "reply",
-                    "reply" => [
                         "id" => "multimarca",
                         "title" => "Usado Multimarca"
-                    ]
                 ]
             ];
             $this->sendMessageOptions($telefono, $message, $option, $id_telefono, $tokenWhatssApp, $empresa);
