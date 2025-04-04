@@ -1035,7 +1035,11 @@ class WppController extends Controller
         
     }
 
+<<<<<<< HEAD
     function saveMessgeSend($respuesta,$telefonoId,$telefono,$empresa){
+=======
+    function saveMessgeSend($respuesta,$telefonoId,$telefono){
+>>>>>>> 900df5dd395f5b2d27935994033a1d29779b6282
         messages_chat::create([
             'telefono' => $telefono,
             'message' => $respuesta,
