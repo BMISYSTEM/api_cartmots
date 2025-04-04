@@ -364,9 +364,9 @@ class WppController extends Controller
             // ));
             // $response = curl_exec($curl2);
             // curl_close($curl2);
-            // $contacto = contactos_chat::where('telefono', $from)->first();
-            // $contacto->bot = 0;
-            // $contacto->save();
+            $contacto = contactos_chat::where('telefono', $telefono)->first();
+            $contacto->bot = 0;
+            $contacto->save();
             // $this->saveMessgeSend($respuesta,$id_telefono,$from);
         } else {
             $contacto = contactos_chat::where('telefono', $from)->first();
@@ -1138,7 +1138,7 @@ class WppController extends Controller
         /* se guarda el mensaje enviado */
         $this->saveMessgeSend($message,$idTelefono,$telefono,$empresa);
     }
-    function sendMessageListOptions($telefono,$message,$titleSections,$optionsSections,$privateToken,$telefonoId,$empresa)
+    function sendMessageListOptions($telefono,$message,$titleSections,$optionsSections,$privateToken,$idTelefono,$empresa)
     {
         $options = array();
         for ($i=0; $i < $optionsSections.lengt(); $i++) { 
@@ -1172,8 +1172,8 @@ class WppController extends Controller
                 ]
             ]
         ];
-        $this->postMessages($data,$privateToken,$idTelefono)
-        $this->saveMessgeSend($message,$telefonoId,$telefono,$empresa)
+        $this->postMessages($data,$privateToken,$idTelefono);
+        $this->saveMessgeSend($message,$idTelefono,$telefono,$empresa);
     }
     function postMessages($data,$privateToken,$idTelefono){
         $curl = curl_init();
