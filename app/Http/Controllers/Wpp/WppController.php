@@ -77,13 +77,13 @@ class WppController extends Controller
                     }
                     $this->saveMessgeRecive($message, $id_telefono, $empresas, $telefono);
                     if ($contacto->isEmpty()) {
-                        $this->botMessage($message, $from, $id_telefono, 1);
+                        $this->botMessage($message, $from, $id_telefono, 1,$config_chat->tocken_permanente,$config_chat->empresas);
                     } else {
                         $contactovalidation = contactos_chat::where('telefono', $telefono)->where('empresas', $empresas)->first();
                         /* $contactovalidation->bot == 1 | 0  */
                         /* 1 = nuevo, 0 = ya se mando el primer mensaje  */
                         Log::info("opcion=> ", ["segunda opcion contacto es 1 "]);
-                        $this->botMessage($message, $from, $id_telefono, $contactovalidation->bot);
+                        $this->botMessage($message, $from, $id_telefono, $contactovalidation->bot,$config_chat->tocken_permanente,$config_chat->empresas);
                     }
                 }
             } else {
@@ -288,13 +288,9 @@ class WppController extends Controller
             return response()->json(['error' => 'error generado en el servidor' . $th], 500);
         }
     }
-    function botMessage($comentario, $from, $id_telefono, $nuevo)
+    function botMessage($comentario, $from, $id_telefono, $nuevo,$tokenWhatssApp,$empresas)
     {
         $respuesta = '';
-        $configChat = config_chat::where('id_telefono', $id_telefono)->first();
-        $tokenWhatssApp = $configChat->tocken_permanente;
-        Log::warning("respuesta $tokenWhatssApp");
-        $empresa = $configChat->empresas;
         $telefono = $from;
         if ($nuevo == 1) {
 
