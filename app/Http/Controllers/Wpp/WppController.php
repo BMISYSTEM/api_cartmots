@@ -1098,21 +1098,51 @@ class WppController extends Controller
                 ]
             ];
         };
+        // $data = [
+        //     "messaging_product" => "whatsapp",
+        //     "recipient_type" => "individual",
+        //     "to" => $telefono,
+        //     "type" => "interactive",
+        //     "interactive" => [
+        //         "type" => "button",
+        //         "body" => [
+        //             "text" => $tituloOptions
+        //         ],
+        //         "action" => [
+        //             "buttons" => $optionButtons
+        //         ]
+        //     ]
+        // ];
         $data = [
-            "messaging_product" => "whatsapp",
-            "recipient_type" => "individual",
-            "to" => $telefono,
-            "type" => "interactive",
-            "interactive" => [
-                "type" => "button",
-                "body" => [
-                    "text" => $tituloOptions
-                ],
-                "action" => [
-                    "buttons" => $optionButtons
+                "messaging_product" => "whatsapp",
+                "recipient_type" => "individual",
+                "to" => $telefono,
+                "type" => "interactive",
+                "interactive" => [
+                    "type" => "button",
+                    "body" => [
+                        "text" => $tituloOptions
+                    ],
+                    "action" => [
+                        "buttons" => [
+                            [
+                                "type" => "reply",
+                                "reply" => [
+                                    "id" => "ford",
+                                    "title" => "Nuevo FORD"
+                                ]
+                            ],
+                            [
+                                "type" => "reply",
+                                "reply" => [
+                                    "id" => "multimarca",
+                                    "title" => "Usado Multimarca"
+                                ]
+                            ]
+                        ]
+                    ]
                 ]
-            ]
-        ];
+            ];
         Log::warning("respuesta ". json_encode($data, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT));
         /* envio de mensajes a api wpp */
         $this->postMessages($data, $privateToken, $idTelefono);
