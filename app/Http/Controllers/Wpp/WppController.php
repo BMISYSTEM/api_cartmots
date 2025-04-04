@@ -293,61 +293,81 @@ class WppController extends Controller
     function botMessage($comentario, $from, $id_telefono, $nuevo)
     {
         $respuesta = '';
-        Log::info("Mensaje = ",["primer comentario "]);
+        $configChat = config_chat::where('id_telefono',$id_telefono)->firs();
+        $tokenWhatssApp = $configChat->id_telefono;
+        $empresa = $configChat->empresas;
+        $telefono = $from;
         if ($nuevo == 1) {
-            $curl2 = curl_init();
-            $respuesta = "🔹 ¡Hola, buen día! ☀️\n👋 Mi nombre es Brandon Arbelaez, especialista en el sector financiero 💰 y automotriz 🚗.\n📌 Permíteme hacerte unas preguntas 📝 para poder asesorarte de la mejor manera.\n✨ ¡Estoy aquí para ayudarte!\nDeseas comprar vehiculo?";
-            $message = [
-                "messaging_product" => "whatsapp",
-                "recipient_type" => "individual",
-                "to" => $from,
-                "type" => "interactive",
-                "interactive" => [
-                    "type" => "button",
-                    "body" => [
-                        "text" => $respuesta
-                    ],
-                    "action" => [
-                        "buttons" => [
-                            [
-                                "type" => "reply",
-                                "reply" => [
-                                    "id" => "ford",
-                                    "title" => "Nuevo FORD"
-                                ]
-                            ],
-                            [
-                                "type" => "reply",
-                                "reply" => [
-                                    "id" => "multimarca",
-                                    "title" => "Usado Multimarca"
-                                ]
-                            ]
-                        ]
+
+            $message = "🔹¡Hola, buen día! ☀️\n👋 Mi nombre es Brandon Arbelaez, especialista en el sector financiero 💰 y automotriz 🚗.\n📌 Permíteme hacerte unas preguntas 📝 para poder asesorarte de la mejor manera.\n✨ ¡Estoy aquí para ayudarte!\nDeseas comprar vehiculo?";
+            $option = [
+                [
+                    "type" => "reply",
+                    "reply" => [
+                        "id" => "ford",
+                        "title" => "Nuevo FORD"
+                    ]
+                ],
+                [
+                    "type" => "reply",
+                    "reply" => [
+                        "id" => "multimarca",
+                        "title" => "Usado Multimarca"
                     ]
                 ]
             ];
-            curl_setopt_array($curl2, array(
-                CURLOPT_URL => 'https://graph.facebook.com/v21.0/585227118006200/messages',
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_ENCODING => '',
-                CURLOPT_MAXREDIRS => 10,
-                CURLOPT_TIMEOUT => 0,
-                CURLOPT_FOLLOWLOCATION => true,
-                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                CURLOPT_CUSTOMREQUEST => 'POST',
-                CURLOPT_POSTFIELDS => json_encode($message, JSON_UNESCAPED_UNICODE), // Corrección aquí
-                CURLOPT_HTTPHEADER => array(
-                    'Content-Type: application/json',
-                    'Authorization: Bearer EAAaOVZBlj55UBO8JEl58zM99tsm7GZBjgA0OZBh65CO7ZCnA82DbP5WfaLcYxfxY2Qr4fI8NvolfPgOZAhpV2bmRD8R1s3JgplJ6ER9xU43pkDS11v2qItVZAosD4YUbL2vr9ox9bhfSPXg8fUEE82zB5aFPBFRDyuoyyzBP6efR8OAgZAKqQAgMJDIJJg6jSI5zAZDZD'
-                ),
-            ));
-            $response = curl_exec($curl2);
-            curl_close($curl2);
-            $contacto = contactos_chat::where('telefono', $from)->first();
-            $contacto->bot = 0;
-            $contacto->save();
-            $this->saveMessgeSend($respuesta,$id_telefono,$from);
+            $this->sendMessageOptions($telefono,$message,$option,$id_telefono,$tokenWhatssApp,$empresa);
+            // $message = [
+            //     "messaging_product" => "whatsapp",
+            //     "recipient_type" => "individual",
+            //     "to" => $from,
+            //     "type" => "interactive",
+            //     "interactive" => [
+            //         "type" => "button",
+            //         "body" => [
+            //             "text" => $respuesta
+            //         ],
+            //         "action" => [
+            //             "buttons" => [
+            //                 [
+            //                     "type" => "reply",
+            //                     "reply" => [
+            //                         "id" => "ford",
+            //                         "title" => "Nuevo FORD"
+            //                     ]
+            //                 ],
+            //                 [
+            //                     "type" => "reply",
+            //                     "reply" => [
+            //                         "id" => "multimarca",
+            //                         "title" => "Usado Multimarca"
+            //                     ]
+            //                 ]
+            //             ]
+            //         ]
+            //     ]
+            // ];
+            // curl_setopt_array($curl2, array(
+            //     CURLOPT_URL => 'https://graph.facebook.com/v21.0/585227118006200/messages',
+            //     CURLOPT_RETURNTRANSFER => true,
+            //     CURLOPT_ENCODING => '',
+            //     CURLOPT_MAXREDIRS => 10,
+            //     CURLOPT_TIMEOUT => 0,
+            //     CURLOPT_FOLLOWLOCATION => true,
+            //     CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            //     CURLOPT_CUSTOMREQUEST => 'POST',
+            //     CURLOPT_POSTFIELDS => json_encode($message, JSON_UNESCAPED_UNICODE), // Corrección aquí
+            //     CURLOPT_HTTPHEADER => array(
+            //         'Content-Type: application/json',
+            //         'Authorization: Bearer EAAaOVZBlj55UBO8JEl58zM99tsm7GZBjgA0OZBh65CO7ZCnA82DbP5WfaLcYxfxY2Qr4fI8NvolfPgOZAhpV2bmRD8R1s3JgplJ6ER9xU43pkDS11v2qItVZAosD4YUbL2vr9ox9bhfSPXg8fUEE82zB5aFPBFRDyuoyyzBP6efR8OAgZAKqQAgMJDIJJg6jSI5zAZDZD'
+            //     ),
+            // ));
+            // $response = curl_exec($curl2);
+            // curl_close($curl2);
+            // $contacto = contactos_chat::where('telefono', $from)->first();
+            // $contacto->bot = 0;
+            // $contacto->save();
+            // $this->saveMessgeSend($respuesta,$id_telefono,$from);
         } else {
             $contacto = contactos_chat::where('telefono', $from)->first();
             if($contacto->finalizado == 1){
@@ -1079,40 +1099,23 @@ class WppController extends Controller
         ];
         $idTelefonoBrandon = 585227118006200;
         $tokenBrandon = "EAAaOVZBlj55UBO8JEl58zM99tsm7GZBjgA0OZBh65CO7ZCnA82DbP5WfaLcYxfxY2Qr4fI8NvolfPgOZAhpV2bmRD8R1s3JgplJ6ER9xU43pkDS11v2qItVZAosD4YUbL2vr9ox9bhfSPXg8fUEE82zB5aFPBFRDyuoyyzBP6efR8OAgZAKqQAgMJDIJJg6jSI5zAZDZD";
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => `https://graph.facebook.com/v21.0/$idTelefono/messages`,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POSTFIELDS => json_encode($data),
-            CURLOPT_HTTPHEADER => array(
-                'Content-Type: application/json',
-                `Authorization: Bearer $privateToken`
-            ),
-        ));
-        $response = curl_exec($curl);
-        curl_close($curl);
+        /* envio de mensajes a api wpp */
+        $this->postMessages($data,$privateToken,$idTelefono);
         $this->saveMessgeSend($message,$idTelefono,$telefono,$empresa);
     }
 
     function sendMessageOptions($telefono,$tituloOptions,$options,$idTelefono,$privateToken,$empresa)
     {
-        $optionButtons = [];
+        $optionButtons = array();
         for($i = 0 ;$i > $options.length; $i++ ){
-            $optionButtons +=[
-                [
+            $optionButtons[] = [
                     "type" => "reply",
                     "reply" => [
-                        "id" => "ford",
-                        "title" => "Nuevo FORD"
+                        "id" => $options[$i]['id'],
+                        "title" => $options[$i]['title']
                     ]
-                ],
+                    ];
 
-            ];
         };
         $data = [
             "messaging_product" => "whatsapp",
@@ -1135,7 +1138,43 @@ class WppController extends Controller
         /* se guarda el mensaje enviado */
         $this->saveMessgeSend($message,$idTelefono,$telefono,$empresa);
     }
-
+    function sendMessageListOptions($telefono,$message,$titleSections,$optionsSections,$privateToken,$telefonoId,$empresa)
+    {
+        $options = array();
+        for ($i=0; $i < $optionsSections.lengt(); $i++) { 
+            $options[] =  [
+                "id" => $optionsSections[$i]['id'],
+                "title" => $optionsSections[$i]['title'],
+                "description" => $optionsSections[$i]['description'] ?? ""
+            ];
+        }
+        $data = [
+            "messaging_product" => "whatsapp",
+            "recipient_type" => "individual",
+            "to" => $telefono,
+            "type" => "interactive",
+            "interactive" => [
+                "type" => "list",
+                "body" => [
+                    "text" => $message
+                ],
+                "footer" => [
+                    "text" => "Elige una opción para continuar"
+                ],
+                "action" => [
+                    "button" => $titleSections,
+                    "sections" => [
+                        [
+                            "title" => $titleSections,
+                            "rows" => $options
+                        ]
+                    ]
+                ]
+            ]
+        ];
+        $this->postMessages($data,$privateToken,$idTelefono)
+        $this->saveMessgeSend($message,$telefonoId,$telefono,$empresa)
+    }
     function postMessages($data,$privateToken,$idTelefono){
         $curl = curl_init();
         curl_setopt_array($curl, array(
