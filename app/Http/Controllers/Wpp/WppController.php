@@ -1194,7 +1194,7 @@ class WppController extends Controller
 
         // Intenta decodificar la respuesta
         $decoded = json_decode($response, true);
-        Log::warning("respuesta   => $decoded");
+        Log::warning("respuesta $response");
         if (json_last_error() !== JSON_ERROR_NONE) {
             // Error al decodificar JSON
             return [
