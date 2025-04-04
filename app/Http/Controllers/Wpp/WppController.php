@@ -17,6 +17,9 @@ class WppController extends Controller
     const token = "WPPAPLICATION";
     const webhook_url = "https://public.cartmots.com/api/wpp";
     const llaveAuto2 = "EAASi45ruqf4BO56CoDj68YpO61OpJ6geb9Kes6ZCu9IueTFaPvs2c869T4LPCYTIKtdycMcXIwMer46oMYMafoIShd4SVDQZBcANv4mvebLDI8ZBinC889XeGHL3UcBzwLozIzcwpMlnDGK9hknlsvGywnYZArxQdu2vDnzpmWmVAHF0yWUmGRoCJHOKdeO91AZDZD";
+    
+    
+    
     function verificarToken(Request $req)
     {
         try {
@@ -165,53 +168,6 @@ class WppController extends Controller
                 "body" => $request['message']
             ]
         ];
-        /* } else if (strpos($comentario, "boton") !== false) {
-            $data = [
-
-                "messaging_product" => "whatsapp",
-                "recipient_type" => "individual",
-                "to" => $numero,
-                "type" => "interactive",
-                "interactive" => [
-                    "type" => "button",
-                    "body" => [
-                        "text" => "prueba de botones"
-                    ],
-                    "action" => [
-                        "buttons" => [
-                            [
-                                "type" => "reply",
-                                "reply" => [
-                                    "id" => "button1",
-                                    "title" => "primera opcion"
-                                ]
-                            ],
-                            [
-                                "type" => "reply",
-                                "reply" => [
-                                    "id" => "button2",
-                                    "title" => "segunda opcion"
-                                ]
-                            ]
-                        ]
-                    ]
-                ]
-
-            ];
-        } else {
-            $data = [
-                "messaging_product" => "whatsapp",
-                "recipient_type" => "individual",
-                "to" => $numero,
-                "type" => "text",
-                "text" => [
-                    "preview_url" => false,
-                    "body" => "no se logro leer el mensaje $comentario"
-                ]
-            ];
-        } */
-
-
         curl_setopt_array($curl, array(
             CURLOPT_URL => 'https://graph.facebook.com/v21.0/585227118006200/messages',
             CURLOPT_RETURNTRANSFER => true,
@@ -227,8 +183,6 @@ class WppController extends Controller
                 'Authorization: Bearer EAAaOVZBlj55UBO8JEl58zM99tsm7GZBjgA0OZBh65CO7ZCnA82DbP5WfaLcYxfxY2Qr4fI8NvolfPgOZAhpV2bmRD8R1s3JgplJ6ER9xU43pkDS11v2qItVZAosD4YUbL2vr9ox9bhfSPXg8fUEE82zB5aFPBFRDyuoyyzBP6efR8OAgZAKqQAgMJDIJJg6jSI5zAZDZD'
             ),
         ));
-
-
         $response = curl_exec($curl);
         curl_close($curl);
         if ($response) {
@@ -259,7 +213,6 @@ class WppController extends Controller
             return response()->json([], 403);
         }
     }
-
     function allContactos()
     {
         $empresa = Auth::user()->empresas;
@@ -1082,14 +1035,14 @@ class WppController extends Controller
         
     }
 
-    function saveMessgeSend($respuesta,$telefonoId,$telefono){
+    function saveMessgeSend($respuesta,$telefonoId,$telefono,$empresa){
         messages_chat::create([
             'telefono' => $telefono,
             'message' => $respuesta,
             'timestamp_message' => time(),
             'id_telefono' => $telefonoId,
             'send' => 1,
-            'empresas' => 8
+            'empresas' => $empresa
         ]);
     }
     function saveMessgeRecive($respuesta,$telefonoId,$empresa,$telefono){
@@ -1102,13 +1055,114 @@ class WppController extends Controller
             'empresas' => $empresa
         ]);
     }
-
-
     function updateEstadoContact(Request $request) 
     {
         $contacto = contactos_chat::find($request['id']);
         $contacto->estado = $request['estado'];
         $contacto->save();
         return response()->json(['succes'=>'Estado actualizado con exito']);
+    }
+
+    function sendMessageText($telefono,$message,$idTelefono,$privateToken,$empresa)
+    {
+        $curl = curl_init();
+        $data = [
+            "messaging_product" => "whatsapp",
+            "recipient_type" => "individual",
+            "to" => $telefono,
+            "type" => "text",
+            "text" => [
+                "preview_url" => false,
+                "body" => $message
+            ]
+        ];
+        $idTelefonoBrandon = 585227118006200;
+        $tokenBrandon = "EAAaOVZBlj55UBO8JEl58zM99tsm7GZBjgA0OZBh65CO7ZCnA82DbP5WfaLcYxfxY2Qr4fI8NvolfPgOZAhpV2bmRD8R1s3JgplJ6ER9xU43pkDS11v2qItVZAosD4YUbL2vr9ox9bhfSPXg8fUEE82zB5aFPBFRDyuoyyzBP6efR8OAgZAKqQAgMJDIJJg6jSI5zAZDZD";
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => `https://graph.facebook.com/v21.0/$idTelefono/messages`,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => json_encode($data),
+            CURLOPT_HTTPHEADER => array(
+                'Content-Type: application/json',
+                `Authorization: Bearer $privateToken`
+            ),
+        ));
+        $response = curl_exec($curl);
+        curl_close($curl);
+        $this->saveMessgeSend($message,$idTelefono,$telefono,$empresa);
+    }
+
+    function sendMessageOptions($telefono,$tituloOptions,$options,$idTelefono,$privateToken,$empresa)
+    {
+        $optionButtons = [];
+        for($i = 0 ;$i > $options.length; $i++ ){
+            $optionButtons +=[
+                [
+                    "type" => "reply",
+                    "reply" => [
+                        "id" => "ford",
+                        "title" => "Nuevo FORD"
+                    ]
+                ],
+
+            ];
+        };
+        $data = [
+            "messaging_product" => "whatsapp",
+            "recipient_type" => "individual",
+            "to" => $telefono,
+            "type" => "interactive",
+            "interactive" => [
+                "type" => "button",
+                "body" => [
+                    "text" => $tituloOptions
+                ],
+                "action" => [
+                    "buttons" => [
+                       
+                        
+                        [
+                            "type" => "reply",
+                            "reply" => [
+                                "id" => "multimarca",
+                                "title" => "Usado Multimarca"
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        ];
+
+        /* envio de mensajes a api wpp */
+        $this->postMessages($data,$privateToken,$idTelefono);
+        /* se guarda el mensaje enviado */
+        $this->saveMessgeSend($message,$idTelefono,$telefono,$empresa);
+    }
+
+    function postMessages($data,$privateToken,$idTelefono){
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => `https://graph.facebook.com/v21.0/$idTelefono/messages`,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => json_encode($data, JSON_UNESCAPED_UNICODE), 
+            CURLOPT_HTTPHEADER => array(
+                'Content-Type: application/json',
+                `Authorization: Bearer $privateToken`
+            ),
+        ));
+        $response = curl_exec($curl);
+        curl_close($curl);
     }
 }
