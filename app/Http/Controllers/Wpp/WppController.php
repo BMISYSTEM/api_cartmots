@@ -292,7 +292,8 @@ class WppController extends Controller
     {
         $respuesta = '';
         $configChat = config_chat::where('id_telefono', $id_telefono)->first();
-        $tokenWhatssApp = $configChat->id_telefono;
+        $tokenWhatssApp = $configChat->tocken_permanente;
+        Log::warning("respuesta $tokenWhatssApp");
         $empresa = $configChat->empresas;
         $telefono = $from;
         if ($nuevo == 1) {
