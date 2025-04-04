@@ -305,7 +305,7 @@ class WppController extends Controller
                         "title" => "Usado Multimarca"
                 ]
             ];
-            $this->sendMessageOptions($telefono, $message, $option, $id_telefono, $tokenWhatssApp, $empresa);
+            $this->sendMessageOptions($telefono, $message, $option, $id_telefono, $tokenWhatssApp, $empresas);
             // $message = [
             //     "messaging_product" => "whatsapp",
             //     "recipient_type" => "individual",
