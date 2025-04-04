@@ -1095,7 +1095,7 @@ class WppController extends Controller
     function sendMessageOptions($telefono, $tituloOptions, $options, $idTelefono, $privateToken, $empresa)
     {
         $optionButtons = array();
-        for ($i = 0; $i > count($options); $i++) {
+        for ($i = 0; $i < count($options); $i++) {
             $optionButtons[] = [
                 "type" => "reply",
                 "reply" => [
