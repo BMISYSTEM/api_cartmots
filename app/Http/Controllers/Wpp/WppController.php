@@ -1206,8 +1206,6 @@ class WppController extends Controller
 
         // Verifica si la API devolvió un error
         if (isset($decoded['error'])) {
-            $error = $decoded['error'];
-            Log::warning("error de la api  => $error");
             return [
                 'success' => false,
                 'error' => $decoded['error'],
@@ -1215,7 +1213,6 @@ class WppController extends Controller
         }
 
         // Todo bien
-        Log::warning("funciono => $decoded");
         return [
             'success' => true,
             'response' => $decoded
