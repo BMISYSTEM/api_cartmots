@@ -1035,12 +1035,9 @@ class WppController extends Controller
         
     }
 
-<<<<<<< HEAD
     function saveMessgeSend($respuesta,$telefonoId,$telefono,$empresa){
-=======
-    function saveMessgeSend($respuesta,$telefonoId,$telefono){
->>>>>>> 900df5dd395f5b2d27935994033a1d29779b6282
         messages_chat::create([
+            'telefono' => $telefono,
             'telefono' => $telefono,
             'message' => $respuesta,
             'timestamp_message' => time(),
@@ -1128,17 +1125,7 @@ class WppController extends Controller
                     "text" => $tituloOptions
                 ],
                 "action" => [
-                    "buttons" => [
-                       
-                        
-                        [
-                            "type" => "reply",
-                            "reply" => [
-                                "id" => "multimarca",
-                                "title" => "Usado Multimarca"
-                            ]
-                        ]
-                    ]
+                    "buttons" => $optionButtons
                 ]
             ]
         ];
