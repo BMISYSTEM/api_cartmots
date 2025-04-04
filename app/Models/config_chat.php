@@ -12,7 +12,7 @@ class config_chat extends Model
     protected $fillable = [
         'telefono',
         'id_telefono',
-        'tocken_permanente',
+        'token_permanente',
         'empresas',
         'id_users'
 
