@@ -77,7 +77,6 @@ class WppController extends Controller
                     }
                     $this->saveMessgeRecive($message,$id_telefono,$empresas,$telefono);
                     if ($contacto->isEmpty()) {
-                        Log::info("opcion=> ",["primera opcion contacto es empty "]);
                         $this->botMessage($message, $from, $id_telefono, 1);
                     } else{
                         $contactovalidation = contactos_chat::where('telefono', $telefono)->where('empresas', $empresas)->first();
@@ -293,7 +292,7 @@ class WppController extends Controller
     function botMessage($comentario, $from, $id_telefono, $nuevo)
     {
         $respuesta = '';
-        $configChat = config_chat::where('id_telefono',$id_telefono)->firs();
+        $configChat = config_chat::where('id_telefono',$id_telefono)->first();
         $tokenWhatssApp = $configChat->id_telefono;
         $empresa = $configChat->empresas;
         $telefono = $from;
