@@ -1135,7 +1135,7 @@ class WppController extends Controller
         /* envio de mensajes a api wpp */
         $this->postMessages($data,$privateToken,$idTelefono);
         /* se guarda el mensaje enviado */
-        $this->saveMessgeSend($message,$idTelefono,$telefono,$empresa);
+        $this->saveMessgeSend($tituloOptions,$idTelefono,$telefono,$empresa);
     }
     function sendMessageListOptions($telefono,$message,$titleSections,$optionsSections,$privateToken,$idTelefono,$empresa)
     {
