@@ -1119,7 +1119,7 @@ class WppController extends Controller
                 ]
             ]
         ];
-
+        Log::warning("respuesta ". json_encode($data, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT));
         /* envio de mensajes a api wpp */
         $this->postMessages($data, $privateToken, $idTelefono);
         /* se guarda el mensaje enviado */
