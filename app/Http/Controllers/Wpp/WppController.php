@@ -17,9 +17,9 @@ class WppController extends Controller
     const token = "WPPAPLICATION";
     const webhook_url = "https://public.cartmots.com/api/wpp";
     const llaveAuto2 = "EAASi45ruqf4BO56CoDj68YpO61OpJ6geb9Kes6ZCu9IueTFaPvs2c869T4LPCYTIKtdycMcXIwMer46oMYMafoIShd4SVDQZBcANv4mvebLDI8ZBinC889XeGHL3UcBzwLozIzcwpMlnDGK9hknlsvGywnYZArxQdu2vDnzpmWmVAHF0yWUmGRoCJHOKdeO91AZDZD";
-    
-    
-    
+
+
+
     function verificarToken(Request $req)
     {
         try {
@@ -75,19 +75,19 @@ class WppController extends Controller
                             'bot' => 0
                         ]);
                     }
-                    $this->saveMessgeRecive($message,$id_telefono,$empresas,$telefono);
+                    $this->saveMessgeRecive($message, $id_telefono, $empresas, $telefono);
                     if ($contacto->isEmpty()) {
                         $this->botMessage($message, $from, $id_telefono, 1);
-                    } else{
+                    } else {
                         $contactovalidation = contactos_chat::where('telefono', $telefono)->where('empresas', $empresas)->first();
                         /* $contactovalidation->bot == 1 | 0  */
                         /* 1 = nuevo, 0 = ya se mando el primer mensaje  */
-                        Log::info("opcion=> ",["segunda opcion contacto es 1 "]);
+                        Log::info("opcion=> ", ["segunda opcion contacto es 1 "]);
                         $this->botMessage($message, $from, $id_telefono, $contactovalidation->bot);
                     }
                 }
             } else {
-                
+
                 if (
                     isset($req['entry'][0]['changes'][0]['value']['messages'][0]['from']) &&
                     isset($req['entry'][0]['changes'][0]['value']['messages'][0]['type']) &&
@@ -105,14 +105,14 @@ class WppController extends Controller
                     ) {
                         $config_chat = config_chat::where('id_telefono', $id_telefono)->first();
                         $empresas = $config_chat ? $config_chat->empresas : null;
-                        $this->saveMessgeRecive($buttonTitle,$id_telefono,$empresas,$from);
+                        $this->saveMessgeRecive($buttonTitle, $id_telefono, $empresas, $from);
                         $this->botMessage($buttonId, $from, $id_telefono, 0);
                     } elseif (
                         $type === 'text' &&
                         isset($req['entry'][0]['changes'][0]['value']['messages'][0]['text']['body']) &&
                         ($comentario = $req['entry'][0]['changes'][0]['value']['messages'][0]['text']['body'])
                     ) {
-                    
+
                         return response()->json([
                             'status' => 'success',
                             'message' => "El usuario $from envió el mensaje: $comentario"
@@ -135,7 +135,7 @@ class WppController extends Controller
 
                     $config_chat = config_chat::where('id_telefono', $id_telefono)->first();
                     $empresas = $config_chat ? $config_chat->empresas : null;
-                    $this->saveMessgeRecive($selected_option_title,$id_telefono,$empresas,$from);
+                    $this->saveMessgeRecive($selected_option_title, $id_telefono, $empresas, $from);
                     $this->botMessage($selected_option_id, $from, $receiver_number, 0);
                 } else {
                     Log::warning("⚠️ No se encontró un mensaje válido en la solicitud.");
@@ -219,8 +219,7 @@ class WppController extends Controller
         $admin = Auth::user()->rol;
         $contactos = "";
         try {
-            if($admin == 1 )
-            {
+            if ($admin == 1) {
                 $contactos = DB::select("
                     SELECT 
                         ch.id,
@@ -243,10 +242,10 @@ class WppController extends Controller
                             GROUP BY telefono
                         ) m2 ON m1.telefono = m2.telefono AND m1.created_at = m2.max_created_at
                     ) ult_messag ON ch.telefono = ult_messag.telefono
-                    where ch.empresas = ".$empresa."
+                    where ch.empresas = " . $empresa . "
                     ORDER BY ult_messag.created_at DESC;
                 ");
-            }else{
+            } else {
                 $contactos = DB::select("
                     SELECT 
                         ch.id,
@@ -269,7 +268,7 @@ class WppController extends Controller
                             GROUP BY telefono
                         ) m2 ON m1.telefono = m2.telefono AND m1.created_at = m2.max_created_at
                     ) ult_messag ON ch.telefono = ult_messag.telefono
-                    where id_users = ".$id_user." and ch.empresas = ".$empresa."
+                    where id_users = " . $id_user . " and ch.empresas = " . $empresa . "
                     ORDER BY ult_messag.created_at DESC;
                 ");
             }
@@ -292,7 +291,7 @@ class WppController extends Controller
     function botMessage($comentario, $from, $id_telefono, $nuevo)
     {
         $respuesta = '';
-        $configChat = config_chat::where('id_telefono',$id_telefono)->first();
+        $configChat = config_chat::where('id_telefono', $id_telefono)->first();
         $tokenWhatssApp = $configChat->id_telefono;
         $empresa = $configChat->empresas;
         $telefono = $from;
@@ -315,7 +314,7 @@ class WppController extends Controller
                     ]
                 ]
             ];
-            $this->sendMessageOptions($telefono,$message,$option,$id_telefono,$tokenWhatssApp,$empresa);
+            $this->sendMessageOptions($telefono, $message, $option, $id_telefono, $tokenWhatssApp, $empresa);
             // $message = [
             //     "messaging_product" => "whatsapp",
             //     "recipient_type" => "individual",
@@ -369,10 +368,10 @@ class WppController extends Controller
             // $this->saveMessgeSend($respuesta,$id_telefono,$from);
         } else {
             $contacto = contactos_chat::where('telefono', $from)->first();
-            if($contacto->finalizado == 1){
+            if ($contacto->finalizado == 1) {
                 return;
             }
-            if($contacto->ingresos == 0 &&  $contacto->ferencias == 1 && $contacto->modelo == 0  && $contacto->kilometraje == 0  && $contacto->color == 0   && $contacto->precio_estimado == 0){
+            if ($contacto->ingresos == 0 &&  $contacto->ferencias == 1 && $contacto->modelo == 0  && $contacto->kilometraje == 0  && $contacto->color == 0   && $contacto->precio_estimado == 0) {
                 $curl = curl_init();
                 $respuesta = "Modelo:";
                 //mensaje de presentacion 
@@ -401,15 +400,15 @@ class WppController extends Controller
                         'Authorization: Bearer EAAaOVZBlj55UBO8JEl58zM99tsm7GZBjgA0OZBh65CO7ZCnA82DbP5WfaLcYxfxY2Qr4fI8NvolfPgOZAhpV2bmRD8R1s3JgplJ6ER9xU43pkDS11v2qItVZAosD4YUbL2vr9ox9bhfSPXg8fUEE82zB5aFPBFRDyuoyyzBP6efR8OAgZAKqQAgMJDIJJg6jSI5zAZDZD'
                     ),
                 ));
-        
-        
+
+
                 $response = curl_exec($curl);
                 curl_close($curl);
                 $contacto = contactos_chat::where('telefono', $from)->first();
                 $contacto->modelo = 1;
                 $contacto->save();
-                $this->saveMessgeSend($respuesta,$id_telefono,$from,$empresa);
-            }elseif($contacto->ingresos == 0 &&  $contacto->ferencias == 1 && $contacto->modelo == 1  && $contacto->kilometraje == 0  && $contacto->color == 0   && $contacto->precio_estimado == 0){
+                $this->saveMessgeSend($respuesta, $id_telefono, $from, $empresa);
+            } elseif ($contacto->ingresos == 0 &&  $contacto->ferencias == 1 && $contacto->modelo == 1  && $contacto->kilometraje == 0  && $contacto->color == 0   && $contacto->precio_estimado == 0) {
                 $curl = curl_init();
                 $respuesta = "Kilometraje:";
                 //mensaje de presentacion 
@@ -438,18 +437,17 @@ class WppController extends Controller
                         'Authorization: Bearer EAAaOVZBlj55UBO8JEl58zM99tsm7GZBjgA0OZBh65CO7ZCnA82DbP5WfaLcYxfxY2Qr4fI8NvolfPgOZAhpV2bmRD8R1s3JgplJ6ER9xU43pkDS11v2qItVZAosD4YUbL2vr9ox9bhfSPXg8fUEE82zB5aFPBFRDyuoyyzBP6efR8OAgZAKqQAgMJDIJJg6jSI5zAZDZD'
                     ),
                 ));
-        
-        
+
+
                 $response = curl_exec($curl);
                 curl_close($curl);
                 $contacto = contactos_chat::where('telefono', $from)->first();
                 $contacto->kilometraje = 1;
                 $contacto->save();
-                $this->saveMessgeSend($respuesta,$id_telefono,$from,$empresa);
-            }
-            elseif($contacto->ingresos == 0 &&  $contacto->ferencias == 1 && $contacto->modelo == 1  && $contacto->kilometraje == 1  && $contacto->color == 0   && $contacto->precio_estimado == 0){
+                $this->saveMessgeSend($respuesta, $id_telefono, $from, $empresa);
+            } elseif ($contacto->ingresos == 0 &&  $contacto->ferencias == 1 && $contacto->modelo == 1  && $contacto->kilometraje == 1  && $contacto->color == 0   && $contacto->precio_estimado == 0) {
                 $curl = curl_init();
-                $respuesta ="Color:";
+                $respuesta = "Color:";
                 //mensaje de presentacion 
                 $data = [
                     "messaging_product" => "whatsapp",
@@ -476,18 +474,17 @@ class WppController extends Controller
                         'Authorization: Bearer EAAaOVZBlj55UBO8JEl58zM99tsm7GZBjgA0OZBh65CO7ZCnA82DbP5WfaLcYxfxY2Qr4fI8NvolfPgOZAhpV2bmRD8R1s3JgplJ6ER9xU43pkDS11v2qItVZAosD4YUbL2vr9ox9bhfSPXg8fUEE82zB5aFPBFRDyuoyyzBP6efR8OAgZAKqQAgMJDIJJg6jSI5zAZDZD'
                     ),
                 ));
-        
-        
+
+
                 $response = curl_exec($curl);
                 curl_close($curl);
                 $contacto = contactos_chat::where('telefono', $from)->first();
                 $contacto->color = 1;
                 $contacto->save();
-                $this->saveMessgeSend($respuesta,$id_telefono,$from,$empresa);
-            }
-            elseif($contacto->ingresos == 0 &&  $contacto->ferencias == 1 && $contacto->modelo == 1  && $contacto->kilometraje == 1  && $contacto->color == 1   && $contacto->precio_estimado == 0){
+                $this->saveMessgeSend($respuesta, $id_telefono, $from, $empresa);
+            } elseif ($contacto->ingresos == 0 &&  $contacto->ferencias == 1 && $contacto->modelo == 1  && $contacto->kilometraje == 1  && $contacto->color == 1   && $contacto->precio_estimado == 0) {
                 $curl = curl_init();
-                $respuesta ="Precio estimado:";
+                $respuesta = "Precio estimado:";
                 //mensaje de presentacion 
                 $data = [
                     "messaging_product" => "whatsapp",
@@ -514,16 +511,15 @@ class WppController extends Controller
                         'Authorization: Bearer EAAaOVZBlj55UBO8JEl58zM99tsm7GZBjgA0OZBh65CO7ZCnA82DbP5WfaLcYxfxY2Qr4fI8NvolfPgOZAhpV2bmRD8R1s3JgplJ6ER9xU43pkDS11v2qItVZAosD4YUbL2vr9ox9bhfSPXg8fUEE82zB5aFPBFRDyuoyyzBP6efR8OAgZAKqQAgMJDIJJg6jSI5zAZDZD'
                     ),
                 ));
-        
-        
+
+
                 $response = curl_exec($curl);
                 curl_close($curl);
                 $contacto = contactos_chat::where('telefono', $from)->first();
                 $contacto->precio_estimado = 1;
                 $contacto->save();
-                $this->saveMessgeSend($respuesta,$id_telefono,$from,$empresa);
-            }
-            elseif($contacto->negocio == 0 &&  $contacto->ingresos == 0 &&  $contacto->ferencias == 1 && $contacto->modelo == 1  && $contacto->kilometraje == 1  && $contacto->color == 1   && $contacto->precio_estimado == 1){
+                $this->saveMessgeSend($respuesta, $id_telefono, $from, $empresa);
+            } elseif ($contacto->negocio == 0 &&  $contacto->ingresos == 0 &&  $contacto->ferencias == 1 && $contacto->modelo == 1  && $contacto->kilometraje == 1  && $contacto->color == 1   && $contacto->precio_estimado == 1) {
                 $curl2 = curl_init();
                 $respuesta = "Quisiera saber como deseas hacer el negocio ";
                 $message = [
@@ -576,9 +572,8 @@ class WppController extends Controller
                 $contacto = contactos_chat::where('telefono', $from)->first();
                 $contacto->negocio = 1;
                 $contacto->save();
-                $this->saveMessgeSend($respuesta,$id_telefono,$from,$empresa);
-            }
-            elseif($contacto->ingresos == 0 &&  $contacto->ferencias == 1 && $contacto->modelo == 1  && $contacto->kilometraje == 1  && $contacto->color == 1   && $contacto->precio_estimado == 1 && stripos($comentario, "contado1") !== false ){
+                $this->saveMessgeSend($respuesta, $id_telefono, $from, $empresa);
+            } elseif ($contacto->ingresos == 0 &&  $contacto->ferencias == 1 && $contacto->modelo == 1  && $contacto->kilometraje == 1  && $contacto->color == 1   && $contacto->precio_estimado == 1 && stripos($comentario, "contado1") !== false) {
                 $curl2 = curl_init();
                 $respuesta = "Genial hemos finalizado En unos minutos uno de nuestros Asesores te contactara para continuar el proceso, gracias...";
                 $message = [
@@ -611,9 +606,8 @@ class WppController extends Controller
                 $contacto = contactos_chat::where('telefono', $from)->first();
                 $contacto->finalizado = 1;
                 $contacto->save();
-                $this->saveMessgeSend($respuesta,$id_telefono,$from,$empresa);
-            }
-            elseif($contacto->ingresos == 0 &&  $contacto->ferencias == 1 && $contacto->modelo == 1  && $contacto->kilometraje == 1  && $contacto->color == 1   && $contacto->precio_estimado == 1 && stripos($comentario, "financiado1") !== false ){
+                $this->saveMessgeSend($respuesta, $id_telefono, $from, $empresa);
+            } elseif ($contacto->ingresos == 0 &&  $contacto->ferencias == 1 && $contacto->modelo == 1  && $contacto->kilometraje == 1  && $contacto->color == 1   && $contacto->precio_estimado == 1 && stripos($comentario, "financiado1") !== false) {
                 $curl2 = curl_init();
                 $respuesta = "Genial, te podemos ayudar con la financiación, voy hacerte unas preguntas y revisamos la viabilidad. ";
                 $message = [
@@ -663,9 +657,8 @@ class WppController extends Controller
                 ));
                 $response = curl_exec($curl2);
                 curl_close($curl2);
-                $this->saveMessgeSend($respuesta,$id_telefono,$from,$empresa);
-            }
-            elseif($contacto->negocio == 1 && $contacto->ingresos == 0 && $contacto->ferencias == 1 && $contacto->modelo == 1  && $contacto->kilometraje == 1  && $contacto->color == 1   && $contacto->precio_estimado == 1){
+                $this->saveMessgeSend($respuesta, $id_telefono, $from, $empresa);
+            } elseif ($contacto->negocio == 1 && $contacto->ingresos == 0 && $contacto->ferencias == 1 && $contacto->modelo == 1  && $contacto->kilometraje == 1  && $contacto->color == 1   && $contacto->precio_estimado == 1) {
                 $curl2 = curl_init();
                 $respuesta = "Cual es tu ingreso mensual ? ";
                 $message = [
@@ -698,21 +691,20 @@ class WppController extends Controller
                 $contacto = contactos_chat::where('telefono', $from)->first();
                 $contacto->ingresos = 1;
                 $contacto->save();
-                $this->saveMessgeSend($respuesta,$id_telefono,$from,$empresa);
-            }
-            elseif($contacto->negocio == 1 && $contacto->ingresos == 1 && $contacto->ferencias == 1 && $contacto->modelo == 1  && $contacto->kilometraje == 1  && $contacto->color == 1   && $contacto->precio_estimado == 1){
+                $this->saveMessgeSend($respuesta, $id_telefono, $from, $empresa);
+            } elseif ($contacto->negocio == 1 && $contacto->ingresos == 1 && $contacto->ferencias == 1 && $contacto->modelo == 1  && $contacto->kilometraje == 1  && $contacto->color == 1   && $contacto->precio_estimado == 1) {
                 $curl2 = curl_init();
                 $respuesta = "¡SUPER! De acuerdo con lo que me cuentas, es muy probable que tu crédito sea aprobado. \n\nPor favor, déjame estos datos para enviar tu solicitud a estudio. En unas horas me contactaré contigo con una respuesta:";
-                
+
                 $respuesta .= "\n\n🔹 *Datos requeridos:*"
-                            . "\n- Nombre completo y número de cédula"
-                            . "\n- Dirección de residencia"
-                            . "\n- Ciudad"
-                            . "\n- Nombre de la empresa"
-                            . "\n- Dirección de la empresa"
-                            . "\n- Antigüedad en la empresa"
-                            . "\n- 1 referencia familiar (nombre y teléfono)"
-                            . "\n- 1 referencia personal (nombre y teléfono)";
+                    . "\n- Nombre completo y número de cédula"
+                    . "\n- Dirección de residencia"
+                    . "\n- Ciudad"
+                    . "\n- Nombre de la empresa"
+                    . "\n- Dirección de la empresa"
+                    . "\n- Antigüedad en la empresa"
+                    . "\n- 1 referencia familiar (nombre y teléfono)"
+                    . "\n- 1 referencia personal (nombre y teléfono)";
                 $message = [
                     "messaging_product" => "whatsapp",
                     "recipient_type" => "individual",
@@ -743,9 +735,8 @@ class WppController extends Controller
                 $contacto = contactos_chat::where('telefono', $from)->first();
                 $contacto->finalizado = 1;
                 $contacto->save();
-                $this->saveMessgeSend($respuesta,$id_telefono,$from,$empresa);
-            }
-            else{
+                $this->saveMessgeSend($respuesta, $id_telefono, $from, $empresa);
+            } else {
                 if (stripos($comentario, "ford") !== false) {
                     $curl2 = curl_init();
                     $respuesta = "Cual es la nave de tu preferencia:";
@@ -818,7 +809,7 @@ class WppController extends Controller
                                                 "title" => "Ford mustang ",
                                                 "description" => " "
                                             ],
-                                            
+
                                         ]
                                     ]
                                 ]
@@ -842,7 +833,7 @@ class WppController extends Controller
                     ));
                     $response = curl_exec($curl2);
                     curl_close($curl2);
-                    $this->saveMessgeSend($respuesta,$id_telefono,$from,$empresa);
+                    $this->saveMessgeSend($respuesta, $id_telefono, $from, $empresa);
                 } elseif (stripos($comentario, "multimarca") !== false) {
                     $curl2 = curl_init();
                     $respuesta = "perfecto !!! Contamos con un amplio inventario, finalizando la conversación te envio el link de la pagina donde puedes ver algunos de los vehiculos que tenemos disponibles.\nDeseas dejar tu vehiculo en parte de pago ? ";
@@ -893,7 +884,7 @@ class WppController extends Controller
                     ));
                     $response = curl_exec($curl2);
                     curl_close($curl2);
-                    $this->saveMessgeSend($respuesta,$id_telefono,$from,$empresa);
+                    $this->saveMessgeSend($respuesta, $id_telefono, $from, $empresa);
                 } elseif (strpos($comentario, "retoma") !== false) {
                     $curl2 = curl_init();
                     $respuesta = "perfecto !!! Deseas dejar tu vehiculo en parte de pago ? ";
@@ -944,11 +935,10 @@ class WppController extends Controller
                     ));
                     $response = curl_exec($curl2);
                     curl_close($curl2);
-                    $this->saveMessgeSend($respuesta,$id_telefono,$from,$empresa);
-                } 
-                elseif (strpos($comentario, "retoSi") !== false) {
+                    $this->saveMessgeSend($respuesta, $id_telefono, $from, $empresa);
+                } elseif (strpos($comentario, "retoSi") !== false) {
                     $curl = curl_init();
-                    $respuesta ="Porfavor ayudame con la informacion de tu auto. \n Referencia:" ;
+                    $respuesta = "Porfavor ayudame con la informacion de tu auto. \n Referencia:";
                     //mensaje de presentacion 
                     $data = [
                         "messaging_product" => "whatsapp",
@@ -980,10 +970,9 @@ class WppController extends Controller
                     $contacto = contactos_chat::where('telefono', $from)->first();
                     $contacto->ferencias = 1;
                     $contacto->save();
-                    $this->saveMessgeSend($respuesta,$id_telefono,$from,$contacto->empresa);
-                } 
-                elseif (strpos($comentario, "retoNo") !== false) {
-                    
+                    $this->saveMessgeSend($respuesta, $id_telefono, $from, $contacto->empresa);
+                } elseif (strpos($comentario, "retoNo") !== false) {
+
                     $curl = curl_init();
                     $respuesta = "Quisiera saber como deseas hacer el negocio ";
                     //mensaje de presentacion 
@@ -1037,24 +1026,22 @@ class WppController extends Controller
                     $contacto = contactos_chat::where('telefono', $from)->first();
                     $contacto->ferencias = 1;
                     $contacto->ferencias = 1;
-                    $contacto->modelo = 1;  
-                    $contacto->kilometraje = 1;  
-                    $contacto->color = 1;   
+                    $contacto->modelo = 1;
+                    $contacto->kilometraje = 1;
+                    $contacto->color = 1;
                     $contacto->precio_estimado = 1;
                     $contacto->negocio = 1;
                     $contacto->save();
-                    $this->saveMessgeSend($respuesta,$id_telefono,$from,$contacto->empresas);
-                } 
-                else {
+                    $this->saveMessgeSend($respuesta, $id_telefono, $from, $contacto->empresas);
+                } else {
                     $respuesta = "No entendimos tu mensaje porfa coloca un numero del menu, si deseas volver a ver el menu escribe la palabra 'menu'";
                 }
             }
         }
-            
-        
     }
 
-    function saveMessgeSend($respuesta,$telefonoId,$telefono,$empresa){
+    function saveMessgeSend($respuesta, $telefonoId, $telefono, $empresa)
+    {
         messages_chat::create([
             'telefono' => $telefono,
             'telefono' => $telefono,
@@ -1065,7 +1052,8 @@ class WppController extends Controller
             'empresas' => $empresa
         ]);
     }
-    function saveMessgeRecive($respuesta,$telefonoId,$empresa,$telefono){
+    function saveMessgeRecive($respuesta, $telefonoId, $empresa, $telefono)
+    {
         messages_chat::create([
             'telefono' => $telefono,
             'message' => $respuesta,
@@ -1075,15 +1063,15 @@ class WppController extends Controller
             'empresas' => $empresa
         ]);
     }
-    function updateEstadoContact(Request $request) 
+    function updateEstadoContact(Request $request)
     {
         $contacto = contactos_chat::find($request['id']);
         $contacto->estado = $request['estado'];
         $contacto->save();
-        return response()->json(['succes'=>'Estado actualizado con exito']);
+        return response()->json(['succes' => 'Estado actualizado con exito']);
     }
 
-    function sendMessageText($telefono,$message,$idTelefono,$privateToken,$empresa)
+    function sendMessageText($telefono, $message, $idTelefono, $privateToken, $empresa)
     {
         $curl = curl_init();
         $data = [
@@ -1099,22 +1087,21 @@ class WppController extends Controller
         $idTelefonoBrandon = 585227118006200;
         $tokenBrandon = "EAAaOVZBlj55UBO8JEl58zM99tsm7GZBjgA0OZBh65CO7ZCnA82DbP5WfaLcYxfxY2Qr4fI8NvolfPgOZAhpV2bmRD8R1s3JgplJ6ER9xU43pkDS11v2qItVZAosD4YUbL2vr9ox9bhfSPXg8fUEE82zB5aFPBFRDyuoyyzBP6efR8OAgZAKqQAgMJDIJJg6jSI5zAZDZD";
         /* envio de mensajes a api wpp */
-        $this->postMessages($data,$privateToken,$idTelefono);
-        $this->saveMessgeSend($message,$idTelefono,$telefono,$empresa);
+        $this->postMessages($data, $privateToken, $idTelefono);
+        $this->saveMessgeSend($message, $idTelefono, $telefono, $empresa);
     }
 
-    function sendMessageOptions($telefono,$tituloOptions,$options,$idTelefono,$privateToken,$empresa)
+    function sendMessageOptions($telefono, $tituloOptions, $options, $idTelefono, $privateToken, $empresa)
     {
         $optionButtons = array();
-        for($i = 0 ;$i > count($options); $i++ ){
+        for ($i = 0; $i > count($options); $i++) {
             $optionButtons[] = [
-                    "type" => "reply",
-                    "reply" => [
-                        "id" => $options[$i]['id'],
-                        "title" => $options[$i]['title']
-                    ]
-                    ];
-
+                "type" => "reply",
+                "reply" => [
+                    "id" => $options[$i]['id'],
+                    "title" => $options[$i]['title']
+                ]
+            ];
         };
         $data = [
             "messaging_product" => "whatsapp",
@@ -1133,14 +1120,14 @@ class WppController extends Controller
         ];
 
         /* envio de mensajes a api wpp */
-        $this->postMessages($data,$privateToken,$idTelefono);
+        $this->postMessages($data, $privateToken, $idTelefono);
         /* se guarda el mensaje enviado */
-        $this->saveMessgeSend($tituloOptions,$idTelefono,$telefono,$empresa);
+        $this->saveMessgeSend($tituloOptions, $idTelefono, $telefono, $empresa);
     }
-    function sendMessageListOptions($telefono,$message,$titleSections,$optionsSections,$privateToken,$idTelefono,$empresa)
+    function sendMessageListOptions($telefono, $message, $titleSections, $optionsSections, $privateToken, $idTelefono, $empresa)
     {
         $options = array();
-        for ($i=0; $i < count($optionsSections); $i++) { 
+        for ($i = 0; $i < count($optionsSections); $i++) {
             $options[] =  [
                 "id" => $optionsSections[$i]['id'],
                 "title" => $optionsSections[$i]['title'],
@@ -1171,13 +1158,14 @@ class WppController extends Controller
                 ]
             ]
         ];
-        $this->postMessages($data,$privateToken,$idTelefono);
-        $this->saveMessgeSend($message,$idTelefono,$telefono,$empresa);
+        $this->postMessages($data, $privateToken, $idTelefono);
+        $this->saveMessgeSend($message, $idTelefono, $telefono, $empresa);
     }
-    function postMessages($data,$privateToken,$idTelefono){
+    function postMessages($data, $privateToken, $idTelefono)
+    {
         $curl = curl_init();
         curl_setopt_array($curl, array(
-            CURLOPT_URL => `https://graph.facebook.com/v21.0/$idTelefono/messages`,
+            CURLOPT_URL => "https://graph.facebook.com/v21.0/$idTelefono/messages",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -1185,13 +1173,52 @@ class WppController extends Controller
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POSTFIELDS => json_encode($data, JSON_UNESCAPED_UNICODE), 
+            CURLOPT_POSTFIELDS => json_encode($data, JSON_UNESCAPED_UNICODE),
             CURLOPT_HTTPHEADER => array(
                 'Content-Type: application/json',
-                `Authorization: Bearer $privateToken`
+                "Authorization: Bearer $privateToken"
             ),
         ));
+
         $response = curl_exec($curl);
+        $curlError = curl_error($curl);
         curl_close($curl);
+
+        if ($curlError) {
+            // Error de cURL
+            return [
+                'success' => false,
+                'error' => $curlError
+            ];
+        }
+
+        // Intenta decodificar la respuesta
+        $decoded = json_decode($response, true);
+        Log::warning("respuesta   => $decoded");
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            // Error al decodificar JSON
+            return [
+                'success' => false,
+                'error' => 'JSON decode error: ' . json_last_error_msg(),
+                'raw_response' => $response
+            ];
+        }
+
+        // Verifica si la API devolvió un error
+        if (isset($decoded['error'])) {
+            $error = $decoded['error'];
+            Log::warning("error de la api  => $error");
+            return [
+                'success' => false,
+                'error' => $decoded['error'],
+            ];
+        }
+
+        // Todo bien
+        Log::warning("funciono => $decoded");
+        return [
+            'success' => true,
+            'response' => $decoded
+        ];
     }
 }
