@@ -1188,6 +1188,9 @@ class WppController extends Controller
     }
     function postMessages($data, $privateToken, $idTelefono)
     {
+        Log::warning("private token  ". $privateToken);
+        Log::warning("private token  ". $idTelefono);
+
         $curl = curl_init();
         curl_setopt_array($curl, array(
             CURLOPT_URL => "https://graph.facebook.com/v21.0/$idTelefono/messages",
