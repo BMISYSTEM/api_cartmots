@@ -79,6 +79,7 @@ class WppController extends Controller
                         $contactovalidation = contactos_chat::where('telefono', $telefono)->where('empresas', $empresas)->first();
                         /* $contactovalidation->bot == 1 | 0  */
                         /* 1 = nuevo, 0 = ya se mando el primer mensaje  */
+                        Log::info("Sengundo mensaje texto  mesaje = $message");
                         $this->botMessage($message, $from, $id_telefono, $contactovalidation->bot,$config_chat->token_permanente,$config_chat->empresas);
                     }
                 }
@@ -474,7 +475,6 @@ class WppController extends Controller
                     ];
                     $this->sendMessageOptions($telefono,$respuesta,$options,$id_telefono,$tokenWhatssApp,$empresas);
                 } elseif (strpos($comentario, "retoSi") !== false) {
-                    $curl = curl_init();
                     $respuesta = "Porfavor ayudame con la informacion de tu auto. \n Referencia:";
                     $this->sendMessageText($empresas,$respuesta,$id_telefono,$tokenWhatssApp,$empresas);
                 } elseif (strpos($comentario, "retoNo") !== false) {
