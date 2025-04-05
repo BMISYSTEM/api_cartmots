@@ -150,48 +150,9 @@ class WppController extends Controller
 
     function sendMessage(Request $request)
     {
-
-        $curl = curl_init();
-
-        $data = [
-            "messaging_product" => "whatsapp",
-            "recipient_type" => "individual",
-            "to" => $request['numero'],
-            "type" => "text",
-            "text" => [
-                "preview_url" => false,
-                "body" => $request['message']
-            ]
-        ];
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://graph.facebook.com/v21.0/585227118006200/messages',
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POSTFIELDS => json_encode($data),
-            CURLOPT_HTTPHEADER => array(
-                'Content-Type: application/json',
-                'Authorization: Bearer EAAaOVZBlj55UBO8JEl58zM99tsm7GZBjgA0OZBh65CO7ZCnA82DbP5WfaLcYxfxY2Qr4fI8NvolfPgOZAhpV2bmRD8R1s3JgplJ6ER9xU43pkDS11v2qItVZAosD4YUbL2vr9ox9bhfSPXg8fUEE82zB5aFPBFRDyuoyyzBP6efR8OAgZAKqQAgMJDIJJg6jSI5zAZDZD'
-            ),
-        ));
-        $response = curl_exec($curl);
-        curl_close($curl);
-        if ($response) {
-            $empresas = Auth::user()->empresas;
-            // Crear mensaje
-            messages_chat::create([
-                'telefono' => $request['numero'],
-                'message' => $request['message'],
-                'timestamp_message' => time(),
-                'id_telefono' => $request['id_telefono'],
-                'send' => 1,
-                'empresas' => $empresas
-            ]);
-        }
+        $empresas = Auth::user()->empresas;
+        $configChat = config_chat::where('empresas',$empresas)->first();
+        $this->sendMessageText($request['numero'],$request['message'],$configChat->id_telefono,$configChat->token_permanente,$empresas);
     }
     function wppGet(Request $req)
     {
