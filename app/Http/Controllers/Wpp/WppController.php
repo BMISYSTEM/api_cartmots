@@ -135,7 +135,7 @@ class WppController extends Controller
                     $empresas = $config_chat ? $config_chat->empresas : null;
                     $contactovalidation = contactos_chat::where('telefono', $from)->where('empresas', $empresas)->first();
                     $this->saveMessgeRecive($selected_option_title, $id_telefono, $empresas, $from);
-                    $this->botMessage($buttonId, $from, $id_telefono, $contactovalidation->bot,$config_chat->token_permanente,$config_chat->empresas);
+                    $this->botMessage($selected_option_id, $from, $id_telefono, $contactovalidation->bot,$config_chat->token_permanente,$config_chat->empresas);
                 } else {
                     Log::warning("⚠️ No se encontró un mensaje válido en la solicitud.");
                 }
