@@ -478,7 +478,7 @@ class WppController extends Controller
                     $respuesta = "Porfavor ayudame con la informacion de tu auto. \n Referencia:";
                     $this->sendMessageText($telefono,$respuesta,$id_telefono,$tokenWhatssApp,$empresas);
                     $contacto = contactos_chat::where('telefono', $telefono)->first();
-                    $contacto->ferencia = 1;
+                    $contacto->ferencias = 1;
                     $contacto->save();
                 } elseif (strpos($comentario, "retoNo") !== false) {
 
