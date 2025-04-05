@@ -476,7 +476,7 @@ class WppController extends Controller
                     $this->sendMessageOptions($telefono,$respuesta,$options,$id_telefono,$tokenWhatssApp,$empresas);
                 } elseif (strpos($comentario, "retoSi") !== false) {
                     $respuesta = "Porfavor ayudame con la informacion de tu auto. \n Referencia:";
-                    $this->sendMessageText($empresas,$respuesta,$id_telefono,$tokenWhatssApp,$empresas);
+                    $this->sendMessageText($telefono,$respuesta,$id_telefono,$tokenWhatssApp,$empresas);
                 } elseif (strpos($comentario, "retoNo") !== false) {
 
                     $respuesta = "Quisiera saber como deseas hacer el negocio ";
