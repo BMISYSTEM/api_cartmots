@@ -43,6 +43,7 @@ class WppController extends Controller
         try {
             $comentario = '';
             $from = 0;
+            /* MEnsaje respuesta de texto o mensaje simple  */
             if (
                 isset($req['entry'][0]['changes'][0]['value']['messages'][0]['from'])
                 && isset($req['entry'][0]['changes'][0]['value']['messages'][0]['text']['body'])
@@ -82,7 +83,7 @@ class WppController extends Controller
                     }
                 }
             } else {
-
+                /* Mensaje respuesta de botones */
                 if (
                     isset($req['entry'][0]['changes'][0]['value']['messages'][0]['from']) &&
                     isset($req['entry'][0]['changes'][0]['value']['messages'][0]['type']) &&
@@ -115,6 +116,7 @@ class WppController extends Controller
                         ]);
                     }
                 }
+                /* Mensajes respuesta de lista */
                 if (
                     isset($req['entry'][0]['changes'][0]['value']['messages'][0]['from']) &&
                     isset($req['entry'][0]['changes'][0]['value']['messages'][0]['interactive']['list_reply']['id']) &&
@@ -131,8 +133,9 @@ class WppController extends Controller
 
                     $config_chat = config_chat::where('id_telefono', $id_telefono)->first();
                     $empresas = $config_chat ? $config_chat->empresas : null;
+                    $contactovalidation = contactos_chat::where('telefono', $from)->where('empresas', $empresas)->first();
                     $this->saveMessgeRecive($selected_option_title, $id_telefono, $empresas, $from);
-                    $this->botMessage($selected_option_id, $from, $receiver_number, 0);
+                    $this->botMessage($buttonId, $from, $id_telefono, $contactovalidation->bot,$config_chat->token_permanente,$config_chat->empresas);
                 } else {
                     Log::warning("⚠️ No se encontró un mensaje válido en la solicitud.");
                 }
