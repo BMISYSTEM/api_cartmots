@@ -73,13 +73,11 @@ class WppController extends Controller
                     }
                     $this->saveMessgeRecive($message, $id_telefono, $empresas, $telefono);
                     if ($contacto->isEmpty()) {
-                        Log::info("opcion=> ", ["envio de primer mensaje"]);
                         $this->botMessage($message, $from, $id_telefono, 1,$config_chat->token_permanente,$config_chat->empresas);
                     } else {
                         $contactovalidation = contactos_chat::where('telefono', $telefono)->where('empresas', $empresas)->first();
                         /* $contactovalidation->bot == 1 | 0  */
                         /* 1 = nuevo, 0 = ya se mando el primer mensaje  */
-                        Log::info("opcion=> ", ["segunda opcion contacto es 1 "]);
                         $this->botMessage($message, $from, $id_telefono, $contactovalidation->bot,$config_chat->token_permanente,$config_chat->empresas);
                     }
                 }
@@ -102,8 +100,9 @@ class WppController extends Controller
                     ) {
                         $config_chat = config_chat::where('id_telefono', $id_telefono)->first();
                         $empresas = $config_chat ? $config_chat->empresas : null;
+                        $contactovalidation = contactos_chat::where('telefono', $from)->where('empresas', $empresas)->first();
                         $this->saveMessgeRecive($buttonTitle, $id_telefono, $empresas, $from);
-                        $this->botMessage($buttonId, $from, $id_telefono, 0);
+                        $this->botMessage($buttonId, $from, $id_telefono, $contactovalidation->bot,$config_chat->token_permanente,$config_chat->empresas);
                     } elseif (
                         $type === 'text' &&
                         isset($req['entry'][0]['changes'][0]['value']['messages'][0]['text']['body']) &&
