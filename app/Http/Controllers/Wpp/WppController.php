@@ -286,217 +286,508 @@ class WppController extends Controller
     }
     function botMessage($comentario, $from, $id_telefono, $nuevo,$tokenWhatssApp,$empresas)
     {
-        Log::warning($comentario);
         $respuesta = '';
         $telefono = $from;
-        if ($nuevo == 1) {
-
-            $message = "🔹¡Hola, buen día! ☀️\n👋 Mi nombre es Brandon Arbelaez, especialista en el sector financiero 💰 y automotriz 🚗.\n📌 Permíteme hacerte unas preguntas 📝 para poder asesorarte de la mejor manera.\n✨ ¡Estoy aquí para ayudarte!\nDeseas comprar vehiculo?";
-            $option = [
-                [
-                        "id" => "ford",
-                        "title" => "Nuevo FORD"
-                ],
-                [
-                        "id" => "multimarca",
-                        "title" => "Usado Multimarca"
-                ]
-            ];
-            $this->sendMessageOptions($telefono, $message, $option, $id_telefono, $tokenWhatssApp, $empresas);
-            $contacto = contactos_chat::where('telefono', $telefono)->first();
-            $contacto->bot = 0;
-            $contacto->save();
-        } else {
-            $contacto = contactos_chat::where('telefono', $from)->first();
-            if ($contacto->finalizado == 1) {
-                return;
-            }
-            if ($contacto->ingresos == 0 &&  $contacto->ferencias == 1 && $contacto->modelo == 0  && $contacto->kilometraje == 0  && $contacto->color == 0   && $contacto->precio_estimado == 0) {
-                $respuesta = "Modelo:";
-                $this->sendMessageText($telefono,$respuesta,$id_telefono,$tokenWhatssApp,$empresas);
-                $contacto = contactos_chat::where('telefono', $from)->first();
-                $contacto->modelo = 1;
-                $contacto->save();
-            } elseif ($contacto->ingresos == 0 &&  $contacto->ferencias == 1 && $contacto->modelo == 1  && $contacto->kilometraje == 0  && $contacto->color == 0   && $contacto->precio_estimado == 0) {
-                $respuesta = "Kilometraje:";
-                $this->sendMessageText($telefono,$respuesta,$id_telefono,$tokenWhatssApp,$empresas);
-                $contacto = contactos_chat::where('telefono', $from)->first();
-                $contacto->kilometraje = 1;
-                $contacto->save();
-            } elseif ($contacto->ingresos == 0 &&  $contacto->ferencias == 1 && $contacto->modelo == 1  && $contacto->kilometraje == 1  && $contacto->color == 0   && $contacto->precio_estimado == 0) {
-                $respuesta = "Color:";
-                $this->sendMessageText($telefono,$respuesta,$id_telefono,$tokenWhatssApp,$empresas);
-                $contacto = contactos_chat::where('telefono', $from)->first();
-                $contacto->color = 1;
-                $contacto->save();
-            } elseif ($contacto->ingresos == 0 &&  $contacto->ferencias == 1 && $contacto->modelo == 1  && $contacto->kilometraje == 1  && $contacto->color == 1   && $contacto->precio_estimado == 0) {
-                $respuesta = "Precio estimado:";
-                $this->sendMessageText($telefono,$respuesta,$id_telefono,$tokenWhatssApp,$empresas);
-                $contacto = contactos_chat::where('telefono', $from)->first();
-                $contacto->precio_estimado = 1;
-                $contacto->save();
-            } elseif ($contacto->negocio == 0 &&  $contacto->ingresos == 0 &&  $contacto->ferencias == 1 && $contacto->modelo == 1  && $contacto->kilometraje == 1  && $contacto->color == 1   && $contacto->precio_estimado == 1) {
-                $respuesta = "Quisiera saber como deseas hacer el negocio ";
-                $options = [
+        /* bot arcamotor */
+        if($empresas === 8){
+            if ($nuevo == 1) {
+    
+                $message = "🔹¡Hola, buen día! ☀️\n👋 Mi nombre es Brandon Arbelaez, especialista en el sector financiero 💰 y automotriz 🚗.\n📌 Permíteme hacerte unas preguntas 📝 para poder asesorarte de la mejor manera.\n✨ ¡Estoy aquí para ayudarte!\nDeseas comprar vehiculo?";
+                $option = [
                     [
-                        "id"=>"contado1",
-                        "title"=>"De Contado"
+                            "id" => "ford",
+                            "title" => "Nuevo FORD"
                     ],
                     [
-                        "id"=>"financiado1",
-                        "title"=>"Financiado"
-                    ],
-                ];
-                $this->sendMessageOptions($telefono,$respuesta,$options,$id_telefono,$tokenWhatssApp,$empresas);
-                $contacto = contactos_chat::where('telefono', $from)->first();
-                $contacto->negocio = 1;
-                $contacto->save();
-            } elseif ($contacto->ingresos == 0 &&  $contacto->ferencias == 1 && $contacto->modelo == 1  && $contacto->kilometraje == 1  && $contacto->color == 1   && $contacto->precio_estimado == 1 && stripos($comentario, "contado1") !== false) {
-                $respuesta = "Genial hemos finalizado En unos minutos uno de nuestros Asesores te contactara para continuar el proceso, gracias...";
-                $this->sendMessageText($telefono,$respuesta,$id_telefono,$tokenWhatssApp,$empresas);
-                $contacto = contactos_chat::where('telefono', $from)->first();
-                $contacto->finalizado = 1;
-                $contacto->save();
-            } elseif ($contacto->ingresos == 0 &&  $contacto->ferencias == 1 && $contacto->modelo == 1  && $contacto->kilometraje == 1  && $contacto->color == 1   && $contacto->precio_estimado == 1 && stripos($comentario, "financiado1") !== false) {
-                $respuesta = "Genial, te podemos ayudar con la financiación, voy hacerte unas preguntas y revisamos la viabilidad. ";
-                $options = [
-                    [
-                        "id" => "empleado1",
-                        "title" => "Soy empleado"
-                    ],
-                    [
-                        "id" => "independiente1",
-                        "title" => "Soy Independiente"
+                            "id" => "multimarca",
+                            "title" => "Usado Multimarca"
                     ]
-                    ];
-                $this->sendMessageOptions($telefono,$respuesta,$options,$id_telefono,$tokenWhatssApp,$empresas);
-            } elseif ($contacto->negocio == 1 && $contacto->ingresos == 0 && $contacto->ferencias == 1 && $contacto->modelo == 1  && $contacto->kilometraje == 1  && $contacto->color == 1   && $contacto->precio_estimado == 1) {
-                $respuesta = "Cual es tu ingreso mensual ? ";
-                $this->sendMessageText($telefono,$respuesta,$id_telefono,$tokenWhatssApp,$empresas);
-                $contacto = contactos_chat::where('telefono', $from)->first();
-                $contacto->ingresos = 1;
-                $contacto->save();
-            } elseif ($contacto->negocio == 1 && $contacto->ingresos == 1 && $contacto->ferencias == 1 && $contacto->modelo == 1  && $contacto->kilometraje == 1  && $contacto->color == 1   && $contacto->precio_estimado == 1) {
-                $respuesta = "¡SUPER! De acuerdo con lo que me cuentas, es muy probable que tu crédito sea aprobado. \n\nPor favor, déjame estos datos para enviar tu solicitud a estudio. En unas horas me contactaré contigo con una respuesta:";
-
-                $respuesta .= "\n\n🔹 *Datos requeridos:*"
-                    . "\n- Nombre completo y número de cédula"
-                    . "\n- Dirección de residencia"
-                    . "\n- Ciudad"
-                    . "\n- Nombre de la empresa"
-                    . "\n- Dirección de la empresa"
-                    . "\n- Antigüedad en la empresa"
-                    . "\n- 1 referencia familiar (nombre y teléfono)"
-                    . "\n- 1 referencia personal (nombre y teléfono)";
-                $this->sendMessageText($telefono,$respuesta,$id_telefono,$tokenWhatssApp,$empresas);
-                $contacto = contactos_chat::where('telefono', $from)->first();
-                $contacto->finalizado = 1;
+                ];
+                $this->sendMessageOptions($telefono, $message, $option, $id_telefono, $tokenWhatssApp, $empresas);
+                $contacto = contactos_chat::where('telefono', $telefono)->first();
+                $contacto->bot = 0;
                 $contacto->save();
             } else {
-                if (stripos($comentario, "ford") !== false) {
-                    $respuesta = "Cual es la nave de tu preferencia:";
-                    $options = [
-                        [
-                            "id" => "retoma_1",
-                            "title" => "Ford ranger",
-                            "description" => ""
-                        ],
-                        [
-                            "id" => "retoma_2",
-                            "title" => "Ford scape ecoobost",
-                            "description" => ""
-                        ],
-                        [
-                            "id" => "retoma_3",
-                            "title" => "Ford scape hibrida ",
-                            "description" => " "
-                        ],
-                        [
-                            "id" => "retoma_4",
-                            "title" => "Ford bronco",
-                            "description" => " "
-                        ],
-                        [
-                            "id" => "retoma_5",
-                            "title" => "Ford f150 ",
-                            "description" => ""
-                        ],
-                        [
-                            "id" => "retoma_6",
-                            "title" => "Ford f150 hibrida ",
-                            "description" => ""
-                        ],
-                        [
-                            "id" => "retoma_7",
-                            "title" => "Ford f150 raptor",
-                            "description" => " "
-                        ],
-                        [
-                            "id" => "retoma_8",
-                            "title" => "Ford ranger raptor ",
-                            "description" => " "
-                        ],
-                        [
-                            "id" => "retoma_9",
-                            "title" => "Ford big bronco ",
-                            "description" => " "
-                        ],
-                        [
-                            "id" => "retoma_10",
-                            "title" => "Ford mustang ",
-                            "description" => " "
-                        ],
-                    ];
-                    $this->sendMessageListOptions($telefono,$respuesta,"Selecciona",$options,$tokenWhatssApp,$id_telefono,$empresas);
-                } elseif (stripos($comentario, "multimarca") !== false) {
-                    $respuesta = "perfecto !!! Contamos con un amplio inventario, finalizando la conversación te envio el link de la pagina donde puedes ver algunos de los vehiculos que tenemos disponibles.\nDeseas dejar tu vehiculo en parte de pago ? ";
-                    $options = [
-                        [
-                            "id" => "retomaSi",
-                            "title" => "Si"
-                        ],
-                        [
-                            "id" => "retomaNo",
-                            "title" => "No"
-                        ]
-                    ];
-                    $this->sendMessageOptions($telefono,$respuesta,$options,$id_telefono,$tokenWhatssApp,$empresas);
-                } elseif (strpos($comentario, "retoma") !== false) {
-                    $respuesta = "perfecto !!! Deseas dejar tu vehiculo en parte de pago ? ";
-                    $options = [
-                        [
-                            "id" => "retoSi",
-                            "title" => "Si"
-                        ],
-                        [
-                            "id" => "retoNo",
-                            "title" => "No"
-                        ]
-                    ];
-                    $this->sendMessageOptions($telefono,$respuesta,$options,$id_telefono,$tokenWhatssApp,$empresas);
-                } elseif (strpos($comentario, "retoSi") !== false) {
-                    $respuesta = "Porfavor ayudame con la informacion de tu auto. \n Referencia:";
+                $contacto = contactos_chat::where('telefono', $from)->first();
+                if ($contacto->finalizado == 1) {
+                    return;
+                }
+                if ($contacto->ingresos == 0 &&  $contacto->ferencias == 1 && $contacto->modelo == 0  && $contacto->kilometraje == 0  && $contacto->color == 0   && $contacto->precio_estimado == 0) {
+                    $respuesta = "Modelo:";
                     $this->sendMessageText($telefono,$respuesta,$id_telefono,$tokenWhatssApp,$empresas);
-                    $contacto = contactos_chat::where('telefono', $telefono)->first();
-                    $contacto->ferencias = 1;
+                    $contacto = contactos_chat::where('telefono', $from)->first();
+                    $contacto->modelo = 1;
                     $contacto->save();
-                } elseif (strpos($comentario, "retoNo") !== false) {
-
+                } elseif ($contacto->ingresos == 0 &&  $contacto->ferencias == 1 && $contacto->modelo == 1  && $contacto->kilometraje == 0  && $contacto->color == 0   && $contacto->precio_estimado == 0) {
+                    $respuesta = "Kilometraje:";
+                    $this->sendMessageText($telefono,$respuesta,$id_telefono,$tokenWhatssApp,$empresas);
+                    $contacto = contactos_chat::where('telefono', $from)->first();
+                    $contacto->kilometraje = 1;
+                    $contacto->save();
+                } elseif ($contacto->ingresos == 0 &&  $contacto->ferencias == 1 && $contacto->modelo == 1  && $contacto->kilometraje == 1  && $contacto->color == 0   && $contacto->precio_estimado == 0) {
+                    $respuesta = "Color:";
+                    $this->sendMessageText($telefono,$respuesta,$id_telefono,$tokenWhatssApp,$empresas);
+                    $contacto = contactos_chat::where('telefono', $from)->first();
+                    $contacto->color = 1;
+                    $contacto->save();
+                } elseif ($contacto->ingresos == 0 &&  $contacto->ferencias == 1 && $contacto->modelo == 1  && $contacto->kilometraje == 1  && $contacto->color == 1   && $contacto->precio_estimado == 0) {
+                    $respuesta = "Precio estimado:";
+                    $this->sendMessageText($telefono,$respuesta,$id_telefono,$tokenWhatssApp,$empresas);
+                    $contacto = contactos_chat::where('telefono', $from)->first();
+                    $contacto->precio_estimado = 1;
+                    $contacto->save();
+                } elseif ($contacto->negocio == 0 &&  $contacto->ingresos == 0 &&  $contacto->ferencias == 1 && $contacto->modelo == 1  && $contacto->kilometraje == 1  && $contacto->color == 1   && $contacto->precio_estimado == 1) {
                     $respuesta = "Quisiera saber como deseas hacer el negocio ";
                     $options = [
                         [
-                            "id" => "contado1",
-                            "title" => "De Contado"
+                            "id"=>"contado1",
+                            "title"=>"De Contado"
                         ],
                         [
-                            "id" => "financiado1",
-                            "title" => "Financiado"
-                        ]
+                            "id"=>"financiado1",
+                            "title"=>"Financiado"
+                        ],
                     ];
                     $this->sendMessageOptions($telefono,$respuesta,$options,$id_telefono,$tokenWhatssApp,$empresas);
+                    $contacto = contactos_chat::where('telefono', $from)->first();
+                    $contacto->negocio = 1;
+                    $contacto->save();
+                } elseif ($contacto->ingresos == 0 &&  $contacto->ferencias == 1 && $contacto->modelo == 1  && $contacto->kilometraje == 1  && $contacto->color == 1   && $contacto->precio_estimado == 1 && stripos($comentario, "contado1") !== false) {
+                    $respuesta = "Genial hemos finalizado En unos minutos uno de nuestros Asesores te contactara para continuar el proceso, gracias...";
+                    $this->sendMessageText($telefono,$respuesta,$id_telefono,$tokenWhatssApp,$empresas);
+                    $contacto = contactos_chat::where('telefono', $from)->first();
+                    $contacto->finalizado = 1;
+                    $contacto->save();
+                } elseif ($contacto->ingresos == 0 &&  $contacto->ferencias == 1 && $contacto->modelo == 1  && $contacto->kilometraje == 1  && $contacto->color == 1   && $contacto->precio_estimado == 1 && stripos($comentario, "financiado1") !== false) {
+                    $respuesta = "Genial, te podemos ayudar con la financiación, voy hacerte unas preguntas y revisamos la viabilidad. ";
+                    $options = [
+                        [
+                            "id" => "empleado1",
+                            "title" => "Soy empleado"
+                        ],
+                        [
+                            "id" => "independiente1",
+                            "title" => "Soy Independiente"
+                        ]
+                        ];
+                    $this->sendMessageOptions($telefono,$respuesta,$options,$id_telefono,$tokenWhatssApp,$empresas);
+                } elseif ($contacto->negocio == 1 && $contacto->ingresos == 0 && $contacto->ferencias == 1 && $contacto->modelo == 1  && $contacto->kilometraje == 1  && $contacto->color == 1   && $contacto->precio_estimado == 1) {
+                    $respuesta = "Cual es tu ingreso mensual ? ";
+                    $this->sendMessageText($telefono,$respuesta,$id_telefono,$tokenWhatssApp,$empresas);
+                    $contacto = contactos_chat::where('telefono', $from)->first();
+                    $contacto->ingresos = 1;
+                    $contacto->save();
+                } elseif ($contacto->negocio == 1 && $contacto->ingresos == 1 && $contacto->ferencias == 1 && $contacto->modelo == 1  && $contacto->kilometraje == 1  && $contacto->color == 1   && $contacto->precio_estimado == 1) {
+                    $respuesta = "¡SUPER! De acuerdo con lo que me cuentas, es muy probable que tu crédito sea aprobado. \n\nPor favor, déjame estos datos para enviar tu solicitud a estudio. En unas horas me contactaré contigo con una respuesta:";
+    
+                    $respuesta .= "\n\n🔹 *Datos requeridos:*"
+                        . "\n- Nombre completo y número de cédula"
+                        . "\n- Dirección de residencia"
+                        . "\n- Ciudad"
+                        . "\n- Nombre de la empresa"
+                        . "\n- Dirección de la empresa"
+                        . "\n- Antigüedad en la empresa"
+                        . "\n- 1 referencia familiar (nombre y teléfono)"
+                        . "\n- 1 referencia personal (nombre y teléfono)";
+                    $this->sendMessageText($telefono,$respuesta,$id_telefono,$tokenWhatssApp,$empresas);
+                    $contacto = contactos_chat::where('telefono', $from)->first();
+                    $contacto->finalizado = 1;
+                    $contacto->save();
                 } else {
-                    $respuesta = "No entendimos tu mensaje porfa coloca un numero del menu, si deseas volver a ver el menu escribe la palabra 'menu'";
+                    if (stripos($comentario, "ford") !== false) {
+                        $respuesta = "Cual es la nave de tu preferencia:";
+                        $options = [
+                            [
+                                "id" => "retoma_1",
+                                "title" => "Ford ranger",
+                                "description" => ""
+                            ],
+                            [
+                                "id" => "retoma_2",
+                                "title" => "Ford scape ecoobost",
+                                "description" => ""
+                            ],
+                            [
+                                "id" => "retoma_3",
+                                "title" => "Ford scape hibrida ",
+                                "description" => " "
+                            ],
+                            [
+                                "id" => "retoma_4",
+                                "title" => "Ford bronco",
+                                "description" => " "
+                            ],
+                            [
+                                "id" => "retoma_5",
+                                "title" => "Ford f150 ",
+                                "description" => ""
+                            ],
+                            [
+                                "id" => "retoma_6",
+                                "title" => "Ford f150 hibrida ",
+                                "description" => ""
+                            ],
+                            [
+                                "id" => "retoma_7",
+                                "title" => "Ford f150 raptor",
+                                "description" => " "
+                            ],
+                            [
+                                "id" => "retoma_8",
+                                "title" => "Ford ranger raptor ",
+                                "description" => " "
+                            ],
+                            [
+                                "id" => "retoma_9",
+                                "title" => "Ford big bronco ",
+                                "description" => " "
+                            ],
+                            [
+                                "id" => "retoma_10",
+                                "title" => "Ford mustang ",
+                                "description" => " "
+                            ],
+                        ];
+                        $this->sendMessageListOptions($telefono,$respuesta,"Selecciona",$options,$tokenWhatssApp,$id_telefono,$empresas);
+                    } elseif (stripos($comentario, "multimarca") !== false) {
+                        $respuesta = "perfecto !!! Contamos con un amplio inventario, finalizando la conversación te envio el link de la pagina donde puedes ver algunos de los vehiculos que tenemos disponibles.\nDeseas dejar tu vehiculo en parte de pago ? ";
+                        $options = [
+                            [
+                                "id" => "retomaSi",
+                                "title" => "Si"
+                            ],
+                            [
+                                "id" => "retomaNo",
+                                "title" => "No"
+                            ]
+                        ];
+                        $this->sendMessageOptions($telefono,$respuesta,$options,$id_telefono,$tokenWhatssApp,$empresas);
+                    } elseif (strpos($comentario, "retoma") !== false) {
+                        $respuesta = "perfecto !!! Deseas dejar tu vehiculo en parte de pago ? ";
+                        $options = [
+                            [
+                                "id" => "retoSi",
+                                "title" => "Si"
+                            ],
+                            [
+                                "id" => "retoNo",
+                                "title" => "No"
+                            ]
+                        ];
+                        $this->sendMessageOptions($telefono,$respuesta,$options,$id_telefono,$tokenWhatssApp,$empresas);
+                    } elseif (strpos($comentario, "retoSi") !== false) {
+                        $respuesta = "Porfavor ayudame con la informacion de tu auto. \n Referencia:";
+                        $this->sendMessageText($telefono,$respuesta,$id_telefono,$tokenWhatssApp,$empresas);
+                        $contacto = contactos_chat::where('telefono', $telefono)->first();
+                        $contacto->ferencias = 1;
+                        $contacto->save();
+                    } elseif (strpos($comentario, "retoNo") !== false) {
+    
+                        $respuesta = "Quisiera saber como deseas hacer el negocio ";
+                        $options = [
+                            [
+                                "id" => "contado1",
+                                "title" => "De Contado"
+                            ],
+                            [
+                                "id" => "financiado1",
+                                "title" => "Financiado"
+                            ]
+                        ];
+                        $this->sendMessageOptions($telefono,$respuesta,$options,$id_telefono,$tokenWhatssApp,$empresas);
+                    } else {
+                        $respuesta = "No entendimos tu mensaje porfa coloca un numero del menu, si deseas volver a ver el menu escribe la palabra 'menu'";
+                    }
                 }
+            }
+        }
+        [
+            {
+                mensaje:'selecciona el numero de la opcion que necesites. ',
+                codigo:1,
+                opcion1:'Compra de vehiculo',
+                proximo1:3,
+                opcion2:'Vender vehiculo',
+                proximo2:4,
+                tipo :2
+    
+            },
+            // opcion 1 compra vehiculo proximo 3
+            {
+                mensaje:'Listo, Cuentame mas',
+                codigo:3,
+                opcion1:'Compra de contado',
+                proximo1:5,
+                opcion2:'Compra con Financiamiento',
+                proximo2:6,
+                tipo :2
+            },
+            {
+                mensaje:'¿Cual es el vehiculo que deseas?',
+                codigo:5,
+                opcion1:'',
+                proximo1:7,
+                opcion2:'',
+                proximo2:0,
+                tipo :0
+            },
+            {
+                mensaje:'¿Cual es elpresupuesto de dinero que deseas invertir en tu vehiculo?',
+                codigo:7,
+                opcion1:'',
+                proximo1:8,
+                opcion2:'',
+                proximo2:0,
+                tipo :0
+            },
+            {
+                mensaje:'!Genial¡ un asesor de nuestro concesionario te contactara en horas laborales. Gracios por contar con nosotros',
+                codigo:8,
+                opcion1:'',
+                proximo1:9,
+                opcion2:'',
+                proximo2:0,
+                tipo :10
+            },
+            // proximo codigo 4 ultimo codigo 9
+            {
+                mensaje:'Claro, Cuentame acerca del financiemiento que deseas',
+                codigo:6,
+                opcion1:'Tengo credito aprobado',
+                proximo1:10,
+                opcion2:'Quiero que se gestione el credito',
+                proximo2:11,
+                tipo :2
+            },
+            {
+                mensaje:'¿Cual es el vehiculo que deseas?',
+                codigo:10,
+                opcion1:'',
+                proximo1:12,
+                opcion2:'',
+                proximo2:0,
+                tipo :0
+            },
+            {
+                mensaje:'¿Cual es elpresupuesto de dinero que deseas invertir en tu vehiculo?',
+                codigo:12,
+                opcion1:'',
+                proximo1:13,
+                opcion2:'',
+                proximo2:0,
+                tipo :0
+            },
+            {
+                mensaje:'!Genial¡ un asesor de nuestro concesionario te contactara en horas laborales. Gracios por contar con nosotros',
+                codigo:13,
+                opcion1:'',
+                proximo1:14,
+                opcion2:'',
+                proximo2:0,
+                tipo :10
+            },
+            // opcion 2 de financiemiento codigo 4
+            {
+                mensaje:'¿Cuentas con un reporte negativo en centrales de riesgo?',
+                codigo:11,
+                opcion1:'Si',
+                proximo1:15,
+                opcion2:'No',
+                proximo2:16,
+                tipo :2
+            },
+            {
+                mensaje:'¿Cual es elpresupuesto de dinero que deseas invertir en tu vehiculo?',
+                codigo:15,
+                opcion1:'',
+                proximo1:17,
+                opcion2:'',
+                proximo2:0,
+                tipo :0
+            },
+            {
+                mensaje:'!Genial¡ un asesor de nuestro concesionario te contactara en horas laborales. Gracios por contar con nosotros',
+                codigo:17,
+                opcion1:'',
+                proximo1:18,
+                opcion2:'',
+                proximo2:0,
+                tipo :10
+            },
+            {
+                mensaje:'Cuentanos, ¿Cual es tu profesion?',
+                codigo:16,
+                opcion1:'Empleado',
+                proximo1:19,
+                opcion2:'Independiente',
+                proximo2:25,
+                tipo :2
+            },
+            {
+                mensaje:'¿Que tipo de contrato tienes?',
+                codigo:19,
+                opcion1:'',
+                proximo1:20,
+                opcion2:'',
+                proximo2:0,
+                tipo :0
+            },
+            {
+                mensaje:'¿Que antiguedad tienes en la empresa?',
+                codigo:20,
+                opcion1:'',
+                proximo1:21,
+                opcion2:'',
+                proximo2:0,
+                tipo :0
+            },
+            {
+                mensaje:'¿Cual es tu ingreso mensual?',
+                codigo:21,
+                opcion1:'',
+                proximo1:22,
+                opcion2:'',
+                proximo2:0,
+                tipo :0
+            },
+            {
+                mensaje:'¿Cual es el vehiculo que deseas?',
+                codigo:22,
+                opcion1:'',
+                proximo1:23,
+                opcion2:'',
+                proximo2:0,
+                tipo :0
+            },
+            {
+                mensaje:'¡Genial! Un asesor de nuestro concesionario te contactará en horario laboral, gracias por confiar en nosotros',
+                codigo:23,
+                opcion1:'',
+                proximo1:24,
+                opcion2:'',
+                proximo2:0,
+                tipo :10
+            },
+            {
+                mensaje:'Cuentanos mas de tu actividad,¿ Tienes Camara de comercio?',
+                codigo:25,
+                opcion1:'',
+                proximo1:26,
+                opcion2:'',
+                proximo2:0,
+                tipo :0
+            },
+            {
+                mensaje:'¿Tienes Rut?',
+                codigo:26,
+                opcion1:'',
+                proximo1:27,
+                opcion2:'',
+                proximo2:0,
+                tipo :0
+            },
+            {
+                mensaje:'¿Declaras renta?',
+                codigo:27,
+                opcion1:'',
+                proximo1:28,
+                opcion2:'',
+                proximo2:0,
+                tipo :0
+            },
+            {
+                mensaje:'¿Cual es tu promedio de ingresos mensuales?',
+                codigo:28,
+                opcion1:'',
+                proximo1:29,
+                opcion2:'',
+                proximo2:0,
+                tipo :0
+            },
+            {
+                mensaje:'¿Que vehiculos quieres?',
+                codigo:29,
+                opcion1:'',
+                proximo1:30,
+                opcion2:'',
+                proximo2:0,
+                tipo :0
+            },
+            {
+                mensaje:'¡Genial! Un asesor de nuestro concesionario te contactará en horario laboral, gracias por confiar en nosotros',
+                codigo:30,
+                opcion1:'',
+                proximo1:31,
+                opcion2:'',
+                proximo2:0,
+                tipo :10
+            },
+            // opcion 2 venta de vehiculo
+            {
+                mensaje:'Cuentanos, ¿ Cual es tu vehiculo?',
+                codigo:4,
+                opcion1:'',
+                proximo1:6,
+                opcion2:'',
+                proximo2:0,
+                tipo :0
+            }
+        ]
+        
+        /* bot general */
+        if($empresas !== 8){
+            $messageId = contactos_chat::where("telefono",$telefono)->where('empresas',$empresas)->first();
+            if($messageId->mensaje1 === 0 ){
+                $messageId->mensaje1 = 1;
+                $messageId->save();
+                $mensaje = "Hola como estas?, un gusto en antenderte, confirmame en las siguientes opciones de que manera te podemos asesorar para la compra o venta de tu vehiculo";
+                $options = [
+                    [
+                        "id"=>"compra",
+                        "title"=>"Compra de vehiculo"
+                    ],
+                    [
+                        "id"=>"venta",
+                        "title"=>"Venta de vehiculo"
+                    ],
+                ];
+                $this->sendMessageOptions($telefono,$message,$options,$id_telefono,$tokenWhatssApp,$empresas);
+            }else{
+                if(stripos($comentario, "compra") !== false){
+                    $message ="Listo, Cuentame mas.";
+                    $options = [
+                        [
+                            "id"=>"ccontado",
+                            "title"=>"Compra de contado"
+                        ],
+                        [
+                            "id"=>"cfinanciado",
+                            "title"=>"Compra de con financiamiento"
+                        ],
+                    ];
+                    $this->sendMessageOptions($telefono,$message,$options,$id_telefono,$tokenWhatssApp,$empresas);
+                }
+                if(stripos($comentario, "ccontado") !== false){
+                    $message ="¿Cual es el vehiculo que deseas?";
+                    $this->sendMessageText($telefono,$message,$id_telefono,$tokenWhatssApp,$empresas);
+                    $messageId->mensaje2 = 1; 
+                    $messageId->save();
+                }
+                if($messageId->mensaje2 == 1 ){
+                    $mensaje = "¿Cual es el presupuesto de dinero que deseas invertir en tu vehiculo?";
+                    $this->sendMessageText($telefono,$message,$id_telefono,$tokenWhatssApp,$empresas);
+                    $messageId->mensaje2 = 2; 
+                    $messageId->mensaje3 = 1; 
+                    $messageId->save();
+                }
+                if($messageId->mensaje3 == 1 ){
+                    $mensaje = "!Genial¡ un asesor de nuestro concesionario te contactara en horas laborales. Gracios por contar con nosotros";
+                    $this->sendMessageText($telefono,$message,$id_telefono,$tokenWhatssApp,$empresas);
+                    $messageId->mensaje3 = 2; 
+                    $messageId->finalizado = 1; 
+                    $messageId->save();
+                }
+
             }
         }
     }
