@@ -700,7 +700,7 @@ class WppController extends Controller
         if($empresas == 8){
             Log::info("entro en el bot general");
             $messageId = contactos_chat::where("telefono",$telefono)->where('empresas',$empresas)->first();
-            if($messageId->mensaje1 === 0 ){
+            if($messageId->mensaje1 == 0 ){
                 $messageId->mensaje1 = 1;
                 $messageId->save();
                 $mensaje = "Hola como estas?, un gusto en antenderte, confirmame en las siguientes opciones de que manera te podemos asesorar para la compra o venta de tu vehiculo";
@@ -716,21 +716,22 @@ class WppController extends Controller
                 ];
                 $this->sendMessageOptions($telefono,$mensaje,$options,$id_telefono,$tokenWhatssApp,$empresas);
             }else{
+                Log::info("la respuesta es = $comentario");
                 if(stripos($comentario, "compra") !== false){
                     $message ="Listo, Cuentame mas.";
                     $options = [
                         [
-                            "id"=>"ccontado",
+                            "id"=>"cctd",
                             "title"=>"Compra de contado"
                         ],
                         [
-                            "id"=>"cfinanciado",
+                            "id"=>"cfd",
                             "title"=>"Compra de con financiamiento"
                         ],
                     ];
                     $this->sendMessageOptions($telefono,$message,$options,$id_telefono,$tokenWhatssApp,$empresas);
                 }
-                if(stripos($comentario, "ccontado") !== false){
+                if(stripos($comentario, "cctd") !== false){
                     $message ="¿Cual es el vehiculo que deseas?";
                     $this->sendMessageText($telefono,$message,$id_telefono,$tokenWhatssApp,$empresas);
                     $messageId->mensaje2 = 1; 
