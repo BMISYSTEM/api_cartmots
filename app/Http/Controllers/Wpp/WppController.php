@@ -479,7 +479,6 @@ class WppController extends Controller
                     $this->sendMessageText($empresas,$respuesta,$id_telefono,$tokenWhatssApp,$empresas);
                 } elseif (strpos($comentario, "retoNo") !== false) {
 
-                    $curl = curl_init();
                     $respuesta = "Quisiera saber como deseas hacer el negocio ";
                     $options = [
                         [
@@ -531,6 +530,7 @@ class WppController extends Controller
 
     function sendMessageText($telefono, $message, $idTelefono, $privateToken, $empresa)
     {
+        Log::alert(" se enviara un mensaje de texto");
         $data = [
             "messaging_product" => "whatsapp",
             "recipient_type" => "individual",
@@ -541,8 +541,6 @@ class WppController extends Controller
                 "body" => $message
             ]
         ];
-        $idTelefonoBrandon = 585227118006200;
-        $tokenBrandon = "EAAaOVZBlj55UBO8JEl58zM99tsm7GZBjgA0OZBh65CO7ZCnA82DbP5WfaLcYxfxY2Qr4fI8NvolfPgOZAhpV2bmRD8R1s3JgplJ6ER9xU43pkDS11v2qItVZAosD4YUbL2vr9ox9bhfSPXg8fUEE82zB5aFPBFRDyuoyyzBP6efR8OAgZAKqQAgMJDIJJg6jSI5zAZDZD";
         /* envio de mensajes a api wpp */
         $this->postMessages($data, $privateToken, $idTelefono);
         $this->saveMessgeSend($message, $idTelefono, $telefono, $empresa);
