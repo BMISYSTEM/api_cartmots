@@ -722,11 +722,11 @@ class WppController extends Controller
                     $options = [
                         [
                             "id"=>"cctd",
-                            "title"=>"Compra de contado"
+                            "title"=>"Contado"
                         ],
                         [
                             "id"=>"cfd",
-                            "title"=>"Compra de con financiamiento"
+                            "title"=>"Financiamiento"
                         ],
                     ];
                     $this->sendMessageOptions($telefono,$message,$options,$id_telefono,$tokenWhatssApp,$empresas);
