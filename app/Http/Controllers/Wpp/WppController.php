@@ -250,7 +250,7 @@ class WppController extends Controller
         $respuesta = '';
         $telefono = $from;
         /* bot arcamotor */
-        if($empresas === 8){
+        if($empresas === 11){
             if ($nuevo == 1) {
     
                 $message = "🔹¡Hola, buen día! ☀️\n👋 Mi nombre es Brandon Arbelaez, especialista en el sector financiero 💰 y automotriz 🚗.\n📌 Permíteme hacerte unas preguntas 📝 para poder asesorarte de la mejor manera.\n✨ ¡Estoy aquí para ayudarte!\nDeseas comprar vehiculo?";
@@ -697,7 +697,7 @@ class WppController extends Controller
         
         /* bot general */
         Log::info("Empresa es = $empresas   ");
-        if($empresas != 8){
+        if($empresas != 11){
             $messageId = contactos_chat::where("telefono",$telefono)->where('empresas',$empresas)->first();
             if($messageId->mensaje1 === 0 ){
                 $messageId->mensaje1 = 1;
