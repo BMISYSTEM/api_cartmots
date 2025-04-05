@@ -501,7 +501,7 @@ class WppController extends Controller
                 }
             }
         }
-        [
+     /*    [
             {
                 mensaje:'selecciona el numero de la opcion que necesites. ',
                 codigo:1,
@@ -732,7 +732,7 @@ class WppController extends Controller
                 proximo2:0,
                 tipo :0
             }
-        ]
+        ] */
         
         /* bot general */
         if($empresas !== 8){
