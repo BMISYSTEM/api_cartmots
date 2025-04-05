@@ -282,6 +282,7 @@ class WppController extends Controller
     }
     function botMessage($comentario, $from, $id_telefono, $nuevo,$tokenWhatssApp,$empresas)
     {
+        Log::warning($comentario);
         $respuesta = '';
         $telefono = $from;
         if ($nuevo == 1) {
@@ -383,7 +384,7 @@ class WppController extends Controller
                     . "\n- Antigüedad en la empresa"
                     . "\n- 1 referencia familiar (nombre y teléfono)"
                     . "\n- 1 referencia personal (nombre y teléfono)";
-                $this->sendMessageText($empresas,$respuesta,$id_telefono,$tokenWhatssApp,$empresas);
+                $this->sendMessageText($telefono,$respuesta,$id_telefono,$tokenWhatssApp,$empresas);
                 $contacto = contactos_chat::where('telefono', $from)->first();
                 $contacto->finalizado = 1;
                 $contacto->save();
