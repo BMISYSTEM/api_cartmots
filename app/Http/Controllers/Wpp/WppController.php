@@ -714,7 +714,7 @@ class WppController extends Controller
                         "title"=>"Venta de vehiculo"
                     ],
                 ];
-                $this->sendMessageOptions($telefono,$message,$options,$id_telefono,$tokenWhatssApp,$empresas);
+                $this->sendMessageOptions($telefono,$mensaje,$options,$id_telefono,$tokenWhatssApp,$empresas);
             }else{
                 if(stripos($comentario, "compra") !== false){
                     $message ="Listo, Cuentame mas.";
@@ -737,14 +737,14 @@ class WppController extends Controller
                     $messageId->save();
                 }
                 if($messageId->mensaje2 == 1 ){
-                    $mensaje = "¿Cual es el presupuesto de dinero que deseas invertir en tu vehiculo?";
+                    $message = "¿Cual es el presupuesto de dinero que deseas invertir en tu vehiculo?";
                     $this->sendMessageText($telefono,$message,$id_telefono,$tokenWhatssApp,$empresas);
                     $messageId->mensaje2 = 2; 
                     $messageId->mensaje3 = 1; 
                     $messageId->save();
                 }
                 if($messageId->mensaje3 == 1 ){
-                    $mensaje = "!Genial¡ un asesor de nuestro concesionario te contactara en horas laborales. Gracios por contar con nosotros";
+                    $message = "!Genial¡ un asesor de nuestro concesionario te contactara en horas laborales. Gracios por contar con nosotros";
                     $this->sendMessageText($telefono,$message,$id_telefono,$tokenWhatssApp,$empresas);
                     $messageId->mensaje3 = 2; 
                     $messageId->finalizado = 1; 
