@@ -736,15 +736,13 @@ class WppController extends Controller
                     $this->sendMessageText($telefono,$message,$id_telefono,$tokenWhatssApp,$empresas);
                     $messageId->mensaje2 = 1; 
                     $messageId->save();
-                }
-                if($messageId->mensaje2 == 1 ){
+                }else if($messageId->mensaje2 == 1 ){
                     $message = "¿Cual es el presupuesto de dinero que deseas invertir en tu vehiculo?";
                     $this->sendMessageText($telefono,$message,$id_telefono,$tokenWhatssApp,$empresas);
                     $messageId->mensaje2 = 2; 
                     $messageId->mensaje3 = 1; 
                     $messageId->save();
-                }
-                if($messageId->mensaje3 == 1 ){
+                }else if($messageId->mensaje3 == 1 ){
                     $message = "!Genial¡ un asesor de nuestro concesionario te contactara en horas laborales. Gracios por contar con nosotros";
                     $this->sendMessageText($telefono,$message,$id_telefono,$tokenWhatssApp,$empresas);
                     $messageId->mensaje3 = 2; 
