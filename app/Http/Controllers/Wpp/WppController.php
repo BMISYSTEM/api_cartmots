@@ -697,7 +697,8 @@ class WppController extends Controller
         
         /* bot general */
         Log::info("Empresa es = $empresas   ");
-        if($empresas != 11){
+        if($empresas == 8){
+            Log::info("entro en el bot general");
             $messageId = contactos_chat::where("telefono",$telefono)->where('empresas',$empresas)->first();
             if($messageId->mensaje1 === 0 ){
                 $messageId->mensaje1 = 1;
