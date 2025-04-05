@@ -73,6 +73,7 @@ class WppController extends Controller
                     }
                     $this->saveMessgeRecive($message, $id_telefono, $empresas, $telefono);
                     if ($contacto->isEmpty()) {
+                        Log::info("opcion=> ", ["envio de primer mensaje"]);
                         $this->botMessage($message, $from, $id_telefono, 1,$config_chat->token_permanente,$config_chat->empresas);
                     } else {
                         $contactovalidation = contactos_chat::where('telefono', $telefono)->where('empresas', $empresas)->first();
