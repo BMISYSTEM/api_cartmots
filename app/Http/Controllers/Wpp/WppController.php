@@ -185,6 +185,7 @@ class WppController extends Controller
                         ch.id_users,
                         ch.nombre,
                         ch.telefono,
+                        ch.email,
                         ch.id_telefono,
                         ch.empresas,
                         ch.estado,
