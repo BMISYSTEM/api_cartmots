@@ -955,7 +955,8 @@ class WppController extends Controller
                 'telefono.required'=>'El telefono es obligatorio',
                 'token.required'=>'El token es obligatorio',
                 'usuario.required'=>'El usuario es obligatorio',
-                'idTelefono.required'=>'El id del telefono es obligatorio'
+                'idTelefono.required'=>'El id del telefono es obligatorio',
+                
             ]
             );
             $empresa = Auth::user()->empresas;

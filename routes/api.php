@@ -296,7 +296,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/wpp/allmessages',[WppController::class,'allMessages']);
     Route::post('/wpp/updateconfig',[WppController::class,'createOrUpdateConfigApi']);
     Route::post('/wpp/sendmessage',[WppController::class,'sendMessage']);
-    Route::post('/updateestadocontact',[WppController::class,'updateEstadoContact']);
+    Route::post('/wpp/updateestadocontact',[WppController::class,'updateEstadoContact']);
     /**
      * Opciones de movimientod de costos de usuarios
      */
