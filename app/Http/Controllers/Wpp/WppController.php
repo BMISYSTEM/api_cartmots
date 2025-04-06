@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
+use function PHPUnit\Framework\isEmpty;
+
 class WppController extends Controller
 {
     const token = "WPPAPLICATION";
@@ -932,5 +934,50 @@ class WppController extends Controller
             'success' => true,
             'response' => $decoded
         ];
+    }
+
+
+    function indexConfig(){
+        $empresa = Auth::user()->empresas;
+        $config = config_chat::where('empresas',$empresa)->first();
+        return response()->json($config);
+    }
+
+    function createOrUpdateConfigApi(Request $request){
+        $request = $request->validate(
+            [
+                'telefono'=>'required',
+                'token'=>'required',
+                'usuario'=>'required',
+                'idTelefono'=>'required'
+            ],
+            [
+                'telefono.required'=>'El telefono es obligatorio',
+                'token.required'=>'El token es obligatorio',
+                'usuario.required'=>'El usuario es obligatorio',
+                'idTelefono.required'=>'El id del telefono es obligatorio'
+            ]
+            );
+            $empresa = Auth::user()->empresas;
+            $config = config_chat::where('empresas',$empresa)->first();
+            if(isEmpty($config)){
+                config_chat::create(
+                    [
+                        'telefono'=>$request['telefono'],
+                        'token_permanente'=>$request['token'],
+                        'id_users'=>$request['usuario'],
+                        'id_telefono'=>$request['idTelefono'],
+                        'empresas'=>$empresa
+                    ]
+                );
+
+            }else{
+                $config->telefono =  $request['telefono'];
+                $config->token_permanente =  $request['token'];
+                $config->id_users =  $request['usuario'];
+                $config->id_telefono =  $request['idTelefono'];
+                $config->save();
+            }
+        return response()->json(['succes'=>'La informacion se actualizo de forma correcta']);
     }
 }

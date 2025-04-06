@@ -291,8 +291,10 @@ Route::middleware('auth:sanctum')->group(function(){
     /* 
         options WhatsApp
     */
+    Route::get('/wpp/apiwhatsap',[WppController::class,'indexConfig']);
     Route::get('/wpp/allcontact',[WppController::class,'allContactos']);
     Route::get('/wpp/allmessages',[WppController::class,'allMessages']);
+    Route::post('/wpp/updateconfig',[WppController::class,'createOrUpdateConfigApi']);
     Route::post('/wpp/sendmessage',[WppController::class,'sendMessage']);
     Route::post('/updateestadocontact',[WppController::class,'updateEstadoContact']);
     /**
