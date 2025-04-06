@@ -781,7 +781,7 @@ class WppController extends Controller
     function updateEstadoContact(Request $request)
     {
         $empresa = Auth::user()->empresas;
-        $contacto = contactos_chat::where('id_telefono',$request['id'])->where('empresas',$empresa)->first();
+        $contacto = contactos_chat::where('id',$request['id'])->where('empresas',$empresa)->first();
         $contacto->estado = $request['estado'];
         $contacto->save();
         return response()->json(['succes' => 'Estado actualizado con exito']);
