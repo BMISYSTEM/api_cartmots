@@ -960,7 +960,7 @@ class WppController extends Controller
             );
             $empresa = Auth::user()->empresas;
             $config = config_chat::where('empresas',$empresa)->first();
-            if(isEmpty($config)){
+            if(!isEmpty($config)){
                 config_chat::create(
                     [
                         'telefono'=>$request['telefono'],
