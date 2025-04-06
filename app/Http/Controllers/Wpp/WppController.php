@@ -787,6 +787,24 @@ class WppController extends Controller
         return response()->json(['succes' => 'Estado actualizado con exito']);
     }
 
+    function reasignarChat(Request $request)
+    {
+        $empresa = Auth::user()->empresas;
+        $contacto = contactos_chat::where('id',$request['id'])->where('empresas',$empresa)->first();
+        $contacto->id_users = $request['usuario'];
+        $contacto->save();
+        return response()->json(['succes' => 'El chat Fue reasignado con exito']);
+    }
+    function updateContact(Request $request)
+    {
+        $empresa = Auth::user()->empresas;
+        $contacto = contactos_chat::where('id',$request['id'])->where('empresas',$empresa)->first();
+        $contacto->nombre = $request['nombre'];
+        $contacto->email = $request['email'];
+        $contacto->save();
+        return response()->json(['succes' => 'La informacion de contacto se actualizo con exito']);
+    }
+
     function sendMessageText($telefono, $message, $idTelefono, $privateToken, $empresa)
     {
         Log::alert(" se enviara un mensaje de texto");
@@ -804,7 +822,6 @@ class WppController extends Controller
         $this->postMessages($data, $privateToken, $idTelefono);
         $this->saveMessgeSend($message, $idTelefono, $telefono, $empresa);
     }
-
     function sendMessageOptions($telefono, $tituloOptions, $options, $idTelefono, $privateToken, $empresa)
     {
         $optionButtons = array();

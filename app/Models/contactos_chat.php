@@ -15,6 +15,7 @@ class contactos_chat extends Model
         'id_telefono',
         'empresas',
         'id_users',
+        'email',
         'bot'
     ];
 }
