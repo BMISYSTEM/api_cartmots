@@ -515,44 +515,35 @@ class WppController extends Controller
                     $this->sendMessageOptions($telefono,$message,$options,$id_telefono,$tokenWhatssApp,$empresas);
                 }else if($comentario == "cctd"){
                     $message ="¿Cual es el vehiculo que deseas?";
-                    $this->sendMessageText($telefono,$message,$id_telefono,$tokenWhatssApp,$empresas);\
-                    $messageId = contactos_chat::where("telefono",$telefono)->where('empresas',$empresas)->first();
+                    $this->sendMessageText($telefono,$message,$id_telefono,$tokenWhatssApp,$empresas);
                     $messageId->mensaje2 = 1; 
                     $messageId->save();
                 }else if($messageId->mensaje2 == 1 ){
                     $message = "¿Cual es el presupuesto de dinero que deseas invertir en tu vehiculo?";
                     $this->sendMessageText($telefono,$message,$id_telefono,$tokenWhatssApp,$empresas);
-                    $messageId = contactos_chat::where("telefono",$telefono)->where('empresas',$empresas)->first();
                     $messageId->mensaje2 = 0; 
                     $messageId->mensaje3 = 1; 
                     $messageId->save();
                 }else if($messageId->mensaje3 == 1 ){
                     $message = "!Genial¡ un asesor de nuestro concesionario te contactara en horas laborales. Gracios por contar con nosotros";
                     $this->sendMessageText($telefono,$message,$id_telefono,$tokenWhatssApp,$empresas);
-                    $messageId = contactos_chat::where("telefono",$telefono)->where('empresas',$empresas)->first();
                     $messageId->mensaje3 = 0; 
                     $messageId->finalizado = 1; 
                     $messageId->save();
                 }else if($comentario == "caprod"){
                     $message ="¿Cual es el vehiculo que deseas?";
                     $this->sendMessageText($telefono,$message,$id_telefono,$tokenWhatssApp,$empresas);
-                    $messageId = contactos_chat::where("telefono",$telefono)->where('empresas',$empresas)->first();
-
                     $messageId->mensaje12 = 1; 
                     $messageId->save();
                 }else if($messageId->mensaje12 == 1){
                     $message ="¿Cual es elpresupuesto de dinero que deseas invertir en tu vehiculo?";
                     $this->sendMessageText($telefono,$message,$id_telefono,$tokenWhatssApp,$empresas);
-                    $messageId = contactos_chat::where("telefono",$telefono)->where('empresas',$empresas)->first();
-
                     $messageId->mensaje12 = 0; 
                     $messageId->mensaje13 = 1; 
                     $messageId->save();
                 }else if($messageId->mensaje13 == 1){
                     $message ="!Genial¡ un asesor de nuestro concesionario te contactara en horas laborales. Gracios por contar con nosotros'";
                     $this->sendMessageText($telefono,$message,$id_telefono,$tokenWhatssApp,$empresas);
-                    $messageId = contactos_chat::where("telefono",$telefono)->where('empresas',$empresas)->first();
-
                     $messageId->mensaje12 = 0; 
                     $messageId->mensaje13 = 0; 
                     $messageId->finalizado = 1; 
@@ -573,15 +564,11 @@ class WppController extends Controller
                 }else if($comentario ==  "sirepo"){
                     $message ="¿Cual es elpresupuesto de dinero que deseas invertir en tu vehiculo?";
                     $this->sendMessageText($telefono,$message,$id_telefono,$tokenWhatssApp,$empresas);
-                    $messageId = contactos_chat::where("telefono",$telefono)->where('empresas',$empresas)->first();
-
                     $messageId->mensaje15 = 1; 
                     $messageId->save();
                 }else if($messageId->mensaje15 == 1){
                     $message ="!Genial¡ un asesor de nuestro concesionario te contactara en horas laborales. Gracios por contar con nosotros'";
                     $this->sendMessageText($telefono,$message,$id_telefono,$tokenWhatssApp,$empresas);
-                    $messageId = contactos_chat::where("telefono",$telefono)->where('empresas',$empresas)->first();
-
                     $messageId->mensaje15 = 0; 
                     $messageId->finalizado = 1; 
                     $messageId->save();
@@ -601,86 +588,64 @@ class WppController extends Controller
                 }else if($comentario == "empl"){
                     $message ="¿Que tipo de contrato tienes?";
                     $this->sendMessageText($telefono,$message,$id_telefono,$tokenWhatssApp,$empresas);
-                    $messageId = contactos_chat::where("telefono",$telefono)->where('empresas',$empresas)->first();
-
                     $messageId->mensaje19 = 1; 
                     $messageId->save();
                 }else if($messageId->mensaje19 == 1){
                     $message ="¿Que antiguedad tienes en la empresa?";
                     $this->sendMessageText($telefono,$message,$id_telefono,$tokenWhatssApp,$empresas);
-                    $messageId = contactos_chat::where("telefono",$telefono)->where('empresas',$empresas)->first();
-
                     $messageId->mensaje19 = 0; 
-                    $messageId->mensjae20 = 1; 
+                    $messageId->mensaje19 = 1; 
                     $messageId->save();
                 }else if($messageId->mensaje20 == 1){
                     $message ="¿Cual es tu ingreso mensual?";
                     $this->sendMessageText($telefono,$message,$id_telefono,$tokenWhatssApp,$empresas);
-                    $messageId = contactos_chat::where("telefono",$telefono)->where('empresas',$empresas)->first();
-
                     $messageId->mensaje20 = 0; 
                     $messageId->mensjae21 = 1; 
                     $messageId->save();
                 }else if($messageId->mensaje21 == 1){
                     $message ="¿Cual es el vehiculo que deseas?";
                     $this->sendMessageText($telefono,$message,$id_telefono,$tokenWhatssApp,$empresas);
-                    $messageId = contactos_chat::where("telefono",$telefono)->where('empresas',$empresas)->first();
-
                     $messageId->mensaje21 = 0; 
                     $messageId->mensjae22 = 1; 
                     $messageId->save();
                 }else if($messageId->mensaje22 == 1){
                     $message ="¡Genial! Un asesor de nuestro concesionario te contactará en horario laboral, gracias por confiar en nosotros";
                     $this->sendMessageText($telefono,$message,$id_telefono,$tokenWhatssApp,$empresas);
-                    $messageId = contactos_chat::where("telefono",$telefono)->where('empresas',$empresas)->first();
-
                     $messageId->mensaje22 = 0; 
                     $messageId->finalizado = 1; 
                     $messageId->save();
                 }else if($comentario ==  "indep"){
                     $message ="Cuentanos mas de tu actividad,¿ Tienes Camara de comercio?";
                     $this->sendMessageText($telefono,$message,$id_telefono,$tokenWhatssApp,$empresas);
-                    $messageId = contactos_chat::where("telefono",$telefono)->where('empresas',$empresas)->first();
-
                     $messageId->mensaje23 = 1; 
                     $messageId->save();
                 }else if($messageId->mensaje23 == 1){
                     $message ="¿Tienes Rut?";
                     $this->sendMessageText($telefono,$message,$id_telefono,$tokenWhatssApp,$empresas);
-                    $messageId = contactos_chat::where("telefono",$telefono)->where('empresas',$empresas)->first();
-
                     $messageId->mensaje23 = 0; 
                     $messageId->mensaje24 = 1; 
                     $messageId->save();
                 }else if($messageId->mensaje24 == 1){
                     $message ="¿Declaras renta?";
                     $this->sendMessageText($telefono,$message,$id_telefono,$tokenWhatssApp,$empresas);
-                    $messageId = contactos_chat::where("telefono",$telefono)->where('empresas',$empresas)->first();
-
                     $messageId->mensaje24 = 0; 
                     $messageId->mensaje25 = 1; 
                     $messageId->save();
                 }else if($messageId->mensaje25 == 1){
                     $message ="¿Cual es tu promedio de ingresos mensuales?";
                     $this->sendMessageText($telefono,$message,$id_telefono,$tokenWhatssApp,$empresas);
-                    $messageId = contactos_chat::where("telefono",$telefono)->where('empresas',$empresas)->first();
-
                     $messageId->mensaje25 = 0; 
                     $messageId->mensaje26 = 1; 
                     $messageId->save();
                 }else if($messageId->mensaje26 == 1){
                     $message ="¿Que vehiculos quieres?";
                     $this->sendMessageText($telefono,$message,$id_telefono,$tokenWhatssApp,$empresas);
-                    $messageId = contactos_chat::where("telefono",$telefono)->where('empresas',$empresas)->first();
-
                     $messageId->mensaje26 = 0; 
                     $messageId->mensaje27 = 1; 
                     $messageId->save();
                 }else if($messageId->mensaje27 == 1){
                     $message ="¡Genial! Un asesor de nuestro concesionario te contactará en horario laboral, gracias por confiar en nosotros";
                     $this->sendMessageText($telefono,$message,$id_telefono,$tokenWhatssApp,$empresas);
-                    $messageId = contactos_chat::where("telefono",$telefono)->where('empresas',$empresas)->first();
-
                     $messageId->mensaje27 = 0; 
                     $messageId->finalizado = 1; 
                     $messageId->save();
