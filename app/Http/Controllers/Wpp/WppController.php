@@ -733,8 +733,7 @@ class WppController extends Controller
                         ],
                     ];
                     $this->sendMessageOptions($telefono,$message,$options,$id_telefono,$tokenWhatssApp,$empresas);
-                }
-                if(stripos($comentario, "cfd") !== false){
+                }else if(stripos($comentario, "cfd") !== false){
                     $message ="Claro, Cuentame acerca del financiemiento que deseas";
                     $options = [
                         [
@@ -749,8 +748,24 @@ class WppController extends Controller
                     $this->sendMessageOptions($telefono,$message,$options,$id_telefono,$tokenWhatssApp,$empresas);
                     $messageId->mensaje2 = 1; 
                     $messageId->save();
-                }
-                if(stripos($comentario, "caprod") !== false){
+                }else if(stripos($comentario, "cctd") !== false){
+                    $message ="¿Cual es el vehiculo que deseas?";
+                    $this->sendMessageText($telefono,$message,$id_telefono,$tokenWhatssApp,$empresas);
+                    $messageId->mensaje2 = 1; 
+                    $messageId->save();
+                }else if($messageId->mensaje2 == 1 ){
+                    $message = "¿Cual es el presupuesto de dinero que deseas invertir en tu vehiculo?";
+                    $this->sendMessageText($telefono,$message,$id_telefono,$tokenWhatssApp,$empresas);
+                    $messageId->mensaje2 = 2; 
+                    $messageId->mensaje3 = 1; 
+                    $messageId->save();
+                }else if($messageId->mensaje3 == 1 ){
+                    $message = "!Genial¡ un asesor de nuestro concesionario te contactara en horas laborales. Gracios por contar con nosotros";
+                    $this->sendMessageText($telefono,$message,$id_telefono,$tokenWhatssApp,$empresas);
+                    $messageId->mensaje3 = 2; 
+                    $messageId->finalizado = 1; 
+                    $messageId->save();
+                }else if(stripos($comentario, "caprod") !== false){
                     $message ="¿Cual es el vehiculo que deseas?";
                     $this->sendMessageText($telefono,$message,$id_telefono,$tokenWhatssApp,$empresas);
                     $messageId->mensaje12 = 1; 
@@ -768,8 +783,7 @@ class WppController extends Controller
                     $messageId->mensaje13 = 0; 
                     $messageId->finalizado = 1; 
                     $messageId->save();
-                }
-                if(stripos($comentario, "gestion") !== false){
+                }else if(stripos($comentario, "gestion") !== false){
                     $message ="¿Cuentas con un reporte negativo en centrales de riesgo?";
                     $options = [
                         [
@@ -782,8 +796,7 @@ class WppController extends Controller
                         ],
                     ];
                     $this->sendMessageOptions($telefono,$message,$options,$id_telefono,$tokenWhatssApp,$empresas);
-                }
-                if(stripos($comentario, "sirepo") !== false){
+                }else if(stripos($comentario, "sirepo") !== false){
                     $message ="¿Cual es elpresupuesto de dinero que deseas invertir en tu vehiculo?";
                     $this->sendMessageText($telefono,$message,$id_telefono,$tokenWhatssApp,$empresas);
                     $messageId->mensaje15 = 1; 
@@ -794,8 +807,7 @@ class WppController extends Controller
                     $messageId->mensaje15 = 0; 
                     $messageId->finalizado = 1; 
                     $messageId->save();
-                }
-                if(stripos($comentario, "norepo") !== false){
+                }else if(stripos($comentario, "norepo") !== false){
                     $message ="Cuentanos, ¿Cual es tu profesion?";
                     $options = [
                         [
@@ -808,8 +820,7 @@ class WppController extends Controller
                         ],
                     ];
                     $this->sendMessageOptions($telefono,$message,$options,$id_telefono,$tokenWhatssApp,$empresas);
-                }
-                if(stripos($comentario, "empl") !== false){
+                }else if(stripos($comentario, "empl") !== false){
                     $message ="¿Que tipo de contrato tienes?";
                     $this->sendMessageText($telefono,$message,$id_telefono,$tokenWhatssApp,$empresas);
                     $messageId->mensaje19 = 1; 
@@ -838,8 +849,7 @@ class WppController extends Controller
                     $messageId->mensaje22 = 0; 
                     $messageId->finalizado = 1; 
                     $messageId->save();
-                }
-                if(stripos($comentario, "indep") !== false){
+                }else if(stripos($comentario, "indep") !== false){
                     $message ="Cuentanos mas de tu actividad,¿ Tienes Camara de comercio?";
                     $this->sendMessageText($telefono,$message,$id_telefono,$tokenWhatssApp,$empresas);
                     $messageId->mensaje23 = 1; 
@@ -875,26 +885,6 @@ class WppController extends Controller
                     $messageId->finalizado = 1; 
                     $messageId->save();
                 }
-                
-                if(stripos($comentario, "cctd") !== false){
-                    $message ="¿Cual es el vehiculo que deseas?";
-                    $this->sendMessageText($telefono,$message,$id_telefono,$tokenWhatssApp,$empresas);
-                    $messageId->mensaje2 = 1; 
-                    $messageId->save();
-                }else if($messageId->mensaje2 == 1 ){
-                    $message = "¿Cual es el presupuesto de dinero que deseas invertir en tu vehiculo?";
-                    $this->sendMessageText($telefono,$message,$id_telefono,$tokenWhatssApp,$empresas);
-                    $messageId->mensaje2 = 2; 
-                    $messageId->mensaje3 = 1; 
-                    $messageId->save();
-                }else if($messageId->mensaje3 == 1 ){
-                    $message = "!Genial¡ un asesor de nuestro concesionario te contactara en horas laborales. Gracios por contar con nosotros";
-                    $this->sendMessageText($telefono,$message,$id_telefono,$tokenWhatssApp,$empresas);
-                    $messageId->mensaje3 = 2; 
-                    $messageId->finalizado = 1; 
-                    $messageId->save();
-                }
-
             }
         }
     }
