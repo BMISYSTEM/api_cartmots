@@ -18,6 +18,43 @@ class LogisticaController extends Controller
         $this->logistica = $implement;
     }
 
+
+    function createContrato(Request $request)
+    {
+        $empresa = Auth::user()->empresas;
+        $users = Auth::user()->id;
+        $negocios = DB::select("select count(*) cantidad from negocios where vehiculo ='".$request['placa']."' and finalizado = 0");
+        if($negocios[0]->cantidad == 0 ){
+            $creacionNegocio = negocio::create(
+                 [
+                     'vehiculo'=>$request['placa'] ,
+                     'valorventa'=>$request['valorventa'] ?? 0,
+                     'porcentajedescuento'=>$request['porcentaje'] ?? 0, 
+                     'placaretoma' => $request['placaretoma'] ?? "" ,
+                     'valorretoma' => $request['valorretoma'] ?? 0,
+                     'finalizado' => 0,
+                     'cliente'  => $request['cliente'],
+                     'empresas' => $empresa ,   
+                     'metodopago'=>$request['metodo'] ?? " ",
+                     'asesor'=>$users,
+                     'vcredito'=>$request['vcredito'] ?? "",
+                     'vcuotaInicial'=>$request['vcuotaInicial'] ?? 0,
+                     'vseparacion'=>$request['vseparacion'] ?? 0,
+                     'vtraspaso'=>$request['vtraspaso'] ?? 0,
+                     'asesorios'=>$request['asesorios'] ?? "",
+                     'obsequios'=>$request['obsequios'] ?? "",
+                     'segundo_precio'=>$request['segundoPrecio']?? 'sin definir',
+                     'entrega'=>$request['entrega']?? 'sin definir',
+                     'vendedor'=>$request['vendedor']?? 'sin definir',
+                     'clausulasAdiccionales'=>$request['clausulasAdiccionales']?? 'sin definir',
+                 ]
+                 ); 
+            return response()->json(['succes'=>'El negocio Se creo de forma correcta']);
+
+        }else{
+            return response()->json(['error'=>'El negocio no se puede crear debido a que ya existen negocio abierto para esta placa']);
+        }
+    }
     function createMovimiento(Request $request): object
     {
         $empresa = Auth::user()->empresas;
@@ -320,7 +357,6 @@ class LogisticaController extends Controller
         $negocio->clausulasAdiccionales = $request['clausulasAdiccionales'] ?? $negocio->vseparacion;;
         $negocio->save();
         return response()->json(['succes' => 'Negocio actualizado correctamente']);
-    
     }
 
     /* esta funcion permite crear un valor a la tabla de monto de usuario para despues cruzarlo con los movimientos realizados en logistica  */

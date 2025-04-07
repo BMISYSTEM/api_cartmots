@@ -232,6 +232,7 @@ Route::middleware('auth:sanctum')->group(function(){
     | Caso de uso
     |
     */
+    Route::post('/createcontrato',[LogisticaController::class,'createContrato']);
     Route::post('/costovehiculo',[LogisticaController::class,'costosVehiculo']);
     Route::post('/costoproveedor',[LogisticaController::class,'costoProveedor']);
     Route::post('/costoscliente',[LogisticaController::class,'costosCliente']);
