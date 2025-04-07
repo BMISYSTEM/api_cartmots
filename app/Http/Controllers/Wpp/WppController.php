@@ -594,7 +594,7 @@ class WppController extends Controller
                     $message ="¿Que antiguedad tienes en la empresa?";
                     $this->sendMessageText($telefono,$message,$id_telefono,$tokenWhatssApp,$empresas);
                     $messageId->mensaje19 = 0; 
-                    $messageId->mensaje19 = 1; 
+                    $messageId->mensaje20 = 1; 
                     $messageId->save();
                 }else if($messageId->mensaje20 == 1){
                     $message ="¿Cual es tu ingreso mensual?";
