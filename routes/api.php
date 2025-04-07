@@ -235,7 +235,9 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::post('/costovehiculo',[LogisticaController::class,'costosVehiculo']);
     Route::post('/costoproveedor',[LogisticaController::class,'costoProveedor']);
     Route::post('/costoscliente',[LogisticaController::class,'costosCliente']);
+    Route::post('/editnegocio',[LogisticaController::class,'editNegocio']);
     Route::get('/allnegociosvehiculos',[LogisticaController::class,'allnegociosvehiculos']);
+    Route::get('/findnegocio',[LogisticaController::class,'findNegocio']);
     /*
     |--------------------------------------------------------------------------
     | proveedor

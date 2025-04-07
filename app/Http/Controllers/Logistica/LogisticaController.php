@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Logistica;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Logistica\Implement\LogisticaImplement;
 use App\Models\logistica;
+use App\Models\negocio;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -285,9 +286,42 @@ class LogisticaController extends Controller
         $estatus = DB::select($sql);
         return response()->json(['succes' => $estatus]);
     }
+    // retorna la informacion de un solo negocio
+    function findNegocio(Request $request)
+    {
+        $empresa = Auth::user()->empresas;
+        $idNegocio = $request->query('negocio');
+        $negocio = negocio::find($idNegocio);
+        return response()->json(['succes' => $negocio]);
+    }
+    // edita la informacion de un negocio
+    function editNegocio(Request $request){
 
+        $negocio = negocio::find($$request['id']);                                                       
+        $negocio->vehiculo = $request['vehiculo'] ?? $negocio->vehiculo;
+        $negocio->valorventa = $request['valorventa'] ?? $negocio->valorventa;
+        $negocio->porcentajedescuento = $request['porcentajedescuento']  ?? $negocio->porcentajedescuento;
+        $negocio->placaretoma = $request['placaretoma'] ?? $negocio->placaretoma;
+        $negocio->valorretoma = $request['valorretoma'] ??  $negocio->valorretoma;
+        $negocio->finalizado = $request['finalizado'] ?? $negocio->finalizado;
+        $negocio->cliente = $request['cliente'] ?? $negocio->cliente;
+        $negocio->empresas = $request['empresas'] ?? $negocio->empresas;
+        $negocio->metodopago = $request['metodopago'] ?? $negocio->metodopago;
+        $negocio->asesor = $request['asesor'] ?? $negocio->asesor;
+        $negocio->vcredito = $request['vcredito'] ?? $negocio->vcredito;
+        $negocio->vcuotaInicial = $request['vcuotaInicial'] ?? $negocio->vcuotaInicial;
+        $negocio->vseparacion = $request['vseparacion'] ?? $negocio->vseparacion;
+        $negocio->vtraspaso = $request['vtraspaso'] ?? $negocio->vseparacion;
+        $negocio->asesorios = $request['asesorios'] ?? $negocio->vseparacion;
+        $negocio->obsequios = $request['obsequios'] ?? $negocio->vseparacion;
+        $negocio->segundo_precio = $request['segundo_precio'] ?? $negocio->vseparacion;;
+        $negocio->vendedor = $request['vendedor'] ?? $negocio->vseparacion;
+        $negocio->entrega = $request['entrega'] ?? $negocio->vseparacion;
+        $negocio->clausulasAdiccionales = $request['clausulasAdiccionales'] ?? $negocio->vseparacion;;
+        $negocio->save();
+        return response()->json(['succes' => 'Negocio actualizado correctamente']);
     
-
+    }
 
     /* esta funcion permite crear un valor a la tabla de monto de usuario para despues cruzarlo con los movimientos realizados en logistica  */
     function createMontoUsuario(Request $request): object
