@@ -487,7 +487,7 @@ class WppController extends Controller
                 $this->sendMessageOptions($telefono,$mensaje,$options,$id_telefono,$tokenWhatssApp,$empresas);
             }else{
                 Log::info("la respuesta es = $comentario");
-                if(stripos($comentario, "compra") !== false){
+                if($comentario ==  "compra"){
                     $message ="Listo, Cuentame mas.";
                     $options = [
                         [
@@ -500,7 +500,7 @@ class WppController extends Controller
                         ],
                     ];
                     $this->sendMessageOptions($telefono,$message,$options,$id_telefono,$tokenWhatssApp,$empresas);
-                }else if(stripos($comentario, "cfd") !== false){
+                }else if($comentario == "cfd"){
                     $message ="Claro, Cuentame acerca del financiemiento que deseas";
                     $options = [
                         [
@@ -513,7 +513,7 @@ class WppController extends Controller
                         ],
                     ];
                     $this->sendMessageOptions($telefono,$message,$options,$id_telefono,$tokenWhatssApp,$empresas);
-                }else if(stripos($comentario, "cctd") !== false){
+                }else if($comentario == "cctd"){
                     $message ="¿Cual es el vehiculo que deseas?";
                     $this->sendMessageText($telefono,$message,$id_telefono,$tokenWhatssApp,$empresas);
                     $messageId->mensaje2 = 1; 
@@ -530,7 +530,7 @@ class WppController extends Controller
                     $messageId->mensaje3 = 0; 
                     $messageId->finalizado = 1; 
                     $messageId->save();
-                }else if(stripos($comentario, "caprod") !== false){
+                }else if($comentario == "caprod"){
                     $message ="¿Cual es el vehiculo que deseas?";
                     $this->sendMessageText($telefono,$message,$id_telefono,$tokenWhatssApp,$empresas);
                     $messageId->mensaje12 = 1; 
@@ -548,7 +548,7 @@ class WppController extends Controller
                     $messageId->mensaje13 = 0; 
                     $messageId->finalizado = 1; 
                     $messageId->save();
-                }else if(stripos($comentario, "gestion") !== false){
+                }else if($comentario == "gestion"){
                     $message ="¿Cuentas con un reporte negativo en centrales de riesgo?";
                     $options = [
                         [
@@ -561,7 +561,7 @@ class WppController extends Controller
                         ],
                     ];
                     $this->sendMessageOptions($telefono,$message,$options,$id_telefono,$tokenWhatssApp,$empresas);
-                }else if(stripos($comentario, "sirepo") !== false){
+                }else if($comentario ==  "sirepo"){
                     $message ="¿Cual es elpresupuesto de dinero que deseas invertir en tu vehiculo?";
                     $this->sendMessageText($telefono,$message,$id_telefono,$tokenWhatssApp,$empresas);
                     $messageId->mensaje15 = 1; 
@@ -572,7 +572,7 @@ class WppController extends Controller
                     $messageId->mensaje15 = 0; 
                     $messageId->finalizado = 1; 
                     $messageId->save();
-                }else if(stripos($comentario, "norepo") !== false){
+                }else if($comentario ==  "norepo" ){
                     $message ="Cuentanos, ¿Cual es tu profesion?";
                     $options = [
                         [
@@ -585,7 +585,7 @@ class WppController extends Controller
                         ],
                     ];
                     $this->sendMessageOptions($telefono,$message,$options,$id_telefono,$tokenWhatssApp,$empresas);
-                }else if(stripos($comentario, "empl") !== false){
+                }else if($comentario == "empl"){
                     $message ="¿Que tipo de contrato tienes?";
                     $this->sendMessageText($telefono,$message,$id_telefono,$tokenWhatssApp,$empresas);
                     $messageId->mensaje19 = 1; 
@@ -614,7 +614,7 @@ class WppController extends Controller
                     $messageId->mensaje22 = 0; 
                     $messageId->finalizado = 1; 
                     $messageId->save();
-                }else if(stripos($comentario, "indep") !== false){
+                }else if($comentario ==  "indep"){
                     $message ="Cuentanos mas de tu actividad,¿ Tienes Camara de comercio?";
                     $this->sendMessageText($telefono,$message,$id_telefono,$tokenWhatssApp,$empresas);
                     $messageId->mensaje23 = 1; 
