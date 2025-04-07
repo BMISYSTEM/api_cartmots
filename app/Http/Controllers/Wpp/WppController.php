@@ -600,13 +600,13 @@ class WppController extends Controller
                     $message ="¿Cual es tu ingreso mensual?";
                     $this->sendMessageText($telefono,$message,$id_telefono,$tokenWhatssApp,$empresas);
                     $messageId->mensaje20 = 0; 
-                    $messageId->mensjae21 = 1; 
+                    $messageId->mensaje21 = 1; 
                     $messageId->save();
                 }else if($messageId->mensaje21 == 1){
                     $message ="¿Cual es el vehiculo que deseas?";
                     $this->sendMessageText($telefono,$message,$id_telefono,$tokenWhatssApp,$empresas);
                     $messageId->mensaje21 = 0; 
-                    $messageId->mensjae22 = 1; 
+                    $messageId->mensaje22 = 1; 
                     $messageId->save();
                 }else if($messageId->mensaje22 == 1){
                     $message ="¡Genial! Un asesor de nuestro concesionario te contactará en horario laboral, gracias por confiar en nosotros";
