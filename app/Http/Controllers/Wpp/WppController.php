@@ -797,7 +797,7 @@ class WppController extends Controller
                     ];
                     $this->sendMessageOptions($telefono,$message,$options,$id_telefono,$tokenWhatssApp,$empresas);
                 }else if(stripos($comentario, "sirepo") !== false){
-                    $message ="¿Cual es elpresupuesto de dinero que deseas invertir en tu vehiculo?";
+                    $message ="¿Cual es elpresupuesto de dinero que deseas invertir en tu vehiculo? reportado";
                     $this->sendMessageText($telefono,$message,$id_telefono,$tokenWhatssApp,$empresas);
                     $messageId->mensaje15 = 1; 
                     $messageId->save();
