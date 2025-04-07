@@ -513,8 +513,6 @@ class WppController extends Controller
                         ],
                     ];
                     $this->sendMessageOptions($telefono,$message,$options,$id_telefono,$tokenWhatssApp,$empresas);
-                    $messageId->mensaje2 = 1; 
-                    $messageId->save();
                 }else if(stripos($comentario, "cctd") !== false){
                     $message ="¿Cual es el vehiculo que deseas?";
                     $this->sendMessageText($telefono,$message,$id_telefono,$tokenWhatssApp,$empresas);
