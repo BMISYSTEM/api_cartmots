@@ -754,7 +754,7 @@ class WppController extends Controller
                     $messageId->mensaje2 = 1; 
                     $messageId->save();
                 }else if($messageId->mensaje2 == 1 ){
-                    $message = "¿Cual es el presupuesto de dinero que deseas invertir en tu vehiculo?";
+                    $message = "¿Cual es el presupuesto de dinero que deseas invertir en tu vehiculo? 1";
                     $this->sendMessageText($telefono,$message,$id_telefono,$tokenWhatssApp,$empresas);
                     $messageId->mensaje2 = 0; 
                     $messageId->mensaje3 = 1; 
@@ -771,7 +771,7 @@ class WppController extends Controller
                     $messageId->mensaje12 = 1; 
                     $messageId->save();
                 }else if($messageId->mensaje12 = 1){
-                    $message ="¿Cual es elpresupuesto de dinero que deseas invertir en tu vehiculo?";
+                    $message ="¿Cual es elpresupuesto de dinero que deseas invertir en tu vehiculo? 2";
                     $this->sendMessageText($telefono,$message,$id_telefono,$tokenWhatssApp,$empresas);
                     $messageId->mensaje12 = 0; 
                     $messageId->mensaje13 = 1; 
