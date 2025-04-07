@@ -465,244 +465,11 @@ class WppController extends Controller
                 }
             }
         }
-     /*    [
-            {
-                mensaje:'selecciona el numero de la opcion que necesites. ',
-                codigo:1,
-                opcion1:'Compra de vehiculo',
-                proximo1:3,
-                opcion2:'Vender vehiculo',
-                proximo2:4,
-                tipo :2
-    
-            },
-            // opcion 1 compra vehiculo proximo 3
-            {
-                mensaje:'Listo, Cuentame mas',
-                codigo:3,
-                opcion1:'Compra de contado',
-                proximo1:5,
-                opcion2:'Compra con Financiamiento',
-                proximo2:6,
-                tipo :2
-            },
-            {
-                mensaje:'¿Cual es el vehiculo que deseas?',
-                codigo:5,
-                opcion1:'',
-                proximo1:7,
-                opcion2:'',
-                proximo2:0,
-                tipo :0
-            },
-            {
-                mensaje:'¿Cual es elpresupuesto de dinero que deseas invertir en tu vehiculo?',
-                codigo:7,
-                opcion1:'',
-                proximo1:8,
-                opcion2:'',
-                proximo2:0,
-                tipo :0
-            },
-            {
-                mensaje:'!Genial¡ un asesor de nuestro concesionario te contactara en horas laborales. Gracios por contar con nosotros',
-                codigo:8,
-                opcion1:'',
-                proximo1:9,
-                opcion2:'',
-                proximo2:0,
-                tipo :10
-            },
-            // proximo codigo 4 ultimo codigo 9
-            {
-                mensaje:'Claro, Cuentame acerca del financiemiento que deseas',
-                codigo:6,
-                opcion1:'Tengo credito aprobado',
-                proximo1:10,
-                opcion2:'Quiero que se gestione el credito',
-                proximo2:11,
-                tipo :2
-            },
-            {
-                mensaje:'¿Cual es el vehiculo que deseas?',
-                codigo:10,
-                opcion1:'',
-                proximo1:12,
-                opcion2:'',
-                proximo2:0,
-                tipo :0
-            },
-            {
-                mensaje:'¿Cual es elpresupuesto de dinero que deseas invertir en tu vehiculo?',
-                codigo:12,
-                opcion1:'',
-                proximo1:13,
-                opcion2:'',
-                proximo2:0,
-                tipo :0
-            },
-            {
-                mensaje:'!Genial¡ un asesor de nuestro concesionario te contactara en horas laborales. Gracios por contar con nosotros',
-                codigo:13,
-                opcion1:'',
-                proximo1:14,
-                opcion2:'',
-                proximo2:0,
-                tipo :10
-            },
-            // opcion 2 de financiemiento codigo 4
-            {
-                mensaje:'¿Cuentas con un reporte negativo en centrales de riesgo?',
-                codigo:11,
-                opcion1:'Si',
-                proximo1:15,
-                opcion2:'No',
-                proximo2:16,
-                tipo :2
-            },
-            {
-                mensaje:'¿Cual es elpresupuesto de dinero que deseas invertir en tu vehiculo?',
-                codigo:15,
-                opcion1:'',
-                proximo1:17,
-                opcion2:'',
-                proximo2:0,
-                tipo :0
-            },
-            {
-                mensaje:'!Genial¡ un asesor de nuestro concesionario te contactara en horas laborales. Gracios por contar con nosotros',
-                codigo:17,
-                opcion1:'',
-                proximo1:18,
-                opcion2:'',
-                proximo2:0,
-                tipo :10
-            },
-            {
-                mensaje:'Cuentanos, ¿Cual es tu profesion?',
-                codigo:16,
-                opcion1:'Empleado',
-                proximo1:19,
-                opcion2:'Independiente',
-                proximo2:25,
-                tipo :2
-            },
-            {
-                mensaje:'¿Que tipo de contrato tienes?',
-                codigo:19,
-                opcion1:'',
-                proximo1:20,
-                opcion2:'',
-                proximo2:0,
-                tipo :0
-            },
-            {
-                mensaje:'¿Que antiguedad tienes en la empresa?',
-                codigo:20,
-                opcion1:'',
-                proximo1:21,
-                opcion2:'',
-                proximo2:0,
-                tipo :0
-            },
-            {
-                mensaje:'¿Cual es tu ingreso mensual?',
-                codigo:21,
-                opcion1:'',
-                proximo1:22,
-                opcion2:'',
-                proximo2:0,
-                tipo :0
-            },
-            {
-                mensaje:'¿Cual es el vehiculo que deseas?',
-                codigo:22,
-                opcion1:'',
-                proximo1:23,
-                opcion2:'',
-                proximo2:0,
-                tipo :0
-            },
-            {
-                mensaje:'¡Genial! Un asesor de nuestro concesionario te contactará en horario laboral, gracias por confiar en nosotros',
-                codigo:23,
-                opcion1:'',
-                proximo1:24,
-                opcion2:'',
-                proximo2:0,
-                tipo :10
-            },
-            {
-                mensaje:'Cuentanos mas de tu actividad,¿ Tienes Camara de comercio?',
-                codigo:25,
-                opcion1:'',
-                proximo1:26,
-                opcion2:'',
-                proximo2:0,
-                tipo :0
-            },
-            {
-                mensaje:'¿Tienes Rut?',
-                codigo:26,
-                opcion1:'',
-                proximo1:27,
-                opcion2:'',
-                proximo2:0,
-                tipo :0
-            },
-            {
-                mensaje:'¿Declaras renta?',
-                codigo:27,
-                opcion1:'',
-                proximo1:28,
-                opcion2:'',
-                proximo2:0,
-                tipo :0
-            },
-            {
-                mensaje:'¿Cual es tu promedio de ingresos mensuales?',
-                codigo:28,
-                opcion1:'',
-                proximo1:29,
-                opcion2:'',
-                proximo2:0,
-                tipo :0
-            },
-            {
-                mensaje:'¿Que vehiculos quieres?',
-                codigo:29,
-                opcion1:'',
-                proximo1:30,
-                opcion2:'',
-                proximo2:0,
-                tipo :0
-            },
-            {
-                mensaje:'¡Genial! Un asesor de nuestro concesionario te contactará en horario laboral, gracias por confiar en nosotros',
-                codigo:30,
-                opcion1:'',
-                proximo1:31,
-                opcion2:'',
-                proximo2:0,
-                tipo :10
-            },
-            // opcion 2 venta de vehiculo
-            {
-                mensaje:'Cuentanos, ¿ Cual es tu vehiculo?',
-                codigo:4,
-                opcion1:'',
-                proximo1:6,
-                opcion2:'',
-                proximo2:0,
-                tipo :0
-            }
-        ] */
-        
-        /* bot general */
-        Log::info("Empresa es = $empresas   ");
         if($empresas != 8){
-            Log::info("entro en el bot general");
             $messageId = contactos_chat::where("telefono",$telefono)->where('empresas',$empresas)->first();
+            if ($messageId->finalizado == 1) {
+                return;
+            }
             if($messageId->mensaje1 == 0 ){
                 $messageId->mensaje1 = 1;
                 $messageId->save();
@@ -754,7 +521,7 @@ class WppController extends Controller
                     $messageId->mensaje2 = 1; 
                     $messageId->save();
                 }else if($messageId->mensaje2 == 1 ){
-                    $message = "¿Cual es el presupuesto de dinero que deseas invertir en tu vehiculo? 1";
+                    $message = "¿Cual es el presupuesto de dinero que deseas invertir en tu vehiculo?";
                     $this->sendMessageText($telefono,$message,$id_telefono,$tokenWhatssApp,$empresas);
                     $messageId->mensaje2 = 0; 
                     $messageId->mensaje3 = 1; 
@@ -771,7 +538,7 @@ class WppController extends Controller
                     $messageId->mensaje12 = 1; 
                     $messageId->save();
                 }else if($messageId->mensaje12 = 1){
-                    $message ="¿Cual es elpresupuesto de dinero que deseas invertir en tu vehiculo? 2";
+                    $message ="¿Cual es elpresupuesto de dinero que deseas invertir en tu vehiculo?";
                     $this->sendMessageText($telefono,$message,$id_telefono,$tokenWhatssApp,$empresas);
                     $messageId->mensaje12 = 0; 
                     $messageId->mensaje13 = 1; 
@@ -797,7 +564,7 @@ class WppController extends Controller
                     ];
                     $this->sendMessageOptions($telefono,$message,$options,$id_telefono,$tokenWhatssApp,$empresas);
                 }else if(stripos($comentario, "sirepo") !== false){
-                    $message ="¿Cual es elpresupuesto de dinero que deseas invertir en tu vehiculo? reportado";
+                    $message ="¿Cual es elpresupuesto de dinero que deseas invertir en tu vehiculo?";
                     $this->sendMessageText($telefono,$message,$id_telefono,$tokenWhatssApp,$empresas);
                     $messageId->mensaje15 = 1; 
                     $messageId->save();
