@@ -269,8 +269,8 @@ class LogisticaController extends Controller
     function allnegociosvehiculos(Request $request)
     {
         $empresa = Auth::user()->empresas;
-
-        $estatus = DB::select("
+        $idCliente = $request->query('id');
+        $sql = "
             select c.nombre,c.apellido,c.cedula,c.telefono,c.email, 
             v.placa,m.nombre,v.linea,v.valor,v.version,ng.cliente,ng.id id_negocio
             from negocios ng 
@@ -278,9 +278,15 @@ class LogisticaController extends Controller
             inner join vehiculos v on ng.vehiculo = v.id
             inner join marcas m on v.marcas = m.id
             where ng.empresas = '" . $empresa . "'
-            ");
+        ";
+        if($idCliente->isEmpty()){
+            $sql += " and c.id = '".$idCliente."'";
+        }
+        $estatus = DB::select($sql);
         return response()->json(['succes' => $estatus]);
     }
+
+    
 
 
     /* esta funcion permite crear un valor a la tabla de monto de usuario para despues cruzarlo con los movimientos realizados en logistica  */
