@@ -280,8 +280,8 @@ class LogisticaController extends Controller
             inner join marcas m on v.marcas = m.id
             where ng.empresas = '" . $empresa . "'
         ";
-        if($idCliente->isEmpty()){
-            $sql += " and c.id = '".$idCliente."'";
+        if(!empty($idCliente)){
+            $sql .= " and c.id = '".$idCliente."'";
         }
         $estatus = DB::select($sql);
         return response()->json(['succes' => $estatus]);
