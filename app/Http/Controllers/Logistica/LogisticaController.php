@@ -354,7 +354,7 @@ class LogisticaController extends Controller
     function editNegocio(Request $request){
 
         $negocio = negocio::find($request['id']);                                                       
-        $negocio->vehiculo = $request['vehiculo'] ?? $negocio->vehiculo;
+        $negocio->vehiculo = $request['placa'] ?? $negocio->vehiculo;
         $negocio->valorventa = $request['valorventa'] ?? $negocio->valorventa;
         $negocio->porcentajedescuento = $request['porcentajedescuento']  ?? $negocio->porcentajedescuento;
         $negocio->placaretoma = $request['placaretoma'] ?? $negocio->placaretoma;
