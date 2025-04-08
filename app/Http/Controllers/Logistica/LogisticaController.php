@@ -356,13 +356,13 @@ class LogisticaController extends Controller
         $negocio = negocio::find($request['id']);                                                       
         $negocio->vehiculo = $request['placa'] ?? $negocio->vehiculo;
         $negocio->valorventa = $request['valorventa'] ?? $negocio->valorventa;
-        $negocio->porcentajedescuento = $request['porcentajedescuento']  ?? $negocio->porcentajedescuento;
+        $negocio->porcentajedescuento = $request['porcentaje']  ?? $negocio->porcentajedescuento;
         $negocio->placaretoma = $request['placaretoma'] ?? $negocio->placaretoma;
         $negocio->valorretoma = $request['valorretoma'] ??  $negocio->valorretoma;
         $negocio->finalizado = $request['finalizado'] ?? $negocio->finalizado;
         $negocio->cliente = $request['cliente'] ?? $negocio->cliente;
         $negocio->empresas = $request['empresas'] ?? $negocio->empresas;
-        $negocio->metodopago = $request['metodopago'] ?? $negocio->metodopago;
+        $negocio->metodopago = $request['metodo'] ?? $negocio->metodopago;
         $negocio->asesor = $request['asesor'] ?? $negocio->asesor;
         $negocio->vcredito = $request['vcredito'] ?? $negocio->vcredito;
         $negocio->vcuotaInicial = $request['vcuotaInicial'] ?? $negocio->vcuotaInicial;
