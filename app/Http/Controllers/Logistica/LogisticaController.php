@@ -70,7 +70,8 @@ class LogisticaController extends Controller
                 return response()->json(['succes'=>'Se elimino de forma correcta.']);
             }
         } catch (\Throwable $th) {
-            Log::alert('Error liminando el contrato ');
+            return response()->json(['error'=>'Error generado en el servidor, contacte con soporte']);
+
         }
     }
     function createMovimiento(Request $request): object
