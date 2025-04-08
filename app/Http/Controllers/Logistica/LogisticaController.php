@@ -70,7 +70,7 @@ class LogisticaController extends Controller
                 return response()->json(['succes'=>'Se elimino de forma correcta.']);
             }
         } catch (\Throwable $th) {
-            return response()->json(['error'=>'Error generado en el servidor, contacte con soporte']);
+            return response()->json(['error'=>'Error generado en el servidor, contacte con soporte'.$th->getMessage()]);
 
         }
     }
