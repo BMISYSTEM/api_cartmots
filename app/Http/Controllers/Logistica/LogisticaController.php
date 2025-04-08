@@ -63,7 +63,7 @@ class LogisticaController extends Controller
         try {
             $contrato = negocio::find($request['id']);
             $movimientos = logistica::where('placa',$request['placa'])->where('cargar_cuenta',2)->get();
-            if(!isEmpty($movimientos)){
+            if(!$movimientos->isEmpty()){
                 return response()->json(['error'=>'No se puede eliminar este negocio debido a que ya tiene movimientos causados, solicite eliminacion desde el modulo de costos.']);
             }else{
                 $contrato->delete();
