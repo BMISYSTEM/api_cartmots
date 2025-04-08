@@ -353,7 +353,7 @@ class LogisticaController extends Controller
     // edita la informacion de un negocio
     function editNegocio(Request $request){
 
-        $negocio = negocio::find($$request['id']);                                                       
+        $negocio = negocio::find($request['id']);                                                       
         $negocio->vehiculo = $request['vehiculo'] ?? $negocio->vehiculo;
         $negocio->valorventa = $request['valorventa'] ?? $negocio->valorventa;
         $negocio->porcentajedescuento = $request['porcentajedescuento']  ?? $negocio->porcentajedescuento;
@@ -367,13 +367,13 @@ class LogisticaController extends Controller
         $negocio->vcredito = $request['vcredito'] ?? $negocio->vcredito;
         $negocio->vcuotaInicial = $request['vcuotaInicial'] ?? $negocio->vcuotaInicial;
         $negocio->vseparacion = $request['vseparacion'] ?? $negocio->vseparacion;
-        $negocio->vtraspaso = $request['vtraspaso'] ?? $negocio->vseparacion;
-        $negocio->asesorios = $request['asesorios'] ?? $negocio->vseparacion;
-        $negocio->obsequios = $request['obsequios'] ?? $negocio->vseparacion;
-        $negocio->segundo_precio = $request['segundo_precio'] ?? $negocio->vseparacion;;
-        $negocio->vendedor = $request['vendedor'] ?? $negocio->vseparacion;
-        $negocio->entrega = $request['entrega'] ?? $negocio->vseparacion;
-        $negocio->clausulasAdiccionales = $request['clausulasAdiccionales'] ?? $negocio->vseparacion;;
+        $negocio->vtraspaso = $request['vtraspaso'] ?? $negocio->vtraspaso;
+        $negocio->asesorios = $request['asesorios'] ?? $negocio->asesorios;
+        $negocio->obsequios = $request['obsequios'] ?? $negocio->obsequios;
+        $negocio->segundo_precio = $request['segundo_precio'] ?? $negocio->segundo_precio;;
+        $negocio->vendedor = $request['vendedor'] ?? $negocio->vendedor;
+        $negocio->entrega = $request['entrega'] ?? $negocio->entrega;
+        $negocio->clausulasAdiccionales = $request['clausulasAdiccionales'] ?? $negocio->clausulasAdiccionales;;
         $negocio->save();
         return response()->json(['succes' => 'Negocio actualizado correctamente']);
     }
