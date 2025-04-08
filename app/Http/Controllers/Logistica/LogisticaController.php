@@ -9,6 +9,10 @@ use App\Models\negocio;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use PhpParser\Node\Stmt\TryCatch;
+
+use function PHPUnit\Framework\isEmpty;
 
 class LogisticaController extends Controller
 {
@@ -53,6 +57,20 @@ class LogisticaController extends Controller
 
         }else{
             return response()->json(['error'=>'El negocio no se puede crear debido a que ya existen negocio abierto para esta placa']);
+        }
+    }
+    function deleteContrato(Request $request){
+        try {
+            $contrato = negocio::find($request['id']);
+            $movimientos = logistica::where('placa',$request['placa'])->where('cargar_cuenta',2)->get();
+            if(!isEmpty($movimientos)){
+                return response()->json(['error'=>'No se puede eliminar este negocio debido a que ya tiene movimientos causados, solicite eliminacion desde el modulo de costos.']);
+            }else{
+                $contrato->delete();
+                return response()->json(['succes'=>'Se elimino de forma correcta.']);
+            }
+        } catch (\Throwable $th) {
+            Log::alert('Error liminando el contrato ');
         }
     }
     function createMovimiento(Request $request): object
