@@ -7,7 +7,7 @@ use App\Http\Controllers\Actividades\ActividadesController;
 use App\Http\Controllers\AsesorioController;
 use App\Http\Controllers\Asociaciones\Controller\AsociacionesController;
 use App\Http\Controllers\Authcontroller;
-use App\Http\Controllers\bold\boldController;
+use App\Http\Controllers\bold\BoldController;
 use App\Http\Controllers\botController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\GeneradorReportes;
@@ -323,7 +323,7 @@ Route::middleware('auth:sanctum')->group(function(){
     /* 
     * Endpoints de pago bold
     */
-    Route::get('/bold/metodos',[boldController::class,'metodosPago']);
+    Route::get('/bold/metodos',[BoldController::class,'metodosPago']);
   });
 
 
