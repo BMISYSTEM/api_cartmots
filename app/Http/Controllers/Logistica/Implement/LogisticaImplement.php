@@ -90,7 +90,7 @@ class LogisticaImplement implements LogisticaInterface
             inner join motivos mt on lg.motivos = mt.id
             left join vehiculos v on lg.placa = v.placa 
             left join users u on lg.usuario = u.id
-            where lg.empresas ='".$empresa."' and lg.usuario =  ".$id_user);
+            where lg.empresas ='".$empresa."' and lg.usuario =  ".$id_user." order by lg.id desc");
             return ['succes'=>$logisticas];
         } catch (\Throwable $th) {
             return ['error'=>'Error inesperado en el servidor error:'.$th];
