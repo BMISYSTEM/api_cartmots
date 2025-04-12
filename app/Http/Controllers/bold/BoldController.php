@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
 class BoldController extends Controller {
-    public $llavePriv = "EsE5cPX72fXUxv7GnDbszA";
+    public $llavePriv = "V4T6UjZX3zoC26JfQOL0jiMOxDBBPRW-QhsFwMhTh-A";
     public $baseUrl = "https://integrations.api.bold.co";
     /* consulta los metodos de pago  */
     function metodosPago(Request $request){
