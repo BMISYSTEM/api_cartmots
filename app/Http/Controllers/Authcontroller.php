@@ -149,14 +149,16 @@ class Authcontroller extends Controller
     }
     public function index()
     {
+        $empresas = Auth::user()->empresas;
         $vista = DB::select(
-        'select u.id,u.name,u.apellido,u.email,u.cedula,u.created_at as fecha_inicio,count(c.id) as clientes,
+        "select u.id,u.name,u.apellido,u.email,u.cedula,u.created_at as fecha_inicio,count(c.id) as clientes,
         count(
         case
         when c.estados = 7 then 1 end) as cerrados from users u 
         inner join clientes c on c.users_id = u.id
         inner join estados e on c.estados = e.id
-        GROUP BY u.name,u.email,u.cedula,u.created_at,u.id,u.apellido');
+        where u.empresas = ".$empresas."   
+        GROUP BY u.name,u.email,u.cedula,u.created_at,u.id,u.apellido");
         return response()->json($vista);
     }
     // muestra los usuarios de esa empresa con sus permisos respectivos
