@@ -12,10 +12,10 @@ class BoldController extends Controller {
     /* consulta los metodos de pago  */
     function metodosPago(Request $request){
         $key = $this->llavePriv;
-        $response = Http::withHeaders([
+        $data = Http::withHeaders([
             'Autorization'=>"x-api-key $key",
             'Accept' => 'application/json',
         ])->get($this->baseUrl.'/payments/payment-methods');
-        return response()->json($response);
+        return response()->json($data->json());
     }
 }
