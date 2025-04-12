@@ -324,6 +324,7 @@ Route::middleware('auth:sanctum')->group(function(){
     * Endpoints de pago bold
     */
     Route::get('/bold/metodos',[BoldController::class,'metodosPago']);
+    Route::get('/bold/terminales',[BoldController::class,'terminales']);
   });
 
 
