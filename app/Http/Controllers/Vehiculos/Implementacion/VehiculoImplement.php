@@ -307,7 +307,7 @@ class VehiculoImplement implements VehiculoInterface
             inner join estados e on v.estados = e.id
             inner join marcas mar on v.marcas = mar.id
             left join proveedors p on v.proveedor = p.id
-            where v.empresas = '.$empresa.'  LIMIT 1000 OFFSET 0 ');
+            where v.empresas = '.$empresa.'  order by disponibilidad desc  LIMIT 1000 OFFSET 0 ');
             return [['succes'=>$vehiculos,'count'=>count($count)]];
         } catch (\Throwable $th) {
             return ['error'=>'Error inesperado en el servidor '.$th];
