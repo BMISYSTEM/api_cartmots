@@ -53,9 +53,9 @@ class PaypalController extends Controller
         ];
 
         $response = Http::withHeaders([
-            'Authorization' => "Bearer {$this->accessToken}",
-            'Accept' => 'application/json',
-            'X-Idempotency-Key' => $uuid,
+            "Authorization" => "Bearer {$this->accessToken}",
+            "Accept" => "application/json",
+            "X-Idempotency-Key" => $uuid,
         ])->post("{$this->baseUrl}/payments", $data);
 
         if ($response->successful()) {
