@@ -32,8 +32,8 @@ class PaypalController extends Controller
         "installments"=>1,
         "payer"=>[
             "email"=>"baironmenesesidarraga.990128@gmail.com",
-
         ],
+        "payment_method_id"=> $request['payment_method_id'],
         "token"=>$request['token'],
         "transaction_amount"=>350000,
     ];
