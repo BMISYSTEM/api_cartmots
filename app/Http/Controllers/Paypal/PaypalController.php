@@ -32,8 +32,8 @@ class PaypalController extends Controller
     public function createPago(Request $request)
     {
         $request->validate([
-            'token' => 'required|string',
-            'payment_method_id' => 'required|string',
+            'token' => 'nullable|string',
+            'payment_method_id' => 'nullable|string',
             'transaction_amount' => 'required|numeric|min:1',
             'payer_email' => 'required|email',
             'installments' => 'nullable|integer|min:1',
