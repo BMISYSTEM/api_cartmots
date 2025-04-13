@@ -13,7 +13,7 @@ class PaypalController extends Controller
     function metodosPago()
     {
         $key = $this->apiKey;
-        $respuesta = Http::withHeader([
+        $respuesta = Http::withHeaders([
             'Authorization'=>"Bearer $key",
             'Accept' => 'application/json',
         ])->get($this->baseUrl.'/payment_methods');
