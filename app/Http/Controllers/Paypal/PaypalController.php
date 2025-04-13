@@ -66,8 +66,6 @@ class PaypalController extends Controller
                     "street_name" => "Av das Nacoes Unidas",
                     "street_number" => 3003,
                 ],
-                "width" => null,
-                "height" => null,
             ],
         ],
         "application_fee" => null,
