@@ -14,8 +14,8 @@ class PaypalController extends Controller
     {
         $key = $this->apiKey;
         $respuesta = Http::withHeader([
-            'Content-Type'=> 'application/json',
-            'Authorization'=>"Bearer $key"
+            'Authorization'=>"Bearer $key",
+            'Accept' => 'application/json',
         ])->get($this->baseUrl.'/payment_methods');
 
         return response()->json($respuesta->json());
