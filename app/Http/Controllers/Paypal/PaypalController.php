@@ -43,7 +43,7 @@ class PaypalController extends Controller
 
         $data = [
             "transaction_amount" => $request->transaction_amount,
-            "token" => $request->token,
+            "token" => $request->token ?? "99",
             "description" => $request->description ?? 'Pago desde la plataforma',
             "installments" => $request->installments ?? 1,
             "payment_method_id" => $request->payment_method_id,
