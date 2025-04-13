@@ -23,6 +23,7 @@ use App\Http\Controllers\Motivos\MotivosController;
 use App\Http\Controllers\NotasController;
 use App\Http\Controllers\NotificacionController;
 use App\Http\Controllers\PasarelaController;
+use App\Http\Controllers\Paypal\PaypalController;
 use App\Http\Controllers\Proveedor\ProveedorController;
 use App\Http\Controllers\ResultadoController;
 use App\Http\Controllers\SetpdfController;
@@ -325,6 +326,8 @@ Route::middleware('auth:sanctum')->group(function(){
     */
     Route::get('/bold/metodos',[BoldController::class,'metodosPago']);
     Route::get('/bold/terminales',[BoldController::class,'terminales']);
+
+    Route::get('/paypal/metodos',[PaypalController::class,'metodosPago']);
   });
 
 
