@@ -103,7 +103,7 @@ class PaypalController extends Controller
         $respuesta = Http::withHeaders([
             'Authorization'=>"Bearer $key",
             'Accept' => 'application/json',
-        ])->post($this->baseUrl.'/payment',$data);
+        ])->post($this->baseUrl.'/payments',$data);
 
         return response()->json($respuesta->json());
     }
