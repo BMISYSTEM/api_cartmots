@@ -91,7 +91,6 @@ class PaypalController extends Controller
         "payment_method_id" => $request['metodo'],
         "token" => "ff8080814c11e237014c1ff593b57b4d",
         "transaction_amount" => 58000,
-        "currency_id" => "COP",
     ];
     
         $key = $this->apiKey;
