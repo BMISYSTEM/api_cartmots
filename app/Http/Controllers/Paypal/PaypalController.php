@@ -50,6 +50,7 @@ class PaypalController extends Controller
             "payer" => [
                 "email" => $request->payer_email, // Asegúrate de que el correo electrónico sea válido
             ],
+            "transaction_amount" => 350000.00,
         ];
         
         $response = Http::withHeaders([
@@ -58,7 +59,7 @@ class PaypalController extends Controller
             "X-Idempotency-Key" => $uuid,
         ])->post("{$this->baseUrl}/payments", $data);
 
-        
+
         if ($response->successful()) {
             return response()->json([
                 'status' => 'success',
