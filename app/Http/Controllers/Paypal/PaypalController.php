@@ -73,7 +73,7 @@ class PaypalController extends Controller
         return response()->json([
             'status' => 'error',
             'message' => 'Error al procesar el pago',
-            'details' => $response->json()
+            'details' => $response->body()
         ], $response->status());
     }
 }
