@@ -48,9 +48,8 @@ class PaypalController extends Controller
             "installments" => $request->installments ?? 1,
             "payment_method_id" => $request->payment_method_id,
             "payer" => [
-                "email" => $request->payer_email,
+                "email" => $request->payer_email ?? "baironmenesesidarraga.990128@gmail.com",
             ],
-            "payer_email"=>"baironmenesesidarraga.990128@gmail.com"
         ];
 
         $response = Http::withHeaders([
