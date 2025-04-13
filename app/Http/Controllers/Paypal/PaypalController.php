@@ -56,9 +56,8 @@ class PaypalController extends Controller
                     "zip_code" => "12312-123",
                     "street_name" => "Av das Nacoes Unidas",
                     "street_number" => 3003,
-                    "neighborhood" => null,
-                    "city" => 3003,
-                    "federal_unit" => 3003,
+                    "city_name" => "São Paulo", // ✅ CORRECTO
+                    "state_name" => "SP",        // ✅ CORRECTO
                 ],
             ],
             "shipments" => [
