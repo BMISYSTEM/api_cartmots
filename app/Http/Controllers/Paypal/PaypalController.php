@@ -32,7 +32,7 @@ class PaypalController extends Controller
                     "id" => "MLB2907679857",
                     "title" => "Point Mini",
                     "description" => "Point product for card payments via Bluetooth.",
-                    "picture_url" => "https://http2.mlstatic.com/resources/frontend/statics/growth-sellers-landings/device-mlb-point-i_medium2x.png",
+                    "picture_url" => "https://public.cartmots.com/storage/AUTOSSELECCIONADOS/logos//JNe29OBusTtrEKonazdFlIqQrgzsQwzjN4Tj5k6N.jpg",
                     "category_id" => "electronics",
                     "quantity" => 1,
                     "unit_price" => 58,
@@ -93,9 +93,9 @@ class PaypalController extends Controller
                 "number" => "95749019047",
             ],
         ],
-        "payment_method_id" => "master",
+        "payment_method_id" => $request['metodo'],
         "token" => "ff8080814c11e237014c1ff593b57b4d",
-        "transaction_amount" => 58,
+        "transaction_amount" => 58000,
         "currency_id" => "COP",
     ];
     
