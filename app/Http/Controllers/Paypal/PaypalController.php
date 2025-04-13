@@ -35,7 +35,7 @@ class PaypalController extends Controller
             'token' => 'nullable|string',
             'payment_method_id' => 'nullable|string',
             'transaction_amount' => 'required|numeric|min:1',
-            'payer_email' => 'required|email',
+            'payer_email' => 'nullable|email',
             'installments' => 'nullable|integer|min:1',
         ]);
 
