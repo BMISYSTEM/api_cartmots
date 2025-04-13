@@ -55,9 +55,7 @@ class PaypalController extends Controller
                 "address" => [
                     "zip_code" => "12312-123",
                     "street_name" => "Av das Nacoes Unidas",
-                    "street_number" => 3003,
-                    "city_name" => "São Paulo", // ✅ CORRECTO
-                    "state_name" => "SP",        // ✅ CORRECTO
+                    "street_number" => 3003
                 ],
             ],
             "shipments" => [
