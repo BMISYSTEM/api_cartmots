@@ -327,8 +327,8 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/bold/metodos',[BoldController::class,'metodosPago']);
     Route::get('/bold/terminales',[BoldController::class,'terminales']);
 
-    Route::get('/paypal/metodos',[PaypalController::class,'metodosPago']);
-    Route::post('/paypal/pago',[PaypalController::class,'createPago']);
+    Route::get('/mercado/metodos',[PaypalController::class,'metodosPago']);
+    Route::post('/mercado/pago',[PaypalController::class,'createPago']);
   });
 
 
