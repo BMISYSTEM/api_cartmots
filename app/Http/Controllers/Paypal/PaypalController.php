@@ -43,21 +43,22 @@ class PaypalController extends Controller
 
         $data = [
             "transaction_amount" => $request->transaction_amount,
-            "token" => $request->token ?? "99",
+            "token" => $request->token, // Asegúrate de que el token se esté enviando correctamente desde el frontend
             "description" => $request->description ?? "Pago desde la plataforma",
             "installments" => $request->installments ?? 1,
-            "payment_method_id" => $request->payment_method_id,
+            "payment_method_id" => $request->payment_method_id, // Verifica que sea un método de pago válido
             "payer" => [
-                "email" => $request->payer_email ?? "baironmenesesidarraga.990128@gmail.com",
+                "email" => $request->payer_email, // Asegúrate de que el correo electrónico sea válido
             ],
         ];
-
+        
         $response = Http::withHeaders([
             "Authorization" => "Bearer {$this->accessToken}",
             "Accept" => "application/json",
             "X-Idempotency-Key" => $uuid,
         ])->post("{$this->baseUrl}/payments", $data);
 
+        
         if ($response->successful()) {
             return response()->json([
                 'status' => 'success',
