@@ -370,7 +370,7 @@ class LogisticaController extends Controller
         $negocio->vtraspaso = $request['vtraspaso'] ?? $negocio->vtraspaso;
         $negocio->asesorios = $request['asesorios'] ?? $negocio->asesorios;
         $negocio->obsequios = $request['obsequios'] ?? $negocio->obsequios;
-        $negocio->segundo_precio = $request['segundo_precio'] ?? $negocio->segundo_precio;;
+        $negocio->segundo_precio = $request['segundoPrecio'] ?? $negocio->segundo_precio;;
         $negocio->vendedor = $request['vendedor'] ?? $negocio->vendedor;
         $negocio->entrega = $request['entrega'] ?? $negocio->entrega;
         $negocio->clausulasAdiccionales = $request['clausulasAdiccionales'] ?? $negocio->clausulasAdiccionales;;
