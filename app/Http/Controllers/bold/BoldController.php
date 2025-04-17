@@ -47,9 +47,8 @@ class BoldController extends Controller {
             "expiration_date"=>$futureNanoseconds,
             "payment_method" => ["POS"],
             "description"=>$factura[0]->descripcion,
-            "callback_url"=>"https://cartmots.com/panel/dashboard",
+            "callback_url"=>"https://cartmots.com/panel/facturas",
             "payer_email"=>"baironmenesesidarraga.990128@gmail.com",
-
         ];
        
         $data = Http::withHeaders([
@@ -61,5 +60,20 @@ class BoldController extends Controller {
         $facturaEdit->idLink = $res['payload']['payment_link'];
         $facturaEdit->save();
         return response()->json($res);
+    }
+
+    function statusUpdate(Request $request)
+    {
+        $factura = factura::where('idLink',$request['id'])->first();
+        $factura->estado = $request['status'] == 'approved' ? 1 : 0;
+        $factura->save();
+        return response()->json(['succes'=>'estado actualizado correctamente ']);
+    }
+
+
+    function facturasAll(){
+        $empresas = Auth::user()->empresas;
+        $factura = factura::where('empresas',$empresas);
+        return response()->json($factura);
     }
 }
