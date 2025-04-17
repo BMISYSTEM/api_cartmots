@@ -57,8 +57,9 @@ class BoldController extends Controller {
             'Accept' => 'application/json',
         ])->post($this->baseUrl.$endpoint,$array);
         $res = $data->json();
-        $factura->idLink = $res['payload']['payment_link'];
-        $factura->save();
+        $facturaEdit = factura::find($factura[0]->id);
+        $facturaEdit->idLink = $res['payload']['payment_link'];
+        $facturaEdit->save();
         return response()->json($res);
     }
 }
