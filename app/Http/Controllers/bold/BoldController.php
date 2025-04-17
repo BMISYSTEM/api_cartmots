@@ -58,6 +58,7 @@ class BoldController extends Controller {
         ])->post($this->baseUrl.$endpoint,$array);
         $res = $data->json();
         $factura->idLink = $res['payload']['payment_link'];
+        $factura->save();
         return response()->json($res);
     }
 }
