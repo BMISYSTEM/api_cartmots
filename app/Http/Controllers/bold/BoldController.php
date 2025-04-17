@@ -28,35 +28,24 @@ class BoldController extends Controller {
         return response()->json($data->json());
     }
     function createLinkPago(){
-        $endpoint = "/payments/app-checkout";
+        $endpoint = "/online/link/v1";
         $key = $this->llavePriv;
+        $currentNanoseconds = microtime(true) * 1e9; // Convertir microsegundos a nanosegundos
+        $tenMinutesInNanoseconds = 10 * 60 * 1e9; // 10 minutos en nanosegundos
+        $futureNanoseconds = $currentNanoseconds + $tenMinutesInNanoseconds;
         $data = [
+            "amount_type"=>"CLOSE",
             "amount" => [
                 "currency" => "COP",
-                "taxes" => [
-                    [
-                        "type" => "VAT",
-                        "base" => 10000,
-                        "value" => 1000
-                    ]
-                ],
                 "tip_amount" => 0,
-                "total_amount" => 1230000
+                "total_amount" => 5000
             ],
-            "payment_method" => "POS",
-            "terminal_model" => "N86",
-            "terminal_serial" => "N860W000000",
-            "reference" => "d9b10690-981d-494d-bcb0-66a1dacab51d",
-            "user_email" => "vendedor@comercio.com",
-            "description" => "Compra de Prueba",
-            "payer" => [
-                "email" => "pagador@hotmail.com",
-                "phone_number" => "3100000000",
-                "document" => [
-                    "document_type" => "CEDULA",
-                    "document_number" => "1010140000"
-                ]
-            ]
+            "expiration_date"=>$futureNanoseconds,
+            "payment_method" => ["POS"],
+            "description"=>"Pago de soporte CRM cartmots",
+            "callback_url"=>"https://cartmots.com/panel/dashboard",
+            "payer_email"=>"baironmenesesidarraga.990128@gmail.com",
+
         ];
         
         $data = Http::withHeaders([
