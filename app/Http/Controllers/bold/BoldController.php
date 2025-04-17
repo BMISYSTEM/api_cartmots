@@ -73,7 +73,7 @@ class BoldController extends Controller {
 
     function facturasAll(){
         $empresas = Auth::user()->empresas;
-        $factura = factura::where('empresas',$empresas);
+        $factura = factura::where('empresas',$empresas)->get();
         return response()->json($factura);
     }
 }
