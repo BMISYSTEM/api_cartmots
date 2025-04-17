@@ -9,7 +9,7 @@ class factura extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'descipcion',
+        'descripcion',
         'estado',
         'fecha_limite',
         'idLink',

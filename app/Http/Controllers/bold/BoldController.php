@@ -46,7 +46,7 @@ class BoldController extends Controller {
             ],
             "expiration_date"=>$futureNanoseconds,
             "payment_method" => ["POS"],
-            "description"=>$factura->descipcion,
+            "description"=>$factura->descripcion,
             "callback_url"=>"https://cartmots.com/panel/dashboard",
             "payer_email"=>"baironmenesesidarraga.990128@gmail.com",
 
