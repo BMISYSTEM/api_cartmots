@@ -21,12 +21,14 @@ class GeneradorReportes extends Controller
     /* guardar fuente de datos  */
 
     public function saveFuenteData(Request $request){
+        $empresas = Auth::user()->empresas;
         try {
             //code...
             reporte_fuente_dato::create(
                 [
                     "nombre"=>$request['nombre'],
-                    "consulta"=>'no definida'
+                    "consulta"=>"no definida",
+                    "empresas"=>$empresas
                 ]
             );
             return response()->json(['succes'=>'La fuente se creo de forma correcta']);
