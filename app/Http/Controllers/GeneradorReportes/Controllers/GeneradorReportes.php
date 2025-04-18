@@ -38,6 +38,12 @@ class GeneradorReportes extends Controller
         }
     }
 
+    /* consulta todas las fuentes de datos  */
+    public function fuenteDataAll(){
+        $empresas = Auth::user()->empresas;
+        $data = reporte_fuente_dato::where('empresas',$empresas)->get();
+        return response()->json($data);
+    }
     /* guarda la consulta de una fuente de datos  */
 
     public function saveConsultaFuenteData(Request $request)

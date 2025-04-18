@@ -285,6 +285,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::post('/syprodreport/fuentedatos',[GeneradorReportes::class,'saveFuenteData']);
     Route::post('/syprodreport/fuentedatosconsulta',[GeneradorReportes::class,'saveConsultaFuenteData']);
     Route::get('/syprodreport/fuentedatos',[GeneradorReportes::class,'ejecutFuenteData']);
+    Route::get('/syprodreport/fuentedatosall',[GeneradorReportes::class,'fuenteDataAll']);
     
      /*
     |--------------------------------------------------------------------------
