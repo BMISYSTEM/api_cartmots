@@ -10,7 +10,8 @@ class reporte_fuente_dato extends Model
     protected $fillable = [
         'nombre',
         'consulta',
-        'empresas',             
+        'empresas', 
+        'descripcion'            
     ];
     use HasFactory;
 }

@@ -28,6 +28,7 @@ class GeneradorReportes extends Controller
                 [
                     "nombre"=>$request['nombre'],
                     "consulta"=>"no definida",
+                    "descripcion"=>$request['descripcion'],
                     "empresas"=>$empresas
                 ]
             );
