@@ -351,7 +351,7 @@ class ClienteController extends Controller
         left join (select proximo_seguimiento fecha,clientes clientes,comentario comentarios,created_at as ult_nota from notas GROUP BY clientes,proximo_seguimiento,comentario,created_at order by proximo_seguimiento desc) as t  on t.clientes = c.id and ult.ultima_nota = t.ult_nota
         where 	em.id= ".$empresa."
         		and cd.centrofinanciero = '1'
-        group by c.id,t.comentarios,t.clientes,c.nombre,c.apellido,c.cedula,c.date,c.telefono,c.email,c.estados,c.users_id,e.id,e.estado,e.created_at,e.updated_at,t.fecha,e.color
+        group by c.id,t.comentarios,t.clientes,c.direccion,c.nombre,c.apellido,c.cedula,c.date,c.telefono,c.email,c.estados,c.users_id,e.id,e.estado,e.created_at,e.updated_at,t.fecha,e.color
         ORDER BY  fecha DESC");
 
         return response()->json($vista);
