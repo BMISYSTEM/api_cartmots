@@ -204,6 +204,7 @@ class ClienteController extends Controller
             c.nombre,
             c.apellido,
             c.cedula,
+            c.direccion,
             c.date,
             c.telefono,
             c.email,
