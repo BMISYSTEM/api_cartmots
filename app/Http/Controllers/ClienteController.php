@@ -222,7 +222,7 @@ class ClienteController extends Controller
             left join (SELECT max(created_at) as ultima_nota,clientes as clientes,empresas as empresas FROM notas GROUP BY clientes,empresas ) as ult on c.id = ult.clientes and ult.empresas = c.empresas
             left join (select proximo_seguimiento fecha,clientes clientes,comentario comentarios,created_at as ult_nota,empresas as empresa from notas GROUP BY clientes,proximo_seguimiento,comentario,created_at,empresas order by proximo_seguimiento desc) as t  on t.clientes = c.id and ult.ultima_nota = t.ult_nota and t.empresa = c.empresas
             where c.empresas= '".$empresa."' and c.transferido = 0 and e.finalizado <> 1   and t.fecha BETWEEN '".$inicio."' AND '".$fin."'
-            group by u.name,u.img,c.id,t.comentarios,t.clientes,c.nombre,c.apellido,c.cedula,c.date,c.telefono,c.email,c.estados,c.users_id,e.id,e.estado,e.created_at,e.updated_at,t.fecha,e.color,e.pendiente,e.aprobado,e.rechazado
+            group by u.name,u.img,c.id,t.comentarios,t.clientes,c.direccion,c.nombre,c.apellido,c.cedula,c.date,c.telefono,c.email,c.estados,c.users_id,e.id,e.estado,e.created_at,e.updated_at,t.fecha,e.color,e.pendiente,e.aprobado,e.rechazado
             ORDER BY  t.fecha DESC limit 500");
         }else{
 
