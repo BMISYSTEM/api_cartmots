@@ -29,7 +29,8 @@ class cliente extends Model
         'tipo_vivienda',
         'antiguedad_vivienda',
         'empresas',
-        'origen'
+        'origen',
+        'direccion'
     ];
 
 

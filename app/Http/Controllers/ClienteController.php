@@ -25,7 +25,8 @@ class ClienteController extends Controller
                 'origen'=>'required|numeric',
                 'nombre'=>'nullable',
                 'apellido'=>'nullable',
-                'cedula'=>'nullable'
+                'cedula'=>'nullable',
+                'direccion'=>'nullable'
             ],
             [
                 'telefono.required'=>'El telefono es obligatorio',
@@ -62,7 +63,8 @@ class ClienteController extends Controller
                 'estados'=>'1',
                 'users_id'=> $user,
                 'empresas'=>$empresa,
-                'origen' =>$vehiculo['origen']
+                'origen' =>$vehiculo['origen'],
+                'direccion'=>$vehiculo['direccion']
             ]);
             return response()->json(['succes'=>$creado ]);
         } catch (\Throwable $th) {
@@ -229,6 +231,7 @@ class ClienteController extends Controller
             c.nombre,
             c.apellido,
             c.cedula,
+            c.direccion,
             c.date,
             c.telefono,
             c.email,
@@ -329,6 +332,7 @@ class ClienteController extends Controller
         c.nombre,
         c.apellido,
         c.cedula,
+        c.direccion,
         c.date,
         c.telefono,
         c.email,
@@ -430,6 +434,7 @@ class ClienteController extends Controller
                 'apellido'=>'nullable',
                 'cedula'=>'nullable',
                 'email'=>'required',
+                'direccion'=>'nullable'
             ],
             [
                 'telefono.required' => 'El telefono es obligatorio',
@@ -448,6 +453,7 @@ class ClienteController extends Controller
                 $cliente->cedula = $request['cedula'];
                 $cliente->telefono = $request['telefono'];
                 $cliente->email = $request['email'];
+                $cliente->direccion = $request['direccion'];
                 $cliente->save();
                 $mensaje = 'Cliente actualizado';
             }else{
@@ -458,6 +464,7 @@ class ClienteController extends Controller
             $cliente->apellido = $request['apellido'];
             $cliente->cedula = $request['cedula'];
             $cliente->email = $request['email'];
+            $cliente->direccion = $request['direccion'];
             $cliente->save();
             $mensaje = 'Cliente actualizado';
         }
