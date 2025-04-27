@@ -12,7 +12,7 @@ class reporte extends Model
 
     protected $fillable = [
         'nombre',
-        'seccion',
+        'secciones',
         'empresas'
     ];
 }

@@ -119,7 +119,7 @@ class GeneradorReportes extends Controller
             $seccion = reporte::create(
                 [
                     'nombre'=>$request['nombre'],
-                    'seccion'=>$request['seccion'],
+                    'secciones'=>$request['seccion'],
                     'empresas'=>$empresas
                 ]
             );
