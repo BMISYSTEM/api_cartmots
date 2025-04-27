@@ -284,8 +284,11 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::post('/syprodreport',[GeneradorReportes::class,'ConsultaSQL']);
     Route::post('/syprodreport/fuentedatos',[GeneradorReportes::class,'saveFuenteData']);
     Route::post('/syprodreport/fuentedatosconsulta',[GeneradorReportes::class,'saveConsultaFuenteData']);
+    Route::post('/syprodreport/layout/seccion',[GeneradorReportes::class,'newSeccion']);
+    Route::post('/syprodreport/layout/reporte',[GeneradorReportes::class,'newReporte']);
     Route::get('/syprodreport/fuentedatos',[GeneradorReportes::class,'ejecutFuenteData']);
     Route::get('/syprodreport/fuentedatosall',[GeneradorReportes::class,'fuenteDataAll']);
+
     
      /*
     |--------------------------------------------------------------------------

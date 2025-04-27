@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\GeneradorReportes\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\reporte;
 use App\Models\reporte_fuente_dato;
+use App\Models\seccione;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -84,4 +86,39 @@ class GeneradorReportes extends Controller
         }
     }
 
+
+    /* rerporte layout  */
+    public function newSeccion(Request $request) 
+    {
+        try {
+            //code...
+            $seccion = seccione::create(
+                [
+                    'nombre'=>$request['nombre']
+                ]
+            );
+            return response()->json(['succes'=>'Se creo la seccion correctamente'],200);
+        } catch (\Throwable $th) {
+            //throw $th;
+            return response()->json(['error'=>'Error generado en el servidor errro = '.$th],500);
+        }
+    }
+    public function newReporte(Request $request) 
+    {
+        try {
+            //code...
+            $empresas = Auth::user()->empresas;
+            $seccion = reporte::create(
+                [
+                    'nombre'=>$request['nombre'],
+                    'seccion'=>$request['seccion'],
+                    'empresas'=>$empresas
+                ]
+            );
+            return response()->json(['succes'=>'Se creo el reporte correctamente'],200);
+        } catch (\Throwable $th) {
+            //throw $th;
+            return response()->json(['error'=>'Error generado en el servidor errro = '.$th],500);
+        }
+    }
 }
