@@ -141,7 +141,7 @@ class GeneradorReportes extends Controller
     function findRelacionReporteFuente(Request $request)
     {   
         $reporte = $request->query('id');
-        $fuenteSeleect = reportes_for_fuente::where('reportes',$reporte);
+        $fuenteSeleect = reportes_for_fuente::where('reportes',$reporte)->get();
         return response()->json($fuenteSeleect);
 
     }
