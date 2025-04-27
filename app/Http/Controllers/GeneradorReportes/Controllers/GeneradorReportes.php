@@ -5,6 +5,7 @@ namespace App\Http\Controllers\GeneradorReportes\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\reporte;
 use App\Models\reporte_fuente_dato;
+use App\Models\reportes_config;
 use App\Models\reportes_for_fuente;
 use App\Models\seccione;
 use Illuminate\Http\Request;
@@ -142,6 +143,51 @@ class GeneradorReportes extends Controller
         $reporte = $request->query('id');
         $fuenteSeleect = reportes_for_fuente::where('reportes',$reporte);
         return response()->json($fuenteSeleect);
+
+    }
+
+    /* creacion de relacion  */
+    function createRelacionreporteFuenteDatos(Request $request)
+    {
+        $empresa = Auth::user()->empresas;
+        $relacion= reportes_for_fuente::create(
+            [
+                'empresas'=>$empresa,
+                'fuente'=>$request['fuente'],
+                'reportes'=>$request['reporte']
+            ]
+        );
+        $fuente = reporte_fuente_dato::find($request['fuente']);
+        $vista = DB::select($fuente->consulta);
+        $columnas = [];
+        if (!empty($vista)) {
+            $columnas = array_keys((array) $vista[0]);
+        }
+        $pocicion = 1;
+        foreach($columnas as $columna)
+        {
+            reportes_config::create(
+                [
+                    'campo'=>$columna,
+                    'seleccion'=>0,
+                    'titulo'=>'',
+                    'color'=>'',
+                    'filtro'=>'',
+                    'posicion'=>$pocicion,
+                    'total'=>0,
+                    'reportes'=>$request['reporte'],
+                    'empresas'=>$empresa
+                ]
+            );
+        }
+        return response()->json(['succes'=>'Fuente relacionado con el reporte de forma correcta, sus campos fueron creados correctamente']);
+    }
+
+
+    function camposReporteAll(Request $request){
+        $reporte = $request->query('id');
+        $campos_reporte = reportes_config::where('reportes',$reporte)->get();
+        return response()->json($campos_reporte);
 
     }
 }
