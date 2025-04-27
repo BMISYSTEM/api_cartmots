@@ -12,5 +12,6 @@ class seccione extends Model
 
     protected $fillable = [
         'nombre',
+        'empresas'
     ];
 }
