@@ -129,4 +129,10 @@ class GeneradorReportes extends Controller
             return response()->json(['error'=>'Error generado en el servidor errro = '.$th],500);
         }
     }
+    public function reportesAll(){
+        $empresas = Auth::user()->empresas;
+        $reporte = reporte::where('empresas',$empresas)->get();
+        return response()->json($reporte);
+
+    }
 }
