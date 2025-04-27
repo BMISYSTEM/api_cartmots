@@ -291,6 +291,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/syprodreport/fuentedatos',[GeneradorReportes::class,'ejecutFuenteData']);
     Route::get('/syprodreport/fuentedatos',[GeneradorReportes::class,'ejecutFuenteData']);
     Route::get('/syprodreport/fuentedatosall',[GeneradorReportes::class,'fuenteDataAll']);
+    Route::get('/syprodreport/reporteforfuente',[GeneradorReportes::class,'findRelacionReporteFuente']);
      /*
     |--------------------------------------------------------------------------
     | rutas negocio

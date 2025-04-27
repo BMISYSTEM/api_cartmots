@@ -5,6 +5,7 @@ namespace App\Http\Controllers\GeneradorReportes\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\reporte;
 use App\Models\reporte_fuente_dato;
+use App\Models\reportes_for_fuente;
 use App\Models\seccione;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -133,6 +134,14 @@ class GeneradorReportes extends Controller
         $empresas = Auth::user()->empresas;
         $reporte = reporte::where('empresas',$empresas)->get();
         return response()->json($reporte);
+
+    }
+    /* consulta la informacion de un reporte  */
+    function findRelacionReporteFuente(Request $request)
+    {   
+        $reporte = $request->query('id');
+        $fuenteSeleect = reportes_for_fuente::where('reportes',$reporte);
+        return response()->json($fuenteSeleect);
 
     }
 }

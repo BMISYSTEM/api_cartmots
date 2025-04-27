@@ -118,3 +118,31 @@ CREATE TABLE reportes (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     CONSTRAINT fk_empresas_reporte_fuente_datos FOREIGN KEY (empresas) REFERENCES empresas(id)
 );
+CREATE TABLE reportes_for_fuentes(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    reportes int not null UNIQUE,
+    fuente INT not null,
+    empresas bigint unsigned  NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    CONSTRAINT fk_reportes_for_fuente_empresa FOREIGN KEY (empresas) REFERENCES empresas(id),
+    CONSTRAINT fk_reportes_for_fuente_fuente FOREIGN KEY (fuente) REFERENCES reporte_fuente_datos(id),
+    CONSTRAINT fk_reportes_for_fuente_reporte FOREIGN KEY (reportes) REFERENCES reportes(id)
+);
+
+CREATE TABLE reportes_config (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    campo varchar(255),
+    seleccion INT not null,
+    titulo varchar(255),
+    color varchar(255),
+    filtro varchar(255),
+    posicion int,
+    total int,
+    reportes int not null,
+    empresas bigint unsigned  NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    CONSTRAINT fk_reporte_empresas_config FOREIGN KEY (empresas) REFERENCES empresas(id),
+    CONSTRAINT fk_reporte_config_id FOREIGN KEY (reportes) REFERENCES reportes(id)
+);
