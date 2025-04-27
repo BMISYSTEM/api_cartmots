@@ -288,8 +288,6 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::post('/syprodreport/layout/reporte',[GeneradorReportes::class,'newReporte']);
     Route::get('/syprodreport/fuentedatos',[GeneradorReportes::class,'ejecutFuenteData']);
     Route::get('/syprodreport/fuentedatosall',[GeneradorReportes::class,'fuenteDataAll']);
-
-    
      /*
     |--------------------------------------------------------------------------
     | rutas negocio

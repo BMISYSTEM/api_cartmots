@@ -92,9 +92,11 @@ class GeneradorReportes extends Controller
     {
         try {
             //code...
+            $empresas = Auth::user()->empresas;
             $seccion = seccione::create(
                 [
-                    'nombre'=>$request['nombre']
+                    'nombre'=>$request['nombre'],
+                    'empresas'=>$empresas
                 ]
             );
             return response()->json(['succes'=>'Se creo la seccion correctamente'],200);
