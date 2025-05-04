@@ -190,4 +190,36 @@ class GeneradorReportes extends Controller
         return response()->json($campos_reporte);
 
     }
+
+
+    /* editar campos uno a uno  */
+    function editCampos(Request $request)
+    {
+        try {
+            
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+    }
+
+
+    function saveConfigCampos(Request $request){
+
+        try {
+            $datos = $request->all();
+            foreach ($datos as $fila) {
+                if (isset($fila['id'])) {
+                    // Actualiza todos los campos excepto el ID
+                    reportes_config::where('id', $fila['id'])->update(
+                        collect($fila)->except('id', 'created_at', 'updated_at')->toArray()
+                    );
+                }
+            }
+            return response()->json(['succes'=>'Se actualizaron todos los campos modificados']);
+
+        } catch (\Throwable $th) {
+            //throw $th;
+            return response()->json(['error'=>'Se genero un error al momento de actualizar los campos '.$th],500);
+        }
+    }
 }
