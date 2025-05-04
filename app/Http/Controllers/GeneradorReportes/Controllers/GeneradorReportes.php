@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\GeneradorReportes\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\empresa;
 use App\Models\reporte;
 use App\Models\reporte_fuente_dato;
 use App\Models\reportes_config;
@@ -233,5 +234,21 @@ class GeneradorReportes extends Controller
             //throw $th;
             return response()->json(['error'=>'Se genero un error al momento de actualizar los campos '.$th],500);
         }
+    }
+
+
+    function generateReporte(Request $request){
+        $id_reporte = $request->query('id');
+        $relacion = reportes_for_fuente::where('reportes',$id_reporte)->first();
+        /* vista */
+        $fuenteData = reporte_fuente_dato::find($relacion->fuente);
+        /* campos de reporte  */
+        $campos_reporte = reportes_config::where('reportes',$id_reporte)->get();
+        /* informacion de reporte  */
+        $reporte = reporte::find($id_reporte);
+        /* informacion empresa */
+        $empresa = Auth::user()->empresas;
+        $empresainfo = empresa::find($empresa);
+        return response()->json(['fuenteData'=>$fuenteData,'configuracion'=>$campos_reporte,'reporte'=>$reporte,'empresa'=> $empresainfo]);
     }
 }
