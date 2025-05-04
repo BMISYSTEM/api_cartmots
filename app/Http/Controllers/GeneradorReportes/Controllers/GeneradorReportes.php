@@ -79,7 +79,7 @@ class GeneradorReportes extends Controller
     {
         try {
             $reporte = $request->query('id');
-            $relacion = reportes_for_fuente::where('reportes',$reporte)->get();
+            $relacion = reportes_for_fuente::where('reportes',$reporte)->first();
             $fuenteData = reporte_fuente_dato::find($relacion->fuente);
             return response()->json($fuenteData);
         } catch (\Throwable $th) {
