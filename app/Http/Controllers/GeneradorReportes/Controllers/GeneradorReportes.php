@@ -74,6 +74,18 @@ class GeneradorReportes extends Controller
             return response()->json(['error'=>'Error generado al momento de almacenar la consulta error= '.$th]);
         }
     }
+
+    public function findFuenteDatos(Request $request)
+    {
+        try {
+            $reporte = $request->query('id');
+            $relacion = reportes_for_fuente::where('reportes',$reporte)->get();
+            $fuenteData = reporte_fuente_dato::find($relacion['fuente']);
+            return response()->json($fuenteData);
+        } catch (\Throwable $th) {
+            return response()->json(['error'=>'Error generado al momento de consultar la fuente de datos  error= '.$th]);
+        }
+    }
     /* Ejecutar una consulta de una fuente de datos  */
     public function ejecutFuenteData(Request $request)
     {

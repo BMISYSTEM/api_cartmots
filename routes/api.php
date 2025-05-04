@@ -295,6 +295,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::post('/syprodreport/layout/reporte/relacion',[GeneradorReportes::class,'createRelacionreporteFuenteDatos']);
     Route::get('/syprodreport/layout/reporte/campos',[GeneradorReportes::class,'camposReporteAll']);
     Route::post('/syprodreport/layout/reporte/save',[GeneradorReportes::class,'saveConfigCampos']);
+    Route::get('/syprodreport/layout/reporte/fuente',[GeneradorReportes::class,'findFuenteDatos']);
      /*
     |--------------------------------------------------------------------------
     | rutas negocio
