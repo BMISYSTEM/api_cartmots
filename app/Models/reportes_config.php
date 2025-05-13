@@ -19,6 +19,7 @@ class reportes_config extends Model
         'posicion',
         'total',
         'reportes',
-        'empresas'
+        'empresas',
+        'condicion'
     ];
 }
