@@ -10,9 +10,5 @@ class reporte extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'nombre',
-        'secciones',
-        'empresas'
-    ];
+    protected $fillable = ["nombre", "secciones", "empresas", "tipo"];
 }
